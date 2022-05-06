@@ -9,14 +9,40 @@ Class {
 
 { #category : #tests }
 ESLTest >> testCSVFilesShouldExists [
-	| root |
-	root := '.' asFileReference.
-	self assert: (root files anySatisfy: [ :file | '*.csv' match: file basename ]).
+	
+	self 
+		assert: ESL csvFilesExists
+		description: 'Baseline should created the csv files'.
+]
+
+{ #category : #tests }
+ESLTest >> testCreateDatabase [
+	ESL createDatabase
+]
+
+{ #category : #tests }
+ESLTest >> testDatabaseDo [
+	| list |
+	list := ESL databaseDo: [ 
+		(Country storedInstances select: [ :each | true ])
+		 ].
+	self assert: list notEmpty.
+]
+
+{ #category : #tests }
+ESLTest >> testDatabaseShouldExists [
+	
+	self 
+		assert: ESL databaseFileExists
+		description: 'Baseline should created the database'.
+]
+
+{ #category : #tests }
+ESLTest >> testHomeDirectory [
+	self assert: ESL csvDirectory isString
 ]
 
 { #category : #tests }
 ESLTest >> testZipPath [
-	| esl |
-	esl := ESL new.
-	self assert: esl zipPath isString
+	self assert: ESL zipPath isString
 ]

@@ -15,7 +15,9 @@ BaselineOfFutbol >> baseline: spec [
 	spec for: #common do: [
 		"Dependencies"
 		
-		self roassal3: spec.
+		self
+			roassal3: spec;
+			restore: spec.
 		"packages"
 		spec
 			package: 'Futbol' with: [ spec requires: #('Roassal3') ];
@@ -25,6 +27,16 @@ BaselineOfFutbol >> baseline: spec [
 		spec
 			group: 'default' with: #('Futbol' 'Futbol-Tests') ]
 		
+]
+
+{ #category : #dependencies }
+BaselineOfFutbol >> restore: spec [
+	spec 
+		baseline: 'ReStore' 
+ 		with: [ 
+			spec 
+				repository: 'github://rko281/ReStoreForPharo';
+    			loads: #( 'all' ) ]
 ]
 
 { #category : #dependencies }
