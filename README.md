@@ -6,6 +6,12 @@ Roassal3 soccer/futbol/football demo
  
 Use the following incantation on you pharo image
 
+```st
+Metacello new
+	baseline: 'Futbol';
+	repository: 'github://akevalion/Futbol';
+	load.
+```
 
 ## Links
 - https://data.world/data-society/european-soccer-data
