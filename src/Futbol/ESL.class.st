@@ -79,5 +79,5 @@ ESL class >> unZipFile [
 
 { #category : #accessing }
 ESL class >> zipPath [
-	^ './pharo-local/iceberg/Futbol/data/soccer-csv.zip'
+	^ './pharo-local/iceberg/akevalion/Futbol/data/soccer-csv.zip'
 ]
