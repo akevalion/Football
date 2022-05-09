@@ -7,6 +7,11 @@ Class {
 	#category : #'Futbol-Tests'
 }
 
+{ #category : #accessing }
+ESLTest >> defaultTimeLimit [
+	^ 30 minutes
+]
+
 { #category : #tests }
 ESLTest >> testCSVFilesShouldExists [
 	
@@ -27,6 +32,7 @@ ESLTest >> testDatabaseDo [
 		(Country storedInstances select: [ :each | true ])
 		 ].
 	self assert: list notEmpty.
+	self assert: list size > 5
 ]
 
 { #category : #tests }

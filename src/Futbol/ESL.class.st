@@ -55,14 +55,16 @@ ESL class >> disconnectDB [
 { #category : #public }
 ESL class >> generateDB [
 	self databaseFileExists ifTrue: [ ^ self ].
-	self connectDB.
-	self importFromCSV.
-	self disconnectDB.
+	self databaseDo: [ self importFromCSV ]
 ]
 
 { #category : #public }
 ESL class >> importFromCSV [
-	FutbolEntity subclasses do: [ :cls | cls importFromCSV ].
+	FutbolEntity subclasses 
+		do: [ :cls | cls importFromCSV ]
+		displayingProgress: [ :cls | 
+			('importing: ', cls name) traceCr.
+			 ]
 ]
 
 { #category : #public }

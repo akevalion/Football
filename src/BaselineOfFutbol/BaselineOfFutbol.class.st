@@ -13,20 +13,32 @@ BaselineOfFutbol >> baseline: spec [
 	"main repository"
 	"https://github.com/akevalion/Futbol"
 	spec for: #common do: [
-		"Dependencies"
+		spec postLoadDoIt: #generateDB.
 		
+		"Dependencies"
 		self
 			roassal3: spec;
-			restore: spec.
+			restore: spec;
+			neoCSV: spec.
 		"packages"
 		spec
-			package: 'Futbol' with: [ spec requires: #('Roassal3') ];
+			package: 'Futbol' with: [ spec requires: #('Roassal3' 'NeoCSV' 'ReStore') ];
 			package: 'Futbol-Tests' with: [ spec requires: 'Futbol' ].
 				
 		"Groups"
 		spec
 			group: 'default' with: #('Futbol' 'Futbol-Tests') ]
 		
+]
+
+{ #category : #postload }
+BaselineOfFutbol >> generateDB [
+	(Smalltalk at: #ESL) createDatabase
+]
+
+{ #category : #dependencies }
+BaselineOfFutbol >> neoCSV: spec [
+	spec baseline: 'NeoCSV' with: [ spec repository: 'github://svenvc/NeoCSV/repository' ].
 ]
 
 { #category : #dependencies }

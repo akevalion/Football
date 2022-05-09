@@ -1,45 +1,57 @@
 "
-used by countries
+league object
 "
 Class {
-	#name : #Country,
+	#name : #League,
 	#superclass : #FutbolEntity,
 	#instVars : [
 		'id',
+		'country_id',
 		'name'
 	],
 	#category : #Futbol
 }
 
 { #category : #accessing }
-Country class >> csvFile [
-	^ 'Country_export_2022-04-14_145153.csv'
+League class >> csvFile [
+	^ 'League_export_2022-04-14_145204.csv'
 ]
 
 { #category : #public }
-Country class >> reStoreDefinition [
+League class >> reStoreDefinition [
 	^ super reStoreDefinition
 		defineAsID: #id;
+		define: #country_id as: Integer;
 		define: #name as: (String maxSize: 100);
 		yourself.
 ]
 
 { #category : #accessing }
-Country >> id [
+League >> country_id [
+	^ country_id
+]
+
+{ #category : #accessing }
+League >> country_id: anObject [
+	country_id:= anObject
+]
+
+{ #category : #accessing }
+League >> id [
 	^ id
 ]
 
 { #category : #accessing }
-Country >> id: anObject [
+League >> id: anObject [
 	id:= anObject
 ]
 
 { #category : #accessing }
-Country >> name [
+League >> name [
 	^ name
 ]
 
 { #category : #accessing }
-Country >> name: anObject [
+League >> name: anObject [
 	name:= anObject
 ]
