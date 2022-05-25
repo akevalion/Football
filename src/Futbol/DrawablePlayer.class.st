@@ -4,7 +4,8 @@ Class {
 	#instVars : [
 		'id',
 		'x',
-		'y'
+		'y',
+		'playerName'
 	],
 	#category : #Futbol
 }
@@ -20,6 +21,14 @@ DrawablePlayer class >> id: id x: x y: y [
 ]
 
 { #category : #accessing }
+DrawablePlayer >> computePlayerName [
+	id ifNil: [ ^ 'NO_NAME' ].
+	^ ESL databaseDo: [ 
+		(Player storedInstances detect: [ :player | player player_api_id = id ]) player_name
+		 ]
+]
+
+{ #category : #accessing }
 DrawablePlayer >> id [
 
 	^ id
@@ -32,6 +41,19 @@ DrawablePlayer >> id: anObject [
 ]
 
 { #category : #accessing }
+DrawablePlayer >> lastName [
+
+	| substrings |
+	substrings := (self playerName substrings: ' ').
+	^ substrings last asString
+]
+
+{ #category : #accessing }
+DrawablePlayer >> playerName [
+	^ playerName ifNil: [ playerName := self computePlayerName ]
+]
+
+{ #category : #accessing }
 DrawablePlayer >> x [
 
 	^ x
@@ -40,7 +62,11 @@ DrawablePlayer >> x [
 { #category : #accessing }
 DrawablePlayer >> x: anObject [
 
-	x := anObject
+	"x := anObject "
+
+	x := anObject = 1
+		     ifTrue: [ 5 ]
+		     ifFalse: [ anObject ]
 ]
 
 { #category : #accessing }

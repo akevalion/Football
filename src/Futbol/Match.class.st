@@ -931,14 +931,22 @@ Match >> country_id: anObject [
 ]
 
 { #category : #'as yet unclassified' }
-Match >> createBoxFor: player [
-	
-	^ RSLabel new
+Match >> createPlayerShapeFor: player [
+	| size circle name |
+	size := 30.
+	circle := RSEllipse new
+		size: size*0.75;
+		yourself.
+	name := RSLabel new
 		color: 'black';
-		text: player id;
-		position: player x @ player y;
+		text: player lastName;
+		position: 0@ size *0.75;
+		yourself.
+	^ { circle } asShape
+		model: player;
+		add: name;
+		position: (player y @ player x) * (size@ (size * 1.5));
 		yourself
-		
 ]
 
 { #category : #'as yet unclassified' }
@@ -948,10 +956,23 @@ Match >> createPlayersCanvas [
 	awayPlayers := self playersFrom: 'away'.
 	
 	canvas := RSCanvas new.
+	canvas @ RSCanvasController.
 	palette := RSColorPalette diverging rdylbu10.
 	
-	canvas addAll: (homePlayers collect: [ :player | (self createBoxFor: player) color: palette range second]).
-	canvas addAll: (awayPlayers collect: [ :player | (self createBoxFor: player) color: palette range nextToLast ]).
+	canvas addAll: (homePlayers collect: [ :player | 
+		(self createPlayerShapeFor: player) 
+			in: [ :shape | 
+				shape children first color: palette range second.
+				shape position: shape position x @ shape position y.
+				 ]
+			yourself ]).
+	canvas addAll: (awayPlayers collect: [ :player | 
+		(self createPlayerShapeFor: player) 
+			
+			in: [ :shape | 
+				shape children first color: palette range nextToLast.
+				shape position: (shape position x negated + (30*25) ) @ shape position y ]
+			yourself ]).
 	^ canvas
 	
 ]
