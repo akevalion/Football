@@ -931,6 +931,54 @@ Match >> country_id: anObject [
 ]
 
 { #category : #'as yet unclassified' }
+Match >> createAwayPlayersPalette: palette [
+	| awayPlayers shapes layers |
+	awayPlayers := self playersFrom: 'away'.
+	shapes := awayPlayers collect: [ :player | 
+		(self createPlayerShapeFor: player) 
+			in: [ :shape |
+				shape children first color: palette range nextToLast.
+				shape position: (shape position x negated + (30*25) ) @ shape position y ]
+			yourself ] as: RSGroup.
+	
+	layers := shapes groupedBy: [ :shape | shape model y ].
+	layers do: [ :group | 
+		RSVerticalLineLayout new
+			gapSize: 20;
+			on: group
+		 ].
+	RSHorizontalLineLayout new
+		alignMiddle;
+		gapSize: 30;
+		on: (layers values reverse collect: [:group | group asGroup ]).
+	^ shapes	
+]
+
+{ #category : #'as yet unclassified' }
+Match >> createHomePlayersPalette: palette [
+	| homePlayers shapes layers |
+	homePlayers := self playersFrom: 'home'.
+	shapes := homePlayers collect: [ :player | 
+		(self createPlayerShapeFor: player) 
+			in: [ :shape |
+				shape children first color: palette range second.
+				shape position: shape position x @ shape position y.
+				 ]
+			yourself ] as: RSGroup.
+	layers := shapes groupedBy: [ :shape | shape model y ].
+	layers do: [ :group | 
+		RSVerticalLineLayout new
+			gapSize: 20;
+			on: group
+		 ].
+	RSHorizontalLineLayout new
+		alignMiddle;
+		gapSize: 30;
+		on: (layers values collect: [:group | group asGroup ]).
+	^ shapes
+]
+
+{ #category : #'as yet unclassified' }
 Match >> createPlayerShapeFor: player [
 	| size circle name |
 	size := 30.
@@ -945,36 +993,27 @@ Match >> createPlayerShapeFor: player [
 	^ { circle } asShape
 		model: player;
 		add: name;
-		position: (player y @ player x) * (size@ (size * 1.5));
+		"position: (player y @ player x) * (size@ (size * 1.5));"
 		yourself
 ]
 
 { #category : #'as yet unclassified' }
 Match >> createPlayersCanvas [
 	| canvas homePlayers awayPlayers palette |
-	homePlayers := self playersFrom: 'home'.
-	awayPlayers := self playersFrom: 'away'.
+	palette := RSColorPalette diverging rdylbu10.
+	homePlayers := self createHomePlayersPalette: palette.
+	awayPlayers := self createAwayPlayersPalette: palette.
 	
 	canvas := RSCanvas new.
 	canvas @ RSCanvasController.
-	palette := RSColorPalette diverging rdylbu10.
 	
-	canvas addAll: (homePlayers collect: [ :player | 
-		(self createPlayerShapeFor: player) 
-			in: [ :shape | 
-				shape children first color: palette range second.
-				shape position: shape position x @ shape position y.
-				 ]
-			yourself ]).
-	canvas addAll: (awayPlayers collect: [ :player | 
-		(self createPlayerShapeFor: player) 
-			
-			in: [ :shape | 
-				shape children first color: palette range nextToLast.
-				shape position: (shape position x negated + (30*25) ) @ shape position y ]
-			yourself ]).
+	RSHorizontalLineLayout new
+		alignMiddle;
+		gapSize: 20;
+		on: { homePlayers. awayPlayers }.
+	canvas addAll: homePlayers.
+	canvas addAll: awayPlayers.
 	^ canvas
-	
 ]
 
 { #category : #accessing }
