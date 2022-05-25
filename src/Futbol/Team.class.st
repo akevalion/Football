@@ -40,6 +40,11 @@ Team >> id: anObject [
 	id:= anObject
 ]
 
+{ #category : #printing }
+Team >> printOn: stream [
+	stream << team_long_name
+]
+
 { #category : #accessing }
 Team >> team_api_id [
 	^ team_api_id

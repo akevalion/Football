@@ -81,3 +81,18 @@ ESL class >> unZipFile [
 ESL class >> zipPath [
 	^ './pharo-local/iceberg/akevalion/Futbol/data/soccer-csv.zip'
 ]
+
+{ #category : #'as yet unclassified' }
+ESL >> inspectorLeagueList [
+	<inspectorPresentationOrder: 1 title: 'Leagues'>
+	^ SpListPresenter new
+		items: self leagues;
+		yourself
+	
+]
+
+{ #category : #'as yet unclassified' }
+ESL >> leagues [
+	
+	^ self class databaseDo: [ League storedInstances asOrderedCollection ]
+]

@@ -94,6 +94,11 @@ Player >> player_name: anObject [
 	player_name:= anObject
 ]
 
+{ #category : #printing }
+Player >> printOn: stream [
+	stream << player_name
+]
+
 { #category : #accessing }
 Player >> weight [
 	^ weight

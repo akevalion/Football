@@ -43,3 +43,8 @@ Country >> name [
 Country >> name: anObject [
 	name:= anObject
 ]
+
+{ #category : #printing }
+Country >> printOn: stream [
+	stream << name
+]

@@ -930,6 +930,32 @@ Match >> country_id: anObject [
 	country_id:= anObject
 ]
 
+{ #category : #'as yet unclassified' }
+Match >> createBoxFor: player [
+	
+	^ RSLabel new
+		color: 'black';
+		text: player id;
+		position: player x @ player y;
+		yourself
+		
+]
+
+{ #category : #'as yet unclassified' }
+Match >> createPlayersCanvas [
+	| canvas homePlayers awayPlayers palette |
+	homePlayers := self playersFrom: 'home'.
+	awayPlayers := self playersFrom: 'away'.
+	
+	canvas := RSCanvas new.
+	palette := RSColorPalette diverging rdylbu10.
+	
+	canvas addAll: (homePlayers collect: [ :player | (self createBoxFor: player) color: palette range second]).
+	canvas addAll: (awayPlayers collect: [ :player | (self createBoxFor: player) color: palette range nextToLast ]).
+	^ canvas
+	
+]
+
 { #category : #accessing }
 Match >> cross [
 	^ cross
@@ -1330,6 +1356,14 @@ Match >> id: anObject [
 	id:= anObject
 ]
 
+{ #category : #'as yet unclassified' }
+Match >> inspectorPlayerCanvas [
+	<inspectorPresentationOrder: 90 title: 'Players'>
+	^ SpRoassal3InspectorPresenter new
+		canvas: self createPlayersCanvas;
+		yourself
+]
+
 { #category : #accessing }
 Match >> league_id [
 	^ league_id
@@ -1350,6 +1384,20 @@ Match >> match_api_id: anObject [
 	match_api_id:= anObject
 ]
 
+{ #category : #'as yet unclassified' }
+Match >> playersFrom: aString [
+
+	| selector selectorX selectorY |
+	selector := aString , '_player_'.
+	selectorX := aString , '_player_X'.
+	selectorY := aString , '_player_Y'.
+	^ (1 to: 11) collect: [ :i | 
+		  DrawablePlayer
+				id: ((selector , i asString) asSymbol value: self)
+				x: ((selectorX , i asString) asSymbol value: self) asInteger
+				y: ((selectorY , i asString) asSymbol value: self) asInteger ]
+]
+
 { #category : #accessing }
 Match >> possession [
 	^ possession
@@ -1358,6 +1406,22 @@ Match >> possession [
 { #category : #accessing }
 Match >> possession: anObject [
 	possession:= anObject
+]
+
+{ #category : #printing }
+Match >> printOn: stream [
+	| homename awayname |
+	homename := self teamName: home_team_api_id.
+	awayname := self teamName: away_team_api_id.
+	stream 
+		<< homename asString
+		<< ' - '
+		<< awayname asString
+		<< ' ('
+		<< home_team_goal asString
+		<< ' - ' 
+		<< away_team_goal asString
+		<< ')'
 ]
 
 { #category : #accessing }
@@ -1398,4 +1462,10 @@ Match >> stage [
 { #category : #accessing }
 Match >> stage: anObject [
 	stage:= anObject
+]
+
+{ #category : #printing }
+Match >> teamName: teamId [
+	^ ESL databaseDo: [ 
+		(Team storedInstances detect: [ :team | team team_api_id = teamId ]) team_long_name ]
 ]

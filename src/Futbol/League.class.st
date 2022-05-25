@@ -7,7 +7,8 @@ Class {
 	#instVars : [
 		'id',
 		'country_id',
-		'name'
+		'name',
+		'seasons'
 	],
 	#category : #Futbol
 }
@@ -36,6 +37,17 @@ League >> country_id: anObject [
 	country_id:= anObject
 ]
 
+{ #category : #'as yet unclassified' }
+League >> createSeasons [
+	^ ESL databaseDo: [
+		(Match storedInstances collect: [ :match | match season] ) asSet asSortedCollection
+			collect: [ :str | 
+				Season new
+					season: str;
+					league_id: id;
+					yourself ] ]
+]
+
 { #category : #accessing }
 League >> id [
 	^ id
@@ -46,6 +58,15 @@ League >> id: anObject [
 	id:= anObject
 ]
 
+{ #category : #'as yet unclassified' }
+League >> inspectorSeasonList [
+	
+	<inspectorPresentationOrder: 1 title: 'Seasons'>
+	^ SpListPresenter new 
+		items: self seasons;
+		yourself
+]
+
 { #category : #accessing }
 League >> name [
 	^ name
@@ -54,4 +75,14 @@ League >> name [
 { #category : #accessing }
 League >> name: anObject [
 	name:= anObject
+]
+
+{ #category : #printing }
+League >> printOn: stream [
+	stream << name
+]
+
+{ #category : #'as yet unclassified' }
+League >> seasons [
+	^ seasons ifNil: [ seasons := self createSeasons ]
 ]
