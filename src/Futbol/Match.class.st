@@ -930,7 +930,7 @@ Match >> country_id: anObject [
 	country_id:= anObject
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #drawing }
 Match >> createAwayPlayersPalette: palette [
 	| awayPlayers shapes layers |
 	awayPlayers := self playersFrom: 'away'.
@@ -945,8 +945,7 @@ Match >> createAwayPlayersPalette: palette [
 	layers do: [ :group | 
 		RSVerticalLineLayout new
 			gapSize: 20;
-			on: group
-		 ].
+			on: group ].
 	RSHorizontalLineLayout new
 		alignMiddle;
 		gapSize: 30;
@@ -954,7 +953,7 @@ Match >> createAwayPlayersPalette: palette [
 	^ shapes	
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #drawing }
 Match >> createHomePlayersPalette: palette [
 	| homePlayers shapes layers |
 	homePlayers := self playersFrom: 'home'.
@@ -962,15 +961,13 @@ Match >> createHomePlayersPalette: palette [
 		(self createPlayerShapeFor: player) 
 			in: [ :shape |
 				shape children first color: palette range second.
-				shape position: shape position x @ shape position y.
-				 ]
+				shape position: shape position x @ shape position y ]
 			yourself ] as: RSGroup.
 	layers := shapes groupedBy: [ :shape | shape model y ].
 	layers do: [ :group | 
 		RSVerticalLineLayout new
 			gapSize: 20;
-			on: group
-		 ].
+			on: group ].
 	RSHorizontalLineLayout new
 		alignMiddle;
 		gapSize: 30;
@@ -978,7 +975,7 @@ Match >> createHomePlayersPalette: palette [
 	^ shapes
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #drawing }
 Match >> createPlayerShapeFor: player [
 	| size circle name |
 	size := 30.
@@ -988,16 +985,16 @@ Match >> createPlayerShapeFor: player [
 	name := RSLabel new
 		color: 'black';
 		text: player lastName;
-		position: 0@ size *0.75;
+		position: 0 @ size *0.75;
 		yourself.
+		
 	^ { circle } asShape
 		model: player;
 		add: name;
-		"position: (player y @ player x) * (size@ (size * 1.5));"
 		yourself
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #drawing }
 Match >> createPlayersCanvas [
 	| canvas homePlayers awayPlayers palette |
 	palette := RSColorPalette diverging rdylbu10.
@@ -1416,9 +1413,10 @@ Match >> id: anObject [
 	id:= anObject
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #drawing }
 Match >> inspectorPlayerCanvas [
 	<inspectorPresentationOrder: 90 title: 'Players'>
+	
 	^ SpRoassal3InspectorPresenter new
 		canvas: self createPlayersCanvas;
 		yourself
@@ -1444,13 +1442,14 @@ Match >> match_api_id: anObject [
 	match_api_id:= anObject
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #drawing }
 Match >> playersFrom: aString [
 
 	| selector selectorX selectorY |
 	selector := aString , '_player_'.
 	selectorX := aString , '_player_X'.
 	selectorY := aString , '_player_Y'.
+	
 	^ (1 to: 11) collect: [ :i | 
 		  DrawablePlayer
 				id: ((selector , i asString) asSymbol value: self)
