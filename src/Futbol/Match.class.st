@@ -967,7 +967,7 @@ Match >> createHomePlayersPalette: palette [
 	layers do: [ :group | 
 		RSVerticalLineLayout new
 			gapSize: 20;
-			on: group ].
+			on: group reverse ].
 	RSHorizontalLineLayout new
 		alignMiddle;
 		gapSize: 30;
