@@ -57,7 +57,7 @@ Season >> createTeamEvolution [
 	^ canvas
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #inspector }
 Season >> inspectorMatches [
 	<inspectorPresentationOrder: 1 title: 'Matches'>
 	
@@ -75,13 +75,49 @@ Season >> inspectorMatches [
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #inspector }
 Season >> inspectorMatchesContext: context [
 
 	context withoutEvaluator
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #inspector }
+Season >> inspectorTablePoints [
+	<inspectorPresentationOrder: 3 title: 'Table Points'>
+	
+	| table |
+	table := SpTablePresenter new
+		items: self teamEvolutionData;
+		addColumn: (SpIndexTableColumn new 
+			title: '#';
+			beNotExpandable;
+			width: 30
+			yourself);
+		yourself.
+	#(Team teamName
+	MP matchesPlayed
+	W wins
+	D draws
+	L losses
+	GF goalsInFavor
+	GA goalsAgainst
+	GD goalsDifference
+	PTS totalPoints) pairsDo: [ :title :selector | 
+		table addColumn: (SpStringTableColumn new  
+			title: title;
+			evaluated: selector;
+			yourself) ].
+	
+	^ table
+]
+
+{ #category : #inspector }
+Season >> inspectorTablePointsContext: context [
+
+	context withoutEvaluator
+]
+
+{ #category : #inspector }
 Season >> inspectorTeamEvolutionLinePlot [
 	<inspectorPresentationOrder: 2 title: 'Teams Evolution'>
 	
@@ -90,7 +126,7 @@ Season >> inspectorTeamEvolutionLinePlot [
 		yourself
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #inspector }
 Season >> inspectorTeamEvolutionLinePlotContext: context [
 
 	context withoutEvaluator 
@@ -170,18 +206,24 @@ Season >> teamEvolutionData [
 	teams := Dictionary new.
 	
 	self matches do: [ :match |
-		| homeGoal awayGoal pointsForHome pointsForAway homeTeam awayTeam |
-		homeGoal := match home_team_goal asInteger.
-		awayGoal := match away_team_goal asInteger.
-		pointsForHome := self pointsFor: homeGoal and: awayGoal.
-		pointsForAway := self pointsFor: awayGoal and: homeGoal.
+		| homeGoals awayGoals pointsForHome pointsForAway homeTeam awayTeam |
+		
+		homeGoals := match home_team_goal asInteger.
+		awayGoals := match away_team_goal asInteger.
+		pointsForHome := self pointsFor: homeGoals and: awayGoals.
+		pointsForAway := self pointsFor: awayGoals and: homeGoals.
 		
 		homeTeam := self teamFor: match home_team_api_id in: teams.
-		awayTeam := self teamFor: match away_team_api_id in: teams.
 		homeTeam addPoints: pointsForHome.
+		homeTeam addGoalsInFavor: homeGoals.
+		homeTeam addAgainstGoals: awayGoals.
+		
+		awayTeam := self teamFor: match away_team_api_id in: teams.
+		awayTeam addGoalsInFavor: awayGoals.
+		homeTeam addAgainstGoals: homeGoals.
 		awayTeam addPoints: pointsForAway.
 		].
-	^ teams asSortedCollection: #teamName ascending
+	^ teams asSortedCollection: #totalPoints descending
 	
 ]
 
