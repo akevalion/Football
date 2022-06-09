@@ -1450,11 +1450,15 @@ Match >> playersFrom: aString [
 	selectorX := aString , '_player_X'.
 	selectorY := aString , '_player_Y'.
 	
-	^ (1 to: 11) collect: [ :i | 
-		  DrawablePlayer
-				id: ((selector , i asString) asSymbol value: self)
-				x: ((selectorX , i asString) asSymbol value: self) asInteger
-				y: ((selectorY , i asString) asSymbol value: self) asInteger ]
+	^ (1 to: 11) collect: [ :i | | x y |
+		x := (selectorX , i asString) asSymbol value: self.
+		y := (selectorY , i asString) asSymbol value: self.
+		x ifNil: [ x := 0 ].
+		y ifNil: [ y := 0 ].
+		DrawablePlayer
+			id: ((selector , i asString) asSymbol value: self)
+			x: x asInteger
+			y: y asInteger ]
 ]
 
 { #category : #accessing }
