@@ -930,7 +930,7 @@ Match >> country_id: anObject [
 	country_id:= anObject
 ]
 
-{ #category : #drawing }
+{ #category : #inspector }
 Match >> createAwayPlayersPalette: palette [
 	| awayPlayers shapes layers |
 	awayPlayers := self playersFrom: 'away'.
@@ -941,7 +941,7 @@ Match >> createAwayPlayersPalette: palette [
 				shape position: (shape position x negated + (30*25) ) @ shape position y ]
 			yourself ] as: RSGroup.
 	
-	layers := shapes groupedBy: [ :shape | shape model y ].
+	layers := shapes groupedBy: [ :shape | (shape propertyAt: #drawablePlayer) y ].
 	layers do: [ :group | 
 		RSVerticalLineLayout new
 			gapSize: 20;
@@ -953,7 +953,7 @@ Match >> createAwayPlayersPalette: palette [
 	^ shapes	
 ]
 
-{ #category : #drawing }
+{ #category : #inspector }
 Match >> createHomePlayersPalette: palette [
 	| homePlayers shapes layers |
 	homePlayers := self playersFrom: 'home'.
@@ -963,7 +963,7 @@ Match >> createHomePlayersPalette: palette [
 				shape children first color: palette range second.
 				shape position: shape position x @ shape position y ]
 			yourself ] as: RSGroup.
-	layers := shapes groupedBy: [ :shape | shape model y ].
+	layers := shapes groupedBy: [ :shape | (shape propertyAt: #drawablePlayer) y ].
 	layers do: [ :group | 
 		RSVerticalLineLayout new
 			gapSize: 20;
@@ -975,8 +975,8 @@ Match >> createHomePlayersPalette: palette [
 	^ shapes
 ]
 
-{ #category : #drawing }
-Match >> createPlayerShapeFor: player [
+{ #category : #inspector }
+Match >> createPlayerShapeFor: aDrawablePlayer [
 	| size circle name |
 	size := 30.
 	circle := RSEllipse new
@@ -984,24 +984,28 @@ Match >> createPlayerShapeFor: player [
 		yourself.
 	name := RSLabel new
 		color: 'black';
-		text: player lastName;
+		text: aDrawablePlayer lastName;
 		position: 0 @ size *0.75;
 		yourself.
 		
 	^ { circle } asShape
-		model: player;
+		model: aDrawablePlayer asPlayer;
+		propertyAt: #drawablePlayer put: aDrawablePlayer;
 		add: name;
 		yourself
 ]
 
-{ #category : #drawing }
+{ #category : #inspector }
 Match >> createPlayersCanvas [
-	| canvas homePlayers awayPlayers palette |
+	| canvas homePlayers awayPlayers palette field r1 |
+	
 	palette := RSColorPalette diverging rdylbu10.
 	homePlayers := self createHomePlayersPalette: palette.
 	awayPlayers := self createAwayPlayersPalette: palette.
 	
 	canvas := RSCanvas new.
+	field := self soccerField.
+	
 	canvas @ RSCanvasController.
 	
 	RSHorizontalLineLayout new
@@ -1010,6 +1014,11 @@ Match >> createPlayersCanvas [
 		on: { homePlayers. awayPlayers }.
 	canvas addAll: homePlayers.
 	canvas addAll: awayPlayers.
+	r1 := canvas nodes encompassingRectangle.
+	canvas add: field.
+	field position: r1 floatCenter.
+	field scaleBy: (r1 width / field width) * 1.1.
+	field pushBack.
 	^ canvas
 ]
 
@@ -1413,7 +1422,7 @@ Match >> id: anObject [
 	id:= anObject
 ]
 
-{ #category : #drawing }
+{ #category : #inspector }
 Match >> inspectorPlayerCanvas [
 	<inspectorPresentationOrder: 90 title: 'Players'>
 	
@@ -1442,7 +1451,7 @@ Match >> match_api_id: anObject [
 	match_api_id:= anObject
 ]
 
-{ #category : #drawing }
+{ #category : #inspector }
 Match >> playersFrom: aString [
 
 	| selector selectorX selectorY |
@@ -1515,6 +1524,39 @@ Match >> shoton [
 { #category : #accessing }
 Match >> shoton: anObject [
 	shoton:= anObject
+]
+
+{ #category : #inspector }
+Match >> soccerField [
+	^ RSSVGImporter fromString: self soccerFieldString
+]
+
+{ #category : #inspector }
+Match >> soccerFieldString [
+	^ '<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" 
+  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="22cm" height="14cm" viewBox="0 0 1150 720" stroke="white" version="1.1"
+     xmlns="http://www.w3.org/2000/svg">
+     <rect x="0" y="0" width="1150" height="720" fill="#299f1b" />
+     <path d="M 575,20 L 50,20 50,700 1100,700 1100,20 575,20 575,700 z" stroke="white" stroke-width="2" fill="#299f1b" />
+     <circle cx="575" cy="360" r="91.5" stroke="white" stroke-width="2" fill-opacity="0" />
+     <circle cx="575" cy="360" r="2" stroke="white" fill="white" />
+     <circle cx="160" cy="360" r="2" stroke="white" fill="white" />
+     <circle cx="990" cy="360" r="2" stroke="white" fill="white" />
+     <path d="M 50,324.4 L 40,324.4 40, 396.6 50 396.6 z" stroke="white" stroke-width="2" fill-opacity="0" />
+     <path d="M 1100,324.4 L 1110,324.4 1110,396.6 1100,396.6 z" stroke="white" stroke-width="2" fill-opacity="0" />
+     <path d="M 50,269.4 L 105,269.4 105,451.6 50 451.6 z" stroke="white" stroke-width="2" fill-opacity="0" />
+     <path d="M 1100,269.4 L 1045,269.4 1045,451.6 1100,451.6 z" stroke="white" stroke-width="2" fill-opacity="0" />
+     <path d="M 50,159.4 L 215,159.4 215,561.6 50 561.6 z" stroke="white" stroke-width="2" fill-opacity="0" />
+     <path d="M 1100,159.4 L 935,159.4 935,561.6 1100,561.6 z" stroke="white" stroke-width="2" fill-opacity="0" />
+     <path d="M 215,286.875 A 91.5,91.5 0 0,1 215,433.125 z" stroke="white" stroke-width="2" fill="#299f1b" />
+     <path d="M 935,286.875 A 91.5,91.5 0 0,0 935,433.125 z" stroke="white" stroke-width="2" fill="#299f1b" />
+     <path d="M 50,30 A 10,10 0 0,0 60,20 L 50,20 z" stroke="white" stroke-width="2" fill-opacity="0" />
+     <path d="M 60,700 A 10,10 0 0,0 50,690 L 50,700 z" stroke="white" stroke-width="2" fill-opacity="0" />
+     <path d="M 1100,690 A 10,10 0 0,0 1090,700 L 1100,700 z" stroke="white" stroke-width="2" fill-opacity="0" />
+     <path d="M 1090,20 A 10,10 0 0,0 1100,30 L 1100,20 z" stroke="white" stroke-width="2" fill-opacity="0" />
+</svg>'
 ]
 
 { #category : #accessing }

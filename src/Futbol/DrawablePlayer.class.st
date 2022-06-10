@@ -20,6 +20,11 @@ DrawablePlayer class >> id: id x: x y: y [
 		yourself
 ]
 
+{ #category : #converting }
+DrawablePlayer >> asPlayer [
+	^ ESL databaseDo: [ Player storedInstances detect: [ :player | player player_api_id = id ] ]
+]
+
 { #category : #accessing }
 DrawablePlayer >> computePlayerName [
 	id ifNil: [ ^ 'NO_NAME' ].

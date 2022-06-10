@@ -14,21 +14,53 @@ Class {
 
 { #category : #inspector }
 Season >> addLegend: chart teams: teams [
-	| lb |
+
+	| lb index |
 	lb := RSLegend new.
 	lb container: chart container.
 	lb defaultCircle size: 5.
+	index := 0.
+	chart plots with: teams do: [ :plot :team | | realTeam |
+		realTeam := team asTeam.
+		index := index + 1.
+		(lb
+			text: index asString , '. ' , team teamName
+			withCircleColor: plot line color)
+			model: realTeam.
+		
+		plot line
+			model: realTeam;
+			addInteraction: RSMorphicPopupInteraction new ].
+	self layout: lb with: teams.
+	lb location offset: 0 @ 30.
+	self addLegendInteractions: lb plots: chart plots.
+	lb build
+]
+
+{ #category : #inspector }
+Season >> addLegendInteractions: lb plots: plots [
+	| highlight |
+	"highlight := RSHighlightable color: Smalltalk ui theme selectionColor."
+	highlight := RSHighlightable new.
+	highlight 
+		when: RSHighlightEvent do: [ :evt | 
+			| plot |
+			highlight record: evt shape selector: #color value: Smalltalk ui theme selectionColor.
+			plot := plots detect: [:each | each line model = evt shape model ].
+			plots do: [ :each | each line color: (each line color alpha: 0.1) ].
+			plot line
+				color: (plot line color alpha: 1);
+				width: 2;
+				pushFront.
+			 ];
+		when: RSUnHighlightEvent do: [ :evt | 
+			highlight restore: evt shape selector: #color.
+			plots do: [ :plot |
+				plot line 
+					color: (plot line color alpha: 1);
+					width: 1 ]. ].
+	lb shapes addInteraction: highlight.
 	
-	chart plots with: teams do: [ :plot :team |
-		lb text: team teamName withCircleColor: plot line color.
-		plot line 
-			model: team;
-			addInteraction: (RSMorphicPopupInteraction new	).
-	].
-	lb legendDo: [ :shape | 
-		shape withBorder; padding: 10; scaleBy: 0.7 ].
-	lb layout cell.
-	lb build.
 	
 ]
 
@@ -130,6 +162,28 @@ Season >> inspectorTeamEvolutionLinePlot [
 Season >> inspectorTeamEvolutionLinePlotContext: context [
 
 	context withoutEvaluator 
+]
+
+{ #category : #inspector }
+Season >> layout: lb with: teams [
+
+	lb legendDo: [ :shape | 
+		| delta groups |
+		delta := teams size sqrt asInteger.
+		groups := OrderedCollection new.
+		1 to: teams size by: delta do: [ :i | 
+			groups add:
+				(shape nodes copyFrom: i to: (i + delta - 1 min: teams size)) ].
+		groups do: [ :list | 
+			RSVerticalLineLayout new
+				alignLeft;
+				on: list ].
+		RSHorizontalLineLayout new on: groups.
+		shape adjustToChildren.
+		shape
+			withBorder;
+			padding: 10;
+			scaleBy: 0.7 ]
 ]
 
 { #category : #accessing }

@@ -39,6 +39,11 @@ TeamPointsCalculator >> addPoints: anInteger [
 	anInteger = 3 ifTrue: [ matchesWon := matchesWon + 1 ]
 ]
 
+{ #category : #converting }
+TeamPointsCalculator >> asTeam [
+	^ ESL databaseDo: [ Team storedInstances detect: [ :team | team team_api_id = id ] ].
+]
+
 { #category : #accessing }
 TeamPointsCalculator >> draws [
 	^ matchesDrawn
