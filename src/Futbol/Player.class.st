@@ -21,6 +21,13 @@ Player class >> csvFile [
 	^ 'Player_export_2022-04-14_145740.csv'
 ]
 
+{ #category : #'instance creation' }
+Player class >> nilPlayer [
+	^ self new
+		player_name: 'NO NAME';
+		yourself
+]
+
 { #category : #public }
 Player class >> reStoreDefinition [
 	^ super reStoreDefinition

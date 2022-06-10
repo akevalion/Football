@@ -948,7 +948,7 @@ Match >> createAwayPlayersPalette: palette [
 			on: group ].
 	RSHorizontalLineLayout new
 		alignMiddle;
-		gapSize: 30;
+		gapSize: 40;
 		on: (layers values reverse collect: [:group | group asGroup ]).
 	^ shapes	
 ]
@@ -970,23 +970,30 @@ Match >> createHomePlayersPalette: palette [
 			on: group reverse ].
 	RSHorizontalLineLayout new
 		alignMiddle;
-		gapSize: 30;
+		gapSize: 40;
 		on: (layers values collect: [:group | group asGroup ]).
 	^ shapes
 ]
 
 { #category : #inspector }
 Match >> createPlayerShapeFor: aDrawablePlayer [
-	| size circle name |
+	| size circle name label box |
 	size := 30.
 	circle := RSEllipse new
 		size: size*0.75;
 		yourself.
-	name := RSLabel new
+	label := RSLabel new
 		color: 'black';
 		text: aDrawablePlayer lastName;
+		fontSize: 15;
 		position: 0 @ size *0.75;
 		yourself.
+	box := RSBox new
+		fromRectangle: label encompassingRectangle;
+		extent: label extent + 5;
+		color: Color white translucent;
+		yourself.
+	name := { box. label } asShape.
 		
 	^ { circle } asShape
 		model: aDrawablePlayer asPlayer;
@@ -997,7 +1004,7 @@ Match >> createPlayerShapeFor: aDrawablePlayer [
 
 { #category : #inspector }
 Match >> createPlayersCanvas [
-	| canvas homePlayers awayPlayers palette field r1 |
+	| canvas homePlayers awayPlayers palette field r1 title dateLabel |
 	
 	palette := RSColorPalette diverging rdylbu10.
 	homePlayers := self createHomePlayersPalette: palette.
@@ -1010,15 +1017,30 @@ Match >> createPlayersCanvas [
 	
 	RSHorizontalLineLayout new
 		alignMiddle;
-		gapSize: 20;
+		gapSize: 40;
 		on: { homePlayers. awayPlayers }.
 	canvas addAll: homePlayers.
 	canvas addAll: awayPlayers.
 	r1 := canvas nodes encompassingRectangle.
-	canvas add: field.
+	
 	field position: r1 floatCenter.
 	field scaleBy: (r1 width / field width) * 1.1.
-	field pushBack.
+	r1 width > r1 height ifTrue: [ 
+		canvas add: field.
+		field pushBack ].
+	title := RSLabel new
+		text: self asString;
+		color: 'black';
+		fontSize: 20;
+		yourself.
+	dateLabel := RSLabel new
+		text: (Date fromString: self date);
+		color: 'black';
+		fontSize: 20;
+		yourself.
+	RSLocation new above; move: title on: field.
+	RSLocation new below; move: dateLabel on: field.
+	canvas addAll: {title. dateLabel}.
 	^ canvas
 ]
 
@@ -1429,6 +1451,12 @@ Match >> inspectorPlayerCanvas [
 	^ SpRoassal3InspectorPresenter new
 		canvas: self createPlayersCanvas;
 		yourself
+]
+
+{ #category : #inspector }
+Match >> inspectorPlayerCanvasContext: aContext [
+
+	aContext withoutEvaluator
 ]
 
 { #category : #accessing }
