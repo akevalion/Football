@@ -1,3 +1,6 @@
+"
+Utility class used to calculate points
+"
 Class {
 	#name : #TeamPointsCalculator,
 	#superclass : #Object,
@@ -11,7 +14,7 @@ Class {
 		'goalsInFavor',
 		'againstGoals'
 	],
-	#category : #Futbol
+	#category : #'Futbol-Utilities'
 }
 
 { #category : #accessing }

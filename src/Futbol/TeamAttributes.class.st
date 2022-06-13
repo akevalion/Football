@@ -31,7 +31,7 @@ Class {
 		'defenceTeamWidthClass',
 		'defenceDefenderLineClass'
 	],
-	#category : #Futbol
+	#category : #'Futbol-Entities'
 }
 
 { #category : #accessing }

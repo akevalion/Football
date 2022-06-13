@@ -48,7 +48,7 @@ Class {
 		'gk_positioning',
 		'gk_reflexes'
 	],
-	#category : #Futbol
+	#category : #'Futbol-Entities'
 }
 
 { #category : #accessing }

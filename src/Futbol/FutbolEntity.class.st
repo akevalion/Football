@@ -4,7 +4,7 @@ class for common methods
 Class {
 	#name : #FutbolEntity,
 	#superclass : #Object,
-	#category : #Futbol
+	#category : #'Futbol-Entities'
 }
 
 { #category : #compiler }

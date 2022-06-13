@@ -11,7 +11,7 @@ Class {
 		'team_long_name',
 		'team_short_name'
 	],
-	#category : #Futbol
+	#category : #'Futbol-Entities'
 }
 
 { #category : #accessing }

@@ -10,7 +10,7 @@ Class {
 		'name',
 		'seasons'
 	],
-	#category : #Futbol
+	#category : #'Futbol-Entities'
 }
 
 { #category : #accessing }

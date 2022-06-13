@@ -8,7 +8,7 @@ Class {
 		'id',
 		'name'
 	],
-	#category : #Futbol
+	#category : #'Futbol-Entities'
 }
 
 { #category : #accessing }

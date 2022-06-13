@@ -1,3 +1,6 @@
+"
+Used by Season to represent a player in soccer field
+"
 Class {
 	#name : #DrawablePlayer,
 	#superclass : #Object,
@@ -7,7 +10,7 @@ Class {
 		'y',
 		'playerName'
 	],
-	#category : #Futbol
+	#category : #'Futbol-Utilities'
 }
 
 { #category : #'as yet unclassified' }

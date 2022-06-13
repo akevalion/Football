@@ -121,7 +121,7 @@ Class {
 		'BSD',
 		'BSA'
 	],
-	#category : #Futbol
+	#category : #'Futbol-Entities'
 }
 
 { #category : #accessing }

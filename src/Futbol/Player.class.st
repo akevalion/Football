@@ -13,7 +13,7 @@ Class {
 		'height',
 		'weight'
 	],
-	#category : #Futbol
+	#category : #'Futbol-Entities'
 }
 
 { #category : #accessing }

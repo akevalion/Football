@@ -4,7 +4,7 @@ The european soccer league
 Class {
 	#name : #ESL,
 	#superclass : #Object,
-	#category : #Futbol
+	#category : #'Futbol-Core'
 }
 
 { #category : #database }
