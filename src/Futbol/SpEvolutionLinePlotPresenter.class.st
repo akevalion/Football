@@ -103,12 +103,15 @@ SpEvolutionLinePlotPresenter >> newCanvas [
 
 { #category : #building }
 SpEvolutionLinePlotPresenter >> newEvolutionLineChart: teams [
-	| chart x |
+	| chart x popup |
 	chart := RSChart new.
-	
-	teams do: [ :team | 
+	popup := RSPopupDecoration new.
+	chart addDecoration: popup.
+	teams do: [ :team | | plot |
 		x := 1 to: team points size.
-		chart addPlot: (RSLinePlot new x: {0},x y: {0},team points).
+		chart addPlot: (plot := RSLinePlot new x: {0},x y: {0},team points).
+		popup chartPopupBuilder
+			for: plot text: team teamName color: plot computeColor.
 	].
 	chart
 		extent: 380@(380*9/16);
