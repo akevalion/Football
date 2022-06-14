@@ -121,30 +121,6 @@ Season >> seasonTeams [
 { #category : #'accessing - computed' }
 Season >> teamEvolutionData [
 	^ TeamPointsCalculator fromMatches: self matches
-		
-	"| teams |
-	teams := Dictionary new.
-	
-	self matches do: [ :match |
-		| homeGoals awayGoals pointsForHome pointsForAway homeTeam awayTeam |
-		
-		homeGoals := match home_team_goal asInteger.
-		awayGoals := match away_team_goal asInteger.
-		pointsForHome := self pointsFor: homeGoals and: awayGoals.
-		pointsForAway := self pointsFor: awayGoals and: homeGoals.
-		
-		homeTeam := self teamFor: match home_team_api_id in: teams.
-		homeTeam addPoints: pointsForHome.
-		homeTeam addGoalsInFavor: homeGoals.
-		homeTeam addAgainstGoals: awayGoals.
-		
-		awayTeam := self teamFor: match away_team_api_id in: teams.
-		awayTeam addGoalsInFavor: awayGoals.
-		homeTeam addAgainstGoals: homeGoals.
-		awayTeam addPoints: pointsForAway.
-		].
-	^ teams asSortedCollection: #totalPoints descending. "
-	
 ]
 
 { #category : #'accessing - computed' }
