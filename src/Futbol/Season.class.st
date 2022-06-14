@@ -19,7 +19,8 @@ Season >> createMatches [
 			select: [ :match | 
 				(match season = self season) 
 				& (match league_id = self league_id ) ])
-		asSortedCollection: [ :a :b | (DateAndTime fromString: a date) < (DateAndTime fromString: b date) ]
+		asSortedCollection: [ :a :b | 
+			(DateAndTime fromString: a date) < (DateAndTime fromString: b date) ]
 			 ]
 ]
 
@@ -119,8 +120,9 @@ Season >> seasonTeams [
 
 { #category : #'accessing - computed' }
 Season >> teamEvolutionData [
-	
-	| teams |
+	^ TeamPointsCalculator fromMatches: self matches
+		
+	"| teams |
 	teams := Dictionary new.
 	
 	self matches do: [ :match |
@@ -141,7 +143,7 @@ Season >> teamEvolutionData [
 		homeTeam addAgainstGoals: homeGoals.
 		awayTeam addPoints: pointsForAway.
 		].
-	^ teams asSortedCollection: #totalPoints descending
+	^ teams asSortedCollection: #totalPoints descending. "
 	
 ]
 

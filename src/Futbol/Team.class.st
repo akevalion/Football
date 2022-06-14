@@ -9,7 +9,8 @@ Class {
 		'team_api_id',
 		'team_fifa_api_id',
 		'team_long_name',
-		'team_short_name'
+		'team_short_name',
+		'matches'
 	],
 	#category : #'Futbol-Entities'
 }
@@ -30,6 +31,14 @@ Team class >> reStoreDefinition [
 		yourself.
 ]
 
+{ #category : #private }
+Team >> computeMatches [
+	^ ESL databaseDo: [ 
+		Match storedInstances
+			select: [ :match | (match home_team_api_id = team_api_id) | (match away_team_api_id = team_api_id) ]
+		 ]
+]
+
 { #category : #accessing }
 Team >> id [
 	^ id
@@ -40,9 +49,44 @@ Team >> id: anObject [
 	id:= anObject
 ]
 
+{ #category : #inspector }
+Team >> inspectorMatches [
+	<inspectorPresentationOrder: 1 title: 'Matches'>
+	^ SpTablePresenter new
+		addColumn: (SpIndexTableColumn new 
+			title: '#';
+			beNotExpandable;
+			width: 30
+			yourself);
+		addColumn: (SpStringTableColumn new  
+			title: 'Matches';
+			evaluated: #yourself;
+			yourself);
+		items: self matches;
+		yourself
+
+]
+
+{ #category : #inspector }
+Team >> inspectorTablePerformance [
+	<inspectorPresentationOrder: 1 title: 'Performance All Time'>
+	^ SpTeamTablePerformancePresenter on: self teamEvolutionData
+]
+
+{ #category : #'accessing - decorators' }
+Team >> matches [
+	^ matches ifNil: [ matches := self computeMatches ]
+]
+
 { #category : #printing }
 Team >> printOn: stream [
 	stream << team_long_name
+]
+
+{ #category : #inspector }
+Team >> teamEvolutionData [
+
+	^ TeamPointsCalculator fromAllMatches: self matches teamId: self team_api_id
 ]
 
 { #category : #accessing }

@@ -12,10 +12,101 @@ Class {
 		'matchesLost',
 		'matchesDrawn',
 		'goalsInFavor',
-		'againstGoals'
+		'againstGoals',
+		'season'
 	],
 	#category : #'Futbol-Utilities'
 }
+
+{ #category : #private }
+TeamPointsCalculator class >> computePointsForMatch: match teams: teams [
+
+	| pointsForHome homeTeam awayGoals awayTeam homeGoals pointsForAway |
+	
+	homeGoals := match home_team_goal asInteger.
+	awayGoals := match away_team_goal asInteger.
+	pointsForHome := self matchPointsTeamA: homeGoals teamB: awayGoals.
+	pointsForAway := self matchPointsTeamA: awayGoals teamB: homeGoals.
+
+	homeTeam := self teamFor: match home_team_api_id in: teams.
+	homeTeam addPoints: pointsForHome.
+	homeTeam addGoalsInFavor: homeGoals.
+	homeTeam addAgainstGoals: awayGoals.
+	homeTeam season: match season.
+
+	awayTeam := self teamFor: match away_team_api_id in: teams.
+	awayTeam addGoalsInFavor: awayGoals.
+	homeTeam addAgainstGoals: homeGoals.
+	awayTeam addPoints: pointsForAway.
+	awayTeam season: match season.
+]
+
+{ #category : #private }
+TeamPointsCalculator class >> computePointsForSeasonMatch: match teams: teams [
+
+	| pointsForHome homeTeam awayGoals awayTeam homeGoals pointsForAway |
+	
+	homeGoals := match home_team_goal asInteger.
+	awayGoals := match away_team_goal asInteger.
+	pointsForHome := self matchPointsTeamA: homeGoals teamB: awayGoals.
+	pointsForAway := self matchPointsTeamA: awayGoals teamB: homeGoals.
+
+	homeTeam := self teamFor: match home_team_api_id in: teams.
+	homeTeam addPoints: pointsForHome.
+	homeTeam addGoalsInFavor: homeGoals.
+	homeTeam addAgainstGoals: awayGoals.
+	homeTeam season: match season.
+
+	awayTeam := self teamFor: match away_team_api_id in: teams.
+	awayTeam addGoalsInFavor: awayGoals.
+	homeTeam addAgainstGoals: homeGoals.
+	awayTeam addPoints: pointsForAway.
+	awayTeam season: match season.
+]
+
+{ #category : #'instance creation' }
+TeamPointsCalculator class >> fromAllMatches: matches teamId: teamId [
+
+	| teams seasons result |
+	result := OrderedCollection new.
+	seasons := matches groupedBy: #season.
+	(seasons keys sorted: #yourself ascending) do: [ :key |
+		teams := Dictionary new.
+		(seasons at: key) do: [ :match |
+			self computePointsForSeasonMatch: match teams: teams.
+			 ].
+		result add: (teams at: teamId)
+		 ].
+	^ result
+]
+
+{ #category : #'instance creation' }
+TeamPointsCalculator class >> fromMatches: matches [
+
+	| teams |
+	teams := Dictionary new.
+	matches do: [ :match | self computePointsForMatch: match teams: teams ].
+	^ teams asSortedCollection: #totalPoints descending
+]
+
+{ #category : #private }
+TeamPointsCalculator class >> matchPointsTeamA: team1Goals teamB: team2Goals [
+
+	^ team1Goals = team2Goals
+		ifTrue: [ 1 ]
+		ifFalse: [ team1Goals > team2Goals 
+			ifTrue: [ 3 ]
+			ifFalse: [ 0 ] ] 
+]
+
+{ #category : #private }
+TeamPointsCalculator class >> teamFor: anInteger in: aCollection [
+
+	^ aCollection at: anInteger ifAbsentPut: [ 
+		self new
+			id: anInteger;
+			yourself ].
+]
 
 { #category : #accessing }
 TeamPointsCalculator >> addAgainstGoals: goals [
@@ -123,6 +214,17 @@ TeamPointsCalculator >> queryTeamName [
 	^ ESL databaseDo: [ 
 		(Team storedInstances detect: [ :team | 
 			team team_api_id = id ]) team_long_name ]
+]
+
+{ #category : #accessing }
+TeamPointsCalculator >> season [
+	^ season
+]
+
+{ #category : #accessing }
+TeamPointsCalculator >> season: aString [ 
+
+	season := aString
 ]
 
 { #category : #printing }

@@ -125,7 +125,7 @@ SpEvolutionLinePlotPresenter >> newEvolutionLineChart: teams [
 			color: Color veryVeryLightGray;
 			numberOfTicks: 10;
 			integer);
-		title: 'Points Evolutions during Season: ', season season;
+		title: 'Points Evolutions During Season: ', season season;
 		xlabel: 'Matches Played';
 		ylabel: 'Points'.
 	^ chart

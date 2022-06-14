@@ -8,7 +8,8 @@ Class {
 		'id',
 		'country_id',
 		'name',
-		'seasons'
+		'seasons',
+		'teams'
 	],
 	#category : #'Futbol-Entities'
 }
@@ -48,6 +49,17 @@ League >> createSeasons [
 					yourself ] ]
 ]
 
+{ #category : #'as yet unclassified' }
+League >> createTeams [
+
+	^ ESL databaseDo: [
+		| teamIDs |
+		teamIDs := (Match storedInstances 
+			select: [ :match | match league_id = self id ]
+			thenCollect: [ :match | match home_team_api_id ]) asSet.
+		Team storedInstances select: [:team | teamIDs includes: team team_api_id ] ]
+]
+
 { #category : #accessing }
 League >> id [
 	^ id
@@ -64,6 +76,25 @@ League >> inspectorSeasonList [
 	<inspectorPresentationOrder: 1 title: 'Seasons'>
 	^ SpListPresenter new 
 		items: self seasons;
+		yourself
+]
+
+{ #category : #'as yet unclassified' }
+League >> inspectorTeamsList [
+	
+	<inspectorPresentationOrder: 2 title: 'Teams'>
+	^ SpTablePresenter new
+		addColumn: (SpIndexTableColumn new 
+			title: '#';
+			beNotExpandable;
+			width: 30
+			yourself);
+		addColumn: (SpStringTableColumn new  
+			title: 'Teams';
+			evaluated: #yourself;
+			yourself);
+		items: self teams;
+		sortingBlock: #team_long_name ascending;
 		yourself
 ]
 
@@ -85,4 +116,9 @@ League >> printOn: stream [
 { #category : #'as yet unclassified' }
 League >> seasons [
 	^ seasons ifNil: [ seasons := self createSeasons ]
+]
+
+{ #category : #'as yet unclassified' }
+League >> teams [
+	^ teams ifNil: [ teams := self createTeams ]
 ]
