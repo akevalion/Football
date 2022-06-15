@@ -51,20 +51,22 @@ Season >> inspectorMatchesContext: context [
 Season >> inspectorTablePoints [
 
 	<inspectorPresentationOrder: 3 title: 'Table Points'>
-	^ SpTablePointsPresenter on: self
+	^ TablePointsOfSeasonPresenter on: self
 ]
 
 { #category : #inspector }
 Season >> inspectorTablePointsContext: context [
+
 	context withoutEvaluator
 ]
 
 { #category : #inspector }
 Season >> inspectorTeamEvolutionLinePlot [
+
 	<inspectorPresentationOrder: 2 title: 'Teams Evolution'>
 	^ SpEvolutionLinePlotPresenter new
-		season: self;
-		yourself
+		  season: self;
+		  yourself
 ]
 
 { #category : #inspector }
@@ -119,13 +121,13 @@ Season >> seasonTeams [
 
 { #category : #'accessing - computed' }
 Season >> teamEvolutionData [
-	^ TeamPointsCalculator fromMatches: self matches
+	^ TeamStatsCalculator fromMatches: self matches
 ]
 
 { #category : #'accessing - computed' }
 Season >> teamFor: anInteger in: aCollection [ 
 	^ aCollection at: anInteger ifAbsentPut: [ 
-		TeamPointsCalculator new
+		TeamStatsCalculator new
 			id: anInteger;
 			yourself
 		 ].

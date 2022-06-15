@@ -2,7 +2,7 @@
 Used by season
 "
 Class {
-	#name : #SpTablePointsPresenter,
+	#name : #TablePointsOfSeasonPresenter,
 	#superclass : #SpPresenter,
 	#instVars : [
 		'season',
@@ -12,7 +12,7 @@ Class {
 }
 
 { #category : #initialization }
-SpTablePointsPresenter >> columnPairs [
+TablePointsOfSeasonPresenter >> columnPairs [
 	^ #(Team teamName
 	MP matchesPlayed
 	W wins
@@ -25,7 +25,7 @@ SpTablePointsPresenter >> columnPairs [
 ]
 
 { #category : #layout }
-SpTablePointsPresenter >> defaultLayout [
+TablePointsOfSeasonPresenter >> defaultLayout [
 
 	^ SpBoxLayout newTopToBottom
 		add: table;
@@ -33,7 +33,7 @@ SpTablePointsPresenter >> defaultLayout [
 ]
 
 { #category : #initialization }
-SpTablePointsPresenter >> initializePresenters [
+TablePointsOfSeasonPresenter >> initializePresenters [
 
 	table := self newTable.
 
@@ -61,7 +61,7 @@ SpTablePointsPresenter >> initializePresenters [
 ]
 
 { #category : #'accessing - model' }
-SpTablePointsPresenter >> setModelBeforeInitialization: aSeason [
+TablePointsOfSeasonPresenter >> setModelBeforeInitialization: aSeason [
 
 	season := aSeason
 ]

@@ -69,8 +69,9 @@ Team >> inspectorMatches [
 
 { #category : #inspector }
 Team >> inspectorTablePerformance [
+
 	<inspectorPresentationOrder: 1 title: 'Performance All Time'>
-	^ SpTeamTablePerformancePresenter on: self teamEvolutionData
+	^ TeamTablePerformancePresenter on: self teamEvolutionData
 ]
 
 { #category : #'accessing - decorators' }
@@ -86,7 +87,7 @@ Team >> printOn: stream [
 { #category : #inspector }
 Team >> teamEvolutionData [
 
-	^ TeamPointsCalculator fromAllMatches: self matches teamId: self team_api_id
+	^ TeamStatsCalculator fromAllMatches: self matches teamId: self team_api_id
 ]
 
 { #category : #accessing }

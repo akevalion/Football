@@ -1,8 +1,17 @@
 "
-Utility class used to calculate points
+I am an utility class to calculate the team stats:
+
+	- Won Matches
+	- Lost Matches
+	- Points
+	- Goals in favor
+	- Goals agains
+	- Goals difference
+	- and other stats
+
 "
 Class {
-	#name : #TeamPointsCalculator,
+	#name : #TeamStatsCalculator,
 	#superclass : #Object,
 	#instVars : [
 		'id',
@@ -19,7 +28,7 @@ Class {
 }
 
 { #category : #private }
-TeamPointsCalculator class >> computePointsForMatch: match teams: teams [
+TeamStatsCalculator class >> computePointsForMatch: match teams: teams [
 
 	| pointsForHome homeTeam awayGoals awayTeam homeGoals pointsForAway |
 	
@@ -42,7 +51,7 @@ TeamPointsCalculator class >> computePointsForMatch: match teams: teams [
 ]
 
 { #category : #'instance creation' }
-TeamPointsCalculator class >> fromAllMatches: matches teamId: teamId [
+TeamStatsCalculator class >> fromAllMatches: matches teamId: teamId [
 
 	| teams seasons result |
 	result := OrderedCollection new.
@@ -58,7 +67,7 @@ TeamPointsCalculator class >> fromAllMatches: matches teamId: teamId [
 ]
 
 { #category : #'instance creation' }
-TeamPointsCalculator class >> fromMatches: matches [
+TeamStatsCalculator class >> fromMatches: matches [
 
 	| teams |
 	teams := Dictionary new.
@@ -67,7 +76,7 @@ TeamPointsCalculator class >> fromMatches: matches [
 ]
 
 { #category : #private }
-TeamPointsCalculator class >> matchPointsTeamA: team1Goals teamB: team2Goals [
+TeamStatsCalculator class >> matchPointsTeamA: team1Goals teamB: team2Goals [
 
 	^ team1Goals = team2Goals
 		ifTrue: [ 1 ]
@@ -77,7 +86,7 @@ TeamPointsCalculator class >> matchPointsTeamA: team1Goals teamB: team2Goals [
 ]
 
 { #category : #private }
-TeamPointsCalculator class >> teamFor: anInteger in: aCollection [
+TeamStatsCalculator class >> teamFor: anInteger in: aCollection [
 
 	^ aCollection at: anInteger ifAbsentPut: [ 
 		self new
@@ -86,7 +95,7 @@ TeamPointsCalculator class >> teamFor: anInteger in: aCollection [
 ]
 
 { #category : #accessing }
-TeamPointsCalculator >> accumulatePoints [
+TeamStatsCalculator >> accumulatePoints [
 	| prev |
 	prev := 0.
 	^ points collect: [ :each | 
@@ -95,19 +104,19 @@ TeamPointsCalculator >> accumulatePoints [
 ]
 
 { #category : #accessing }
-TeamPointsCalculator >> addAgainstGoals: goals [
+TeamStatsCalculator >> addAgainstGoals: goals [
 
 	againstGoals := againstGoals + goals
 ]
 
 { #category : #accessing }
-TeamPointsCalculator >> addGoalsInFavor: goals [
+TeamStatsCalculator >> addGoalsInFavor: goals [
 
 	goalsInFavor := goalsInFavor + goals
 ]
 
 { #category : #adding }
-TeamPointsCalculator >> addPoints: anInteger [
+TeamStatsCalculator >> addPoints: anInteger [
 	
 	"points
 		ifEmpty: [ points addLast: anInteger ]
@@ -120,44 +129,47 @@ TeamPointsCalculator >> addPoints: anInteger [
 ]
 
 { #category : #converting }
-TeamPointsCalculator >> asTeam [
-	^ ESL databaseDo: [ Team storedInstances detect: [ :team | team team_api_id = id ] ].
+TeamStatsCalculator >> asTeam [
+
+	^ ESL databaseDo: [ Team storedInstances detect: [ :team | team team_api_id = id ] ]
 ]
 
 { #category : #accessing }
-TeamPointsCalculator >> draws [
+TeamStatsCalculator >> draws [
 	^ matchesDrawn
 ]
 
 { #category : #accessing }
-TeamPointsCalculator >> goalsAgainst [
+TeamStatsCalculator >> goalsAgainst [
 	^ againstGoals
 ]
 
 { #category : #initialization }
-TeamPointsCalculator >> goalsDifference [
+TeamStatsCalculator >> goalsDifference [
 
 	^ goalsInFavor - againstGoals
 ]
 
 { #category : #accessing }
-TeamPointsCalculator >> goalsInFavor [
+TeamStatsCalculator >> goalsInFavor [
 	^ goalsInFavor
 ]
 
 { #category : #accessing }
-TeamPointsCalculator >> id [
+TeamStatsCalculator >> id [
 
 	^ id
 ]
 
 { #category : #accessing }
-TeamPointsCalculator >> id: anInteger [ 
+TeamStatsCalculator >> id: anInteger [
+
 	id := anInteger
 ]
 
 { #category : #initialization }
-TeamPointsCalculator >> initialize [
+TeamStatsCalculator >> initialize [
+
 	super initialize.
 	"points := OrderedCollection with: 0."
 	points := OrderedCollection empty.
@@ -169,7 +181,7 @@ TeamPointsCalculator >> initialize [
 ]
 
 { #category : #'accessing - computed' }
-TeamPointsCalculator >> last5MatchesIcon [
+TeamStatsCalculator >> last5MatchesIcon [
 
 	| canvas |
 	canvas := RSCanvas new.
@@ -184,45 +196,48 @@ TeamPointsCalculator >> last5MatchesIcon [
 ]
 
 { #category : #'accessing - computed' }
-TeamPointsCalculator >> last5Mathes [
+TeamStatsCalculator >> last5Mathes [
 	^ points last: 5
 ]
 
 { #category : #accessing }
-TeamPointsCalculator >> losses [
+TeamStatsCalculator >> losses [
+
 	^ matchesLost
 ]
 
 { #category : #accessing }
-TeamPointsCalculator >> matchesPlayed [
+TeamStatsCalculator >> matchesPlayed [
+
 	^ points size
 ]
 
 { #category : #accessing }
-TeamPointsCalculator >> points [
+TeamStatsCalculator >> points [
 	^ points
 ]
 
 { #category : #accessing }
-TeamPointsCalculator >> points: anObject [
+TeamStatsCalculator >> points: anObject [
 
 	points := anObject
 ]
 
 { #category : #printing }
-TeamPointsCalculator >> printOn: stream [
-	stream << self teamName.
+TeamStatsCalculator >> printOn: stream [
+
+	stream << self teamName
 ]
 
 { #category : #printing }
-TeamPointsCalculator >> queryTeamName [
+TeamStatsCalculator >> queryTeamName [
+
 	^ ESL databaseDo: [ 
-		(Team storedInstances detect: [ :team | 
-			team team_api_id = id ]) team_long_name ]
+		  (Team storedInstances detect: [ :team | team team_api_id = id ]) team_long_name ]
 ]
 
 { #category : #'accessing - computed' }
-TeamPointsCalculator >> resultIconFor: result [
+TeamStatsCalculator >> resultIconFor: result [
 	| name icon label text |
 	result=0 ifTrue: [ 
 		name := #testRed.
@@ -241,27 +256,30 @@ TeamPointsCalculator >> resultIconFor: result [
 ]
 
 { #category : #accessing }
-TeamPointsCalculator >> season [
+TeamStatsCalculator >> season [
 	^ season
 ]
 
 { #category : #accessing }
-TeamPointsCalculator >> season: aString [ 
+TeamStatsCalculator >> season: aString [ 
 
 	season := aString
 ]
 
 { #category : #printing }
-TeamPointsCalculator >> teamName [
-	^ teamName ifNil: [ teamName := self queryTeamName ].
+TeamStatsCalculator >> teamName [
+
+	^ teamName ifNil: [ teamName := self queryTeamName ]
 ]
 
 { #category : #accessing }
-TeamPointsCalculator >> totalPoints [
+TeamStatsCalculator >> totalPoints [
+
 	^ self accumulatePoints last
 ]
 
 { #category : #accessing }
-TeamPointsCalculator >> wins [
+TeamStatsCalculator >> wins [
+
 	^ matchesWon
 ]

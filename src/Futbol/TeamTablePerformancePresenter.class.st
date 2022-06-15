@@ -1,5 +1,5 @@
 Class {
-	#name : #SpTeamTablePerformancePresenter,
+	#name : #TeamTablePerformancePresenter,
 	#superclass : #SpPresenter,
 	#instVars : [
 		'team',
@@ -10,7 +10,7 @@ Class {
 }
 
 { #category : #accessing }
-SpTeamTablePerformancePresenter >> columnPairs [
+TeamTablePerformancePresenter >> columnPairs [
 	^ #( MP matchesPlayed
 	W wins
 	D draws
@@ -22,7 +22,7 @@ SpTeamTablePerformancePresenter >> columnPairs [
 ]
 
 { #category : #accessing }
-SpTeamTablePerformancePresenter >> createIndexColumn [
+TeamTablePerformancePresenter >> createIndexColumn [
 
 	^ SpStringTableColumn new 
 		title: 'Season';
@@ -32,7 +32,7 @@ SpTeamTablePerformancePresenter >> createIndexColumn [
 ]
 
 { #category : #layout }
-SpTeamTablePerformancePresenter >> defaultLayout [
+TeamTablePerformancePresenter >> defaultLayout [
 
 	^ SpBoxLayout newTopToBottom
 		add: table;
@@ -40,14 +40,14 @@ SpTeamTablePerformancePresenter >> defaultLayout [
 ]
 
 { #category : #initialization }
-SpTeamTablePerformancePresenter >> initializePresenters [
+TeamTablePerformancePresenter >> initializePresenters [
 
 	self initializeTable
 	
 ]
 
 { #category : #initialization }
-SpTeamTablePerformancePresenter >> initializeTable [
+TeamTablePerformancePresenter >> initializeTable [
 
 	table := self newTable.
 	
@@ -63,8 +63,8 @@ SpTeamTablePerformancePresenter >> initializeTable [
 			yourself) ]
 ]
 
-{ #category : #accessing }
-SpTeamTablePerformancePresenter >> setModelBeforeInitialization: aTeamEvolutionData [
+{ #category : #'accessing - model' }
+TeamTablePerformancePresenter >> setModelBeforeInitialization: aTeamEvolutionData [
 
 	teamEvolutionData := aTeamEvolutionData 
 ]
