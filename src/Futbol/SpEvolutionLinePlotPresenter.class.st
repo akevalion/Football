@@ -107,9 +107,10 @@ SpEvolutionLinePlotPresenter >> newEvolutionLineChart: teams [
 	chart := RSChart new.
 	popup := RSPopupDecoration new.
 	chart addDecoration: popup.
-	teams do: [ :team | | plot |
-		x := 1 to: team points size.
-		chart addPlot: (plot := RSLinePlot new x: {0},x y: {0},team points).
+	teams do: [ :team | | plot points |
+		points := team accumulatePoints.
+		x := 1 to: points size.
+		chart addPlot: (plot := RSLinePlot new x: {0},x y: {0}, points).
 		popup chartPopupBuilder
 			for: plot text: team teamName color: plot computeColor.
 	].

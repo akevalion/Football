@@ -24,9 +24,14 @@ SpTablePointsPresenter >> buildTable [
 			title: title;
 			width: (title = #Team 
 				ifTrue: [nil]
-				ifFalse: [40]);
+				ifFalse: [35]);
 			evaluated: selector;
 			yourself) ].
+	self addColumn: (SpImageTableColumn new
+		title: 'Last 5 matches';
+		width: 120;
+		evaluated: #last5MatchesIcon;
+		yourself).
 ]
 
 { #category : #initialization }
