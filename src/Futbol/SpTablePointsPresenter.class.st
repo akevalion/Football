@@ -12,6 +12,7 @@ Class {
 
 { #category : #initialization }
 SpTablePointsPresenter >> buildTable [
+	self alternateRowsColor.
 	self 
 		items: season teamEvolutionData;
 		addColumn: (SpIndexTableColumn new 
