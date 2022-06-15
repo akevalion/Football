@@ -3,7 +3,7 @@ Used by season
 "
 Class {
 	#name : #TablePointsOfSeasonPresenter,
-	#superclass : #SpPresenter,
+	#superclass : #StInspection,
 	#instVars : [
 		'season',
 		'table'
@@ -32,12 +32,20 @@ TablePointsOfSeasonPresenter >> defaultLayout [
 		yourself
 ]
 
+{ #category : #testing }
+TablePointsOfSeasonPresenter >> hasOutputActivationPort [
+
+	^ true
+]
+
 { #category : #initialization }
 TablePointsOfSeasonPresenter >> initializePresenters [
 
 	table := self newTable.
 
-	table alternateRowsColor.
+	table
+		alternateRowsColor;
+		activateOnSingleClick.
 	table 
 		items: season teamEvolutionData;
 		addColumn: (SpIndexTableColumn new 
@@ -58,6 +66,14 @@ TablePointsOfSeasonPresenter >> initializePresenters [
 		width: 120;
 		evaluated: #last5MatchesIcon;
 		yourself).
+]
+
+{ #category : #testing }
+TablePointsOfSeasonPresenter >> outputActivationPort [
+
+    ^ table outputActivationPort
+        transform: [ :aValue |  5 "para probar" ];
+        yourself.
 ]
 
 { #category : #'accessing - model' }

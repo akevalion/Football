@@ -1,6 +1,6 @@
 Class {
 	#name : #TeamTablePerformancePresenter,
-	#superclass : #SpPresenter,
+	#superclass : #StInspection,
 	#instVars : [
 		'team',
 		'table',
@@ -39,6 +39,12 @@ TeamTablePerformancePresenter >> defaultLayout [
 		yourself
 ]
 
+{ #category : #testing }
+TeamTablePerformancePresenter >> hasOutputActivationPort [
+
+	^ true
+]
+
 { #category : #initialization }
 TeamTablePerformancePresenter >> initializePresenters [
 
@@ -51,7 +57,8 @@ TeamTablePerformancePresenter >> initializeTable [
 
 	table := self newTable.
 	
-	table 
+	table
+		activateOnSingleClick;
 		items: teamEvolutionData;
 		addColumn: self createIndexColumn.
 			
@@ -61,6 +68,14 @@ TeamTablePerformancePresenter >> initializeTable [
 			width: 50;
 			evaluated: selector;
 			yourself) ]
+]
+
+{ #category : #ports }
+TeamTablePerformancePresenter >> outputActivationPort [
+
+    ^ table outputActivationPort
+        transform: [ :aValue |  5 "para probar" ];
+        yourself.
 ]
 
 { #category : #'accessing - model' }
