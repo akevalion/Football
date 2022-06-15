@@ -87,7 +87,7 @@ Team >> printOn: stream [
 { #category : #inspector }
 Team >> teamEvolutionData [
 
-	^ TeamStatsCalculator fromAllMatches: self matches teamId: self team_api_id
+	^ TeamStatsCalculator fromMatches: self matches ofTeam: self team_api_id
 ]
 
 { #category : #accessing }

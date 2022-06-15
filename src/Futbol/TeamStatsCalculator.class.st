@@ -51,28 +51,25 @@ TeamStatsCalculator class >> computePointsForMatch: match teams: teams [
 ]
 
 { #category : #'instance creation' }
-TeamStatsCalculator class >> fromAllMatches: matches teamId: teamId [
-
-	| teams seasons result |
-	result := OrderedCollection new.
-	seasons := matches groupedBy: #season.
-	(seasons keys sorted: #yourself ascending) do: [ :key |
-		teams := Dictionary new.
-		(seasons at: key) do: [ :match |
-			self computePointsForMatch: match teams: teams.
-			 ].
-		result add: (teams at: teamId)
-		 ].
-	^ result
-]
-
-{ #category : #'instance creation' }
 TeamStatsCalculator class >> fromMatches: matches [
 
 	| teams |
 	teams := Dictionary new.
 	matches do: [ :match | self computePointsForMatch: match teams: teams ].
 	^ teams asSortedCollection: #totalPoints descending
+]
+
+{ #category : #'instance creation' }
+TeamStatsCalculator class >> fromMatches: matches ofTeam: teamId [
+
+	| teams seasons result |
+	result := OrderedCollection new.
+	seasons := matches groupedBy: #season.
+	(seasons keys sorted: #yourself ascending) do: [ :key | 
+		teams := Dictionary new.
+		(seasons at: key) do: [ :match | self computePointsForMatch: match teams: teams ].
+		result add: (teams at: teamId) ].
+	^ result
 ]
 
 { #category : #private }
@@ -86,9 +83,9 @@ TeamStatsCalculator class >> matchPointsTeamA: team1Goals teamB: team2Goals [
 ]
 
 { #category : #private }
-TeamStatsCalculator class >> teamFor: anInteger in: aCollection [
+TeamStatsCalculator class >> teamFor: anInteger in: aDictionary [
 
-	^ aCollection at: anInteger ifAbsentPut: [ 
+	^ aDictionary at: anInteger ifAbsentPut: [ 
 		self new
 			id: anInteger;
 			yourself ].
