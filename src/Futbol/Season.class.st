@@ -49,10 +49,9 @@ Season >> inspectorMatchesContext: context [
 
 { #category : #inspector }
 Season >> inspectorTablePoints [
+
 	<inspectorPresentationOrder: 3 title: 'Table Points'>
-	^ SpTablePointsPresenter new
-		season: self;
-		yourself
+	^ SpTablePointsPresenter on: self
 ]
 
 { #category : #inspector }
