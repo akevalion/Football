@@ -3,18 +3,13 @@ Used by season
 "
 Class {
 	#name : #TablePointsOfSeasonPresenter,
-	#superclass : #StInspection,
-	#instVars : [
-		'season',
-		'table'
-	],
+	#superclass : #TablePointsPresenter,
 	#category : #'Futbol-Spec'
 }
 
 { #category : #initialization }
 TablePointsOfSeasonPresenter >> columnPairs [
-	^ #(Team teamName
-	MP matchesPlayed
+	^ #(MP matchesPlayed
 	W wins
 	D draws
 	L losses
@@ -24,60 +19,54 @@ TablePointsOfSeasonPresenter >> columnPairs [
 	PTS totalPoints)
 ]
 
-{ #category : #layout }
-TablePointsOfSeasonPresenter >> defaultLayout [
+{ #category : #utilities }
+TablePointsOfSeasonPresenter >> doesTeamHasARelevantposition: teamStatsCalculator [
 
-	^ SpBoxLayout newTopToBottom
-		add: table;
-		yourself
-]
+	| size tableItems |
+	tableItems := table items.
+	size := table items size.
 
-{ #category : #testing }
-TablePointsOfSeasonPresenter >> hasOutputActivationPort [
+	(tableItems indexOf: teamStatsCalculator) < 6 ifTrue: [ ^ true ].
+	(tableItems indexOf: teamStatsCalculator) > (size - 3) ifTrue: [ ^ true ].
 
-	^ true
+	^ false
 ]
 
 { #category : #initialization }
-TablePointsOfSeasonPresenter >> initializePresenters [
-
-	table := self newTable.
+TablePointsOfSeasonPresenter >> initializeIndexColumn [
 
 	table
-		alternateRowsColor;
-		activateOnSingleClick.
-	table 
-		items: season teamEvolutionData;
-		addColumn: (SpIndexTableColumn new 
+		addColumn: (SpStringTableColumn new 
 			title: '#';
 			beNotExpandable;
+			evaluated: [ :e | (table items indexOf: e) asString ];
+			displayColor: [ :teamStatsCalculator | self teamStringTableColor: teamStatsCalculator ];
+			displayBold: [ :teamStatsCalculator |self doesTeamHasARelevantposition: teamStatsCalculator];
 			width: 30
-			yourself).
-	self columnPairs pairsDo: [ :title :selector | 
-		table addColumn: (SpStringTableColumn new  
-			title: title;
-			width: (title = #Team 
-				ifTrue: [nil]
-				ifFalse: [35]);
-			evaluated: selector;
-			yourself) ].
-	table addColumn: (SpImageTableColumn new
-		title: 'Last 5 matches';
-		width: 120;
-		evaluated: #last5MatchesIcon;
-		yourself).
+			yourself)
 ]
 
-{ #category : #testing }
-TablePointsOfSeasonPresenter >> outputActivationPort [
+{ #category : #initialization }
+TablePointsOfSeasonPresenter >> initializeNameColumn [
 
-    ^ table outputActivationPort
-        transform: [ :aValue |  5 "para probar" ];
-        yourself.
+	table
+		addColumn: (SpStringTableColumn new
+			title: 'Team';
+			evaluated: #teamName;
+			width: 30;
+			displayColor: [ :teamStatsCalculator | self teamStringTableColor: teamStatsCalculator ];
+			displayBold: [ :teamStatsCalculator |self doesTeamHasARelevantposition: teamStatsCalculator ])
 ]
 
-{ #category : #'accessing - model' }
-TablePointsOfSeasonPresenter >> setModelBeforeInitialization: aSeason [
+{ #category : #utilities }
+TablePointsOfSeasonPresenter >> teamStringTableColor: teamStatsCalculator [
 
-	season := aSeason
+	| size tableItems |
+	tableItems := table items.
+	size := table items size.
+
+	(tableItems indexOf: teamStatsCalculator) < 6 ifTrue: [ ^ Color fromString: '008000' ].
+	(tableItems indexOf: teamStatsCalculator) > (size - 3) ifTrue: [ ^ Color fromString: 'ee6055' ].
+
+	^ Smalltalk ui theme textColor
 ]

@@ -51,7 +51,7 @@ Season >> inspectorMatchesContext: context [
 Season >> inspectorTablePoints [
 
 	<inspectorPresentationOrder: 3 title: 'Table Points'>
-	^ TablePointsOfSeasonPresenter on: self
+	^ TablePointsOfSeasonPresenter on: self teamEvolutionData
 ]
 
 { #category : #inspector }

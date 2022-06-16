@@ -51,7 +51,7 @@ Team >> id: anObject [
 
 { #category : #inspector }
 Team >> inspectorMatches [
-	<inspectorPresentationOrder: 1 title: 'Matches'>
+	"<inspectorPresentationOrder: 1 title: 'Matches'>"
 	^ SpTablePresenter new
 		addColumn: (SpIndexTableColumn new 
 			title: '#';
