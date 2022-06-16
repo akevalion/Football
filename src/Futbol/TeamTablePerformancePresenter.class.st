@@ -7,7 +7,7 @@ Class {
 	#category : #'Futbol-Spec'
 }
 
-{ #category : #accessing }
+{ #category : #initialization }
 TeamTablePerformancePresenter >> columnPairs [
 	^ #( MP matchesPlayed
 	W wins
@@ -19,12 +19,12 @@ TeamTablePerformancePresenter >> columnPairs [
 	PTS totalPoints)
 ]
 
-{ #category : #accessing }
+{ #category : #initialization }
 TeamTablePerformancePresenter >> initializeIndexColumn [
 
 	table addColumn: (SpStringTableColumn new 
 		title: 'Season';
-		"width: 70;"
+		width: 70;
 		evaluated: [ :item | item season ];
 		yourself)
 ]
