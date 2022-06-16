@@ -74,6 +74,12 @@ Team >> inspectorTablePerformance [
 	^ TeamTablePerformancePresenter on: self teamEvolutionData
 ]
 
+{ #category : #inspector }
+Team >> inspectorTablePerformanceContext: aContext [
+
+	aContext withoutEvaluator
+]
+
 { #category : #'accessing - decorators' }
 Team >> matches [
 	^ matches ifNil: [ matches := self computeMatches ]
