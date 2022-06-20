@@ -33,10 +33,10 @@ Team class >> reStoreDefinition [
 
 { #category : #private }
 Team >> computeMatches [
-	^ ESL databaseDo: [ 
-		Match storedInstances
-			select: [ :match | (match home_team_api_id = team_api_id) | (match away_team_api_id = team_api_id) ]
-		 ]
+	^ ESL databaseDo: [ Match storedInstances 
+		select: [ :match | 
+			(match home_team_api_id = team_api_id) 
+				| (match away_team_api_id = team_api_id) ] ]
 ]
 
 { #category : #accessing }

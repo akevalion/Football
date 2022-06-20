@@ -14,14 +14,13 @@ Class {
 
 { #category : #'accessing - computed' }
 Season >> createMatches [
-	^ ESL databaseDo: [ 
-		(Match storedInstances 
+	^ ESL databaseDo: [
+		| list  |
+		list := Match storedInstances 
 			select: [ :match | 
-				(match season = self season) 
-				& (match league_id = self league_id ) ])
-		asSortedCollection: [ :a :b | 
-			(DateAndTime fromString: a date) < (DateAndTime fromString: b date) ]
-			 ]
+				(match league_id = self league_id ) & 
+				(match season = self season) ].
+		list asSortedCollection: [ :a :b | a dateAndTime < b dateAndTime ] ]
 ]
 
 { #category : #inspector }
@@ -38,7 +37,8 @@ Season >> inspectorMatches [
 			title: 'Matches';
 			evaluated: #yourself;
 			yourself);
-		items: self matches
+		items: self matches;
+		yourself
 
 ]
 

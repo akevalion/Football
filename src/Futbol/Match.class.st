@@ -119,7 +119,10 @@ Class {
 		'GBA',
 		'BSH',
 		'BSD',
-		'BSA'
+		'BSA',
+		'dateAndTime',
+		'homeName',
+		'awayName'
 	],
 	#category : #'Futbol-Entities'
 }
@@ -548,6 +551,11 @@ Match >> WHH [
 { #category : #accessing }
 Match >> WHH: anObject [
 	WHH:= anObject
+]
+
+{ #category : #'accessing - computed' }
+Match >> awayName [
+	^ awayName ifNil: [ awayName := self teamName: away_team_api_id ] 
 ]
 
 { #category : #accessing }
@@ -1025,9 +1033,7 @@ Match >> createPlayersCanvas [
 	
 	field position: r1 floatCenter.
 	field scaleBy: (r1 width / field width) * 1.1.
-	r1 width > r1 height ifTrue: [ 
-		canvas add: field.
-		field pushBack ].
+	
 	title := RSLabel new
 		text: self asString;
 		color: 'black';
@@ -1038,6 +1044,10 @@ Match >> createPlayersCanvas [
 		color: 'black';
 		fontSize: 20;
 		yourself.
+	r1 width > r1 height ifTrue: [ 
+		canvas add: field.
+		field pushBack
+	] ifFalse: [ field := (0@20) asMargin expandRectangle: canvas encompassingRectangle. ].
 	RSLocation new above; move: title on: field.
 	RSLocation new below; move: dateLabel on: field.
 	canvas addAll: {title. dateLabel}.
@@ -1064,6 +1074,11 @@ Match >> date: anObject [
 	date:= anObject
 ]
 
+{ #category : #'accessing - computed' }
+Match >> dateAndTime [
+	^ dateAndTime ifNil: [ dateAndTime := DateAndTime fromString: self date ]
+]
+
 { #category : #accessing }
 Match >> foulcommit [
 	^ foulcommit
@@ -1082,6 +1097,11 @@ Match >> goal [
 { #category : #accessing }
 Match >> goal: anObject [
 	goal:= anObject
+]
+
+{ #category : #'accessing - computed' }
+Match >> homeName [
+	^ homeName ifNil: [ homeName := self teamName: home_team_api_id ] 
 ]
 
 { #category : #accessing }
@@ -1510,13 +1530,10 @@ Match >> possession: anObject [
 
 { #category : #printing }
 Match >> printOn: stream [
-	| homename awayname |
-	homename := self teamName: home_team_api_id.
-	awayname := self teamName: away_team_api_id.
-	stream 
-		<< homename asString
+		stream 
+		<< self homeName asString
 		<< ' - '
-		<< awayname asString
+		<< self awayName asString
 		<< ' ('
 		<< home_team_goal asString
 		<< ' - ' 

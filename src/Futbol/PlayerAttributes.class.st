@@ -46,10 +46,47 @@ Class {
 		'gk_handling',
 		'gk_kicking',
 		'gk_positioning',
-		'gk_reflexes'
+		'gk_reflexes',
+		'dateAndTime'
 	],
 	#category : #'Futbol-Entities'
 }
+
+{ #category : #public }
+PlayerAttributes class >> axisNames [
+	^ 
+	#(dribbling
+	agility
+	reactions
+	balance
+	shot_power
+	jumping
+	stamina
+	strength
+	crossing
+	finishing
+	heading_accuracy
+	volleys
+	curve
+	ball_control
+	acceleration
+	sprint_speed
+	long_shots
+	short_passing
+	vision
+	penalties
+	long_passing
+	free_kick_accuracy
+	positioning
+	interceptions
+	marking
+	standing_tackle
+	sliding_tackle
+	gk_diving
+	gk_kicking
+	gk_positioning
+	gk_reflexes)
+]
 
 { #category : #accessing }
 PlayerAttributes class >> csvFile [
@@ -185,6 +222,13 @@ PlayerAttributes >> curve: anObject [
 	curve:= anObject
 ]
 
+{ #category : #'accessing - computed' }
+PlayerAttributes >> dataArray [
+	^ self class axisNames collect: [ :each | | value |
+		value := each value: self.
+		value ifNil: [ 0 ] ifNotNil: [ value asNumber ] ]
+]
+
 { #category : #accessing }
 PlayerAttributes >> date [
 	^ date
@@ -193,6 +237,11 @@ PlayerAttributes >> date [
 { #category : #accessing }
 PlayerAttributes >> date: anObject [
 	date:= anObject
+]
+
+{ #category : #'accessing - computed' }
+PlayerAttributes >> dateAndTime [
+	^ dateAndTime ifNil: [ dateAndTime := DateAndTime fromString: self date ]
 ]
 
 { #category : #accessing }

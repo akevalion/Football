@@ -11,7 +11,8 @@ Class {
 		'player_fifa_api_id',
 		'birthday',
 		'height',
-		'weight'
+		'weight',
+		'stats'
 	],
 	#category : #'Futbol-Entities'
 }
@@ -51,6 +52,12 @@ Player >> birthday: anObject [
 	birthday:= anObject
 ]
 
+{ #category : #'accessing - computed' }
+Player >> computeStats [
+	^ (ESL databaseDo: [ PlayerAttributes storedInstances
+		select: [ :each | each player_api_id = player_api_id ] ]) asSortedCollection: #dateAndTime ascending.
+]
+
 { #category : #accessing }
 Player >> height [
 	^ height
@@ -69,6 +76,19 @@ Player >> id [
 { #category : #accessing }
 Player >> id: anObject [
 	id:= anObject
+]
+
+{ #category : #inspector }
+Player >> inspectorStats [
+	<inspectorPresentationOrder: 90 title: 'Stats'>
+	^ SpPlayerStatsPresenter new
+		player: self;
+		yourself
+]
+
+{ #category : #inspector }
+Player >> inspectorStatsContext: context [
+	context withoutEvaluator
 ]
 
 { #category : #accessing }
@@ -104,6 +124,11 @@ Player >> player_name: anObject [
 { #category : #printing }
 Player >> printOn: stream [
 	stream << player_name
+]
+
+{ #category : #accessing }
+Player >> stats [
+	^ stats ifNil: [ stats := self computeStats ]
 ]
 
 { #category : #accessing }
