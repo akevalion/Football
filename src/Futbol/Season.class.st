@@ -13,7 +13,7 @@ Class {
 }
 
 { #category : #'accessing - computed' }
-Season >> createMatches [
+Season >> computeMatches [
 	^ ESL databaseDo: [
 		| list  |
 		list := Match storedInstances 
@@ -36,6 +36,11 @@ Season >> inspectorMatches [
 		addColumn: (SpStringTableColumn new  
 			title: 'Matches';
 			evaluated: #yourself;
+			yourself);
+		addColumn: (SpStringTableColumn new  
+			title: 'Date';
+			width: 80;
+			evaluated: [:each | each dateAndTime asDate mmddyyyy ];
 			yourself);
 		items: self matches;
 		yourself
@@ -86,7 +91,7 @@ Season >> league_id: id [
 
 { #category : #accessing }
 Season >> matches [
-	^ matches ifNil: [ matches := self createMatches ]
+	^ matches ifNil: [ matches := self computeMatches ]
 ]
 
 { #category : #'accessing - computed' }

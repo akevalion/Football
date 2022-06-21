@@ -107,13 +107,7 @@ SpEvolutionLinePlotPresenter >> newEvolutionLineChart: teams [
 	chart := RSChart new.
 	popup := RSPopupDecoration new.
 	chart addDecoration: popup.
-	teams do: [ :team | | plot points |
-		points := team accumulatePoints.
-		x := 1 to: points size.
-		chart addPlot: (plot := RSLinePlot new x: {0},x y: {0}, points).
-		popup chartPopupBuilder
-			for: plot text: team teamName color: plot computeColor.
-	].
+	
 	chart
 		extent: 380@(380*9/16);
 		addDecoration: (RSHorizontalTick new
@@ -129,6 +123,15 @@ SpEvolutionLinePlotPresenter >> newEvolutionLineChart: teams [
 		title: 'Points Evolutions During Season: ', season season;
 		xlabel: 'Matches Played';
 		ylabel: 'Points'.
+	
+	teams do: [ :team | | plot points |
+		points := team accumulatePoints.
+		x := 1 to: points size.
+		chart addPlot: (plot := RSLinePlot new x: {0},x y: {0}, points).
+		popup chartPopupBuilder
+			for: plot text: team teamName color: plot computeColor.
+	].
+	
 	^ chart
 	
 ]
