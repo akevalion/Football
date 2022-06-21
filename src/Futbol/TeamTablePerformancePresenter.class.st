@@ -33,3 +33,13 @@ TeamTablePerformancePresenter >> initializeIndexColumn [
 TeamTablePerformancePresenter >> initializeNameColumn [
 
 ]
+
+{ #category : #testing }
+TeamTablePerformancePresenter >> outputActivationPort [
+    "^ SpActivationPort newPresenter: self"
+	^ table outputActivationPort
+		transform: [ :selection | SpWrappedItem new 
+			selectedItem: selection selectedItem asSeason;
+			yourself ];
+		yourself
+]

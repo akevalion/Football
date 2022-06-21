@@ -22,7 +22,8 @@ Class {
 		'matchesDrawn',
 		'goalsInFavor',
 		'againstGoals',
-		'season'
+		'season',
+		'league_id'
 	],
 	#category : #'Futbol-Utilities'
 }
@@ -62,13 +63,15 @@ TeamStatsCalculator class >> fromMatches: matches [
 { #category : #'instance creation' }
 TeamStatsCalculator class >> fromMatches: matches ofTeam: teamId [
 
-	| teams seasons result |
-	result := OrderedCollection new.
+	| teams seasons result  |
+	
 	seasons := matches groupedBy: #season.
-	(seasons keys sorted: #yourself ascending) do: [ :key | 
+	result := (seasons keys sorted: #yourself ascending) collect: [ :key | | teamCalculator |
 		teams := Dictionary new.
 		(seasons at: key) do: [ :match | self computePointsForMatch: match teams: teams ].
-		result add: (teams at: teamId) ].
+		teamCalculator := teams at: teamId.
+		teamCalculator league_id: (seasons at: key) anyOne league_id.
+		teamCalculator ] as: OrderedCollection.
 	^ result
 ]
 
@@ -123,6 +126,14 @@ TeamStatsCalculator >> addPoints: anInteger [
 	anInteger = 1 ifTrue: [ matchesDrawn := matchesDrawn + 1 ].
 	anInteger = 0 ifTrue: [ matchesLost := matchesDrawn + 1 ].
 	anInteger = 3 ifTrue: [ matchesWon := matchesWon + 1 ]
+]
+
+{ #category : #converting }
+TeamStatsCalculator >> asSeason [
+	^ Season new
+		season: season;
+		league_id: league_id;
+		yourself
 ]
 
 { #category : #converting }
@@ -195,6 +206,11 @@ TeamStatsCalculator >> last5MatchesIcon [
 { #category : #'accessing - computed' }
 TeamStatsCalculator >> last5Mathes [
 	^ points last: 5
+]
+
+{ #category : #accessing }
+TeamStatsCalculator >> league_id: aNumber [
+	league_id := aNumber
 ]
 
 { #category : #accessing }

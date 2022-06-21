@@ -81,10 +81,12 @@ TablePointsPresenter >> initializePresenters [
 
 { #category : #testing }
 TablePointsPresenter >> outputActivationPort [
-
-    ^ table outputActivationPort
-        transform: [ :selection | selection selectedItem asTeam ];
-        yourself.
+    "^ SpActivationPort newPresenter: self"
+	^ table outputActivationPort
+		transform: [ :selection | SpWrappedItem new 
+			selectedItem: selection selectedItem asTeam;
+			yourself ];
+		yourself
 ]
 
 { #category : #'accessing - model' }
