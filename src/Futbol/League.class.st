@@ -79,7 +79,7 @@ League >> inspectorSeasonList [
 ]
 
 { #category : #inspector }
-League >> inspectorTeamsList [
+League >> inspectorTeamList [
 	
 	<inspectorPresentationOrder: 2 title: 'Teams'>
 	^ SpTablePresenter new

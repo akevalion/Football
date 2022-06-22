@@ -55,7 +55,7 @@ Season >> inspectorMatchesContext: context [
 { #category : #inspector }
 Season >> inspectorTablePoints [
 
-	<inspectorPresentationOrder: 3 title: 'Table Points'>
+	<inspectorPresentationOrder: 2 title: 'Table Points'>
 	^ TablePointsOfSeasonPresenter on: self teamEvolutionData
 ]
 
@@ -68,7 +68,7 @@ Season >> inspectorTablePointsContext: context [
 { #category : #inspector }
 Season >> inspectorTeamEvolutionLinePlot [
 
-	<inspectorPresentationOrder: 2 title: 'Teams Evolution'>
+	<inspectorPresentationOrder: 3 title: 'Teams Evolution'>
 	^ SpEvolutionLinePlotPresenter new
 		  season: self;
 		  yourself

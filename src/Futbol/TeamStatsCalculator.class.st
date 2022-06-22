@@ -57,6 +57,7 @@ TeamStatsCalculator class >> fromMatches: matches [
 	| teams |
 	teams := Dictionary new.
 	matches do: [ :match | self computePointsForMatch: match teams: teams ].
+	
 	^ teams asSortedCollection: #totalPoints descending
 ]
 
