@@ -1,9 +1,6 @@
 Class {
 	#name : #TeamTablePerformancePresenter,
 	#superclass : #TablePointsPresenter,
-	#instVars : [
-		'team'
-	],
 	#category : #'Futbol-Spec'
 }
 

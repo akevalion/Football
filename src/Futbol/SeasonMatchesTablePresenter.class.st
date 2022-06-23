@@ -30,12 +30,14 @@ SeasonMatchesTablePresenter >> defaultLayout [
 
 { #category : #initialization }
 SeasonMatchesTablePresenter >> filterMatches: text [
+
 	| andStrings |
-	andStrings := (text trim asLowercase substrings: '&') collect: #trim.
-	^ matches select: [ :aMatch |
+	andStrings := (text trim asLowercase removeLowercaseAccents substrings: '&') collect: #trim.
+
+	^ matches select: [ :aMatch | 
 		| searchingMatch |
-		searchingMatch := aMatch asString asLowercase.
-		andStrings allSatisfy: [ :each | searchingMatch includesSubstring: each  ] ]
+		searchingMatch := aMatch asString asLowercase removeLowercaseAccents.
+		andStrings allSatisfy: [ :each | searchingMatch includesSubstring: each ] ]
 ]
 
 { #category : #testing }
