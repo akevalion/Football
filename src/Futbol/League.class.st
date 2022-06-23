@@ -90,7 +90,7 @@ League >> inspectorTeamList [
 			yourself);
 		addColumn: (SpStringTableColumn new  
 			title: 'Teams';
-			evaluated: #yourself;
+			evaluated: #asString;
 			yourself);
 		items: self teams;
 		sortingBlock: #team_long_name ascending;

@@ -7,7 +7,8 @@ Class {
 	#instVars : [
 		'player',
 		'title',
-		'animatedPolygon'
+		'animatedPolygon',
+		'polygonAndDots'
 	],
 	#category : #'Futbol-Spec'
 }
@@ -44,6 +45,27 @@ SpPlayerStatsPresenter >> addAnimationButtonIn: kiviat stats: list [
 		RSLocation new inner; bottom; right; offset: -10 asPoint;
 			move: button on: (0@0 corner: c extent) ].
 	c addShape: button
+]
+
+{ #category : #building }
+SpPlayerStatsPresenter >> computePolygonDots: kiviat stats: list [
+	| c |
+	c := kiviat container.
+	polygonAndDots := OrderedCollection new.
+	kiviat polygonShapes with: list do: [ :polygon :stat | | dots |
+		polygon pushFront.
+		polygonAndDots add: polygon.
+		dots := polygon points with: stat dataArray collect: [ :point :value |
+			RSEllipse new
+				size: 5;
+				color: Color black;
+				model: value;
+				popup;
+				position: point+polygon position;
+				yourself ].
+		c addAll: dots.
+		polygonAndDots addAll: dots.
+		 ].
 ]
 
 { #category : #animation }
@@ -87,6 +109,7 @@ SpPlayerStatsPresenter >> newCanvas [
 		minValue: 0;
 		build.
 	kiviat labels do: [ :lbl | lbl color: Color black ].
+	self computePolygonDots: kiviat stats: list.
 	self addAnimationButtonIn: kiviat stats: list.
 	c @ RSCanvasController.
 	^ c
@@ -106,10 +129,11 @@ SpPlayerStatsPresenter >> playEvolutionAnimation: kiviat stats: list [
 	c add: title.
 	c add: animatedPolygon.
 	RSLocation new above; offset: 0@ -20; move: title on: canvas shapes.
+	"because 2"
+	polygonAndDots do: #remove.
 	
-	animations := shapes collectWithIndex: [:fromShape :index |
-		fromShape remove.
-		self newAnimationFor: fromShape index: index shapes: shapes stats: list ].
+	animations := kiviat polygonShapes collectWithIndex: [:fromShape :index |
+		self newAnimationFor: fromShape index: index shapes: kiviat polygonShapes stats: list ].
 	animation := canvas animationFrom: animations.
 	animation repeat.
 	c signalUpdate.
@@ -129,5 +153,5 @@ SpPlayerStatsPresenter >> stopEvolutionAnimation: kiviat [
 	c animations do: #stop.
 	title remove.
 	animatedPolygon remove.
-	c addAll: kiviat polygonShapes.
+	c addAll: polygonAndDots.
 ]

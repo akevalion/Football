@@ -111,18 +111,20 @@ SpEvolutionLinePlotPresenter >> newEvolutionLineChart: teams [
 	chart
 		extent: 380@(380*9/16);
 		addDecoration: (RSHorizontalTick new
-			in: [ :tick |tick configuration tickSize: chart extent y negated ];
+			in: [ :tick | tick configuration tickSize: chart extent y negated ];
 			color: Color veryVeryLightGray;
 			numberOfTicks: 20;
 			integer);
 		addDecoration: (RSVerticalTick new 
-			in: [ :tick | tick configuration tickSize: chart extent x negated ];
+			in: [ :tick | 
+				tick configuration tickSize: chart extent x negated.
+				tick labelLocation right offset: 5@0 ];
 			color: Color veryVeryLightGray;
 			numberOfTicks: 10;
 			integer);
 		title: 'Points Evolutions During Season: ', season season;
-		xlabel: 'Matches Played';
-		ylabel: 'Points'.
+		xlabel: 'Matches Played'.
+	(chart ylabel: 'Points') right.
 	
 	teams do: [ :team | | plot points |
 		points := team accumulatePoints.
