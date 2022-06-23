@@ -30,15 +30,12 @@ SeasonMatchesTablePresenter >> defaultLayout [
 
 { #category : #initialization }
 SeasonMatchesTablePresenter >> filterMatches: text [
-
+	| andStrings |
+	andStrings := (text trim asLowercase substrings: '&') collect: #trim.
 	^ matches select: [ :aMatch |
-		| searchingMatch andStrings |
+		| searchingMatch |
 		searchingMatch := aMatch asString asLowercase.
-		andStrings := (text trim asLowercase substrings: '&') collect: #trim.
-		
-		andStrings
-			inject: true
-			into: [ :accum : each | accum & (searchingMatch includesSubstring: each) ] ]
+		andStrings allSatisfy: [ :each | searchingMatch includesSubstring: each  ] ]
 ]
 
 { #category : #initialization }
@@ -66,7 +63,7 @@ SeasonMatchesTablePresenter >> initializeTable [
 				 width: 30 yourself);
 		addColumn: (SpStringTableColumn new
 				 title: 'Matches';
-				 evaluated: #yourself;
+				 evaluated: #asString;
 				 yourself);
 		addColumn: (SpStringTableColumn new
 				 title: 'Date';
