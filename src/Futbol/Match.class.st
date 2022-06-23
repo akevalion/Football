@@ -558,6 +558,11 @@ Match >> awayName [
 	^ awayName ifNil: [ awayName := self teamName: away_team_api_id ] 
 ]
 
+{ #category : #'accessing - computed' }
+Match >> awayName: aString [
+	awayName := aString
+]
+
 { #category : #accessing }
 Match >> away_player_1 [
 	^ away_player_1
@@ -1104,6 +1109,11 @@ Match >> homeName [
 	^ homeName ifNil: [ homeName := self teamName: home_team_api_id ] 
 ]
 
+{ #category : #'accessing - computed' }
+Match >> homeName: aString [
+	homeName := aString
+]
+
 { #category : #accessing }
 Match >> home_player_1 [
 	^ home_player_1
@@ -1530,7 +1540,7 @@ Match >> possession: anObject [
 
 { #category : #printing }
 Match >> printOn: stream [
-		stream 
+	stream 
 		<< self homeName asString
 		<< ' - '
 		<< self awayName asString
@@ -1614,7 +1624,7 @@ Match >> stage: anObject [
 	stage:= anObject
 ]
 
-{ #category : #'accessing - computed' }
+{ #category : #utilities }
 Match >> teamName: teamId [
 	^ ESL databaseDo: [ 
 		((Team storedInstances satisfying: [ :team | team team_api_id = teamId ])

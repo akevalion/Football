@@ -33,7 +33,7 @@ SeasonMatchesTablePresenter >> filterMatches: text [
 
 	| andStrings |
 	andStrings := (text trim asLowercase removeLowercaseAccents substrings: '&') collect: #trim.
-
+	
 	^ matches select: [ :aMatch | 
 		| searchingMatch |
 		searchingMatch := aMatch asString asLowercase removeLowercaseAccents.

@@ -15,11 +15,23 @@ Class {
 { #category : #'accessing - computed' }
 Season >> computeMatches [
 	^ ESL databaseDo: [
-		| list  |
+		| list ids names |
 		list := Match storedInstances 
 			select: [ :match | 
 				(match league_id = self league_id ) & 
 				(match season = self season) ].
+		ids := Set new.
+		list do: [ :match | ids add: match home_team_api_id; add: match away_team_api_id ].
+		ids := ids asArray.
+		names := ids collect: [ :tid | 
+			((Team storedInstances satisfying: [ :team | team team_api_id = tid ])
+				collect: [ :team | team team_long_name ]) first ].
+		ids := Dictionary newFromKeys: ids andValues: names.
+		list do: [ :match | 
+			match 
+				awayName: (ids at: match away_team_api_id);
+				homeName: (ids at: match home_team_api_id)
+			 ].
 		list asSortedCollection: [ :a :b | a dateAndTime < b dateAndTime ] ]
 ]
 
