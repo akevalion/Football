@@ -25,26 +25,9 @@ Season >> computeMatches [
 
 { #category : #inspector }
 Season >> inspectorMatches [
-	<inspectorPresentationOrder: 1 title: 'Matches'>
-	
-	^ SpTablePresenter new
-		addColumn: (SpIndexTableColumn new 
-			title: '#';
-			beNotExpandable;
-			width: 30
-			yourself);
-		addColumn: (SpStringTableColumn new  
-			title: 'Matches';
-			evaluated: #yourself;
-			yourself);
-		addColumn: (SpStringTableColumn new  
-			title: 'Date';
-			width: 80;
-			evaluated: [:each | each dateAndTime asDate mmddyyyy ];
-			yourself);
-		items: self matches;
-		yourself
 
+	<inspectorPresentationOrder: 1 title: 'Matches'>
+	^ SeasonMatchesTablePresenter on: self matches
 ]
 
 { #category : #inspector }
