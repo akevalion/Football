@@ -1614,8 +1614,9 @@ Match >> stage: anObject [
 	stage:= anObject
 ]
 
-{ #category : #printing }
+{ #category : #'accessing - computed' }
 Match >> teamName: teamId [
 	^ ESL databaseDo: [ 
-		(Team storedInstances detect: [ :team | team team_api_id = teamId ]) team_long_name ]
+		((Team storedInstances satisfying: [ :team | team team_api_id = teamId ])
+			collect: [ :team | team team_long_name ]) first ]
 ]
