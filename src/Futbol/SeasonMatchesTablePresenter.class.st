@@ -1,6 +1,6 @@
 Class {
 	#name : #SeasonMatchesTablePresenter,
-	#superclass : #SpPresenter,
+	#superclass : #StInspection,
 	#instVars : [
 		'table',
 		'matches',
@@ -41,6 +41,12 @@ SeasonMatchesTablePresenter >> filterMatches: text [
 			into: [ :accum : each | accum & (searchingMatch includesSubstring: each) ] ]
 ]
 
+{ #category : #testing }
+SeasonMatchesTablePresenter >> hasOutputActivationPort [
+
+	^ true
+]
+
 { #category : #initialization }
 SeasonMatchesTablePresenter >> initializePresenters [
 
@@ -60,6 +66,9 @@ SeasonMatchesTablePresenter >> initializeTable [
 
 	table := SpTablePresenter new.
 	table
+		alternateRowsColor;
+		activateOnSingleClick.
+	table
 		addColumn: (SpIndexTableColumn new
 				 title: '#';
 				 beNotExpandable;
@@ -74,6 +83,16 @@ SeasonMatchesTablePresenter >> initializeTable [
 				 evaluated: [ :each | each dateAndTime asDate mmddyyyy ];
 				 yourself);
 		items: matches
+]
+
+{ #category : #testing }
+SeasonMatchesTablePresenter >> outputActivationPort [
+
+	^ table outputActivationPort
+		transform: [ :selection | SpWrappedItem new 
+			selectedItem: selection selectedItem;
+			yourself ];
+		yourself
 ]
 
 { #category : #'accessing - model' }
