@@ -10,7 +10,7 @@ Class {
 		'animatedPolygon',
 		'polygonAndDots'
 	],
-	#category : #'Futbol-Spec'
+	#category : #'Futbol-Spec-Core'
 }
 
 { #category : #animation }

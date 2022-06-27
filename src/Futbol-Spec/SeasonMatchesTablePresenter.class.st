@@ -7,7 +7,7 @@ Class {
 		'searchTextInput',
 		'filteredMatches'
 	],
-	#category : #'Futbol-Spec'
+	#category : #'Futbol-Spec-Core'
 }
 
 { #category : #initialization }

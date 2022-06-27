@@ -4,7 +4,7 @@ Used to access ESL new
 Class {
 	#name : #FutbolWorldMenu,
 	#superclass : #Object,
-	#category : #'Futbol-WoldMenu'
+	#category : #'Futbol-Spec-WorldMenu'
 }
 
 { #category : #accessing }

@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'season'
 	],
-	#category : #'Futbol-Spec'
+	#category : #'Futbol-Spec-Core'
 }
 
 { #category : #building }

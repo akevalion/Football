@@ -4,7 +4,7 @@ Utility class add a nice background and configure the canvas controller
 Class {
 	#name : #RSGradientBackground,
 	#superclass : #RSInteraction,
-	#category : #'Futbol-Spec'
+	#category : #'Futbol-Spec-Core'
 }
 
 { #category : #hooks }

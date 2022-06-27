@@ -4,7 +4,7 @@ Used by season
 Class {
 	#name : #TablePointsOfSeasonPresenter,
 	#superclass : #TablePointsPresenter,
-	#category : #'Futbol-Spec'
+	#category : #'Futbol-Spec-Core'
 }
 
 { #category : #initialization }
