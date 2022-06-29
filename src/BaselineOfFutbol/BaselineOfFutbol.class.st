@@ -24,7 +24,8 @@ BaselineOfFutbol >> baseline: spec [
 		spec
 			package: 'Futbol' with: [ spec requires: #('Roassal3' 'NeoCSV' 'ReStore') ];
 			package: 'Futbol-Spec' with: [ spec requires: #('Futbol') ];
-			package: 'Futbol-Tests' with: [ spec requires: #('Futbol' 'Futbol-Spec') ].
+			package: 'Futbol-Roassal' with: [ spec requires: #('Futbol') ];
+			package: 'Futbol-Tests' with: [ spec requires: #('Futbol' 'Futbol-Spec' 'Futbol-Roassal') ].
 				
 		"Groups"
 		spec
