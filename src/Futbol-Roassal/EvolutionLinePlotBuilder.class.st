@@ -111,7 +111,9 @@ EvolutionLinePlotBuilder >> newEvolutionLineChart [
 { #category : #hooks }
 EvolutionLinePlotBuilder >> newHorizontalTick [
 	^ RSHorizontalTick new
-		in: [ :tick | tick configuration tickSize: self chartExtent y negated ];
+		in: [ :tick | 
+			tick shape width: 0.5.
+			tick configuration tickSize: self chartExtent y negated ];
 		color: Color veryVeryLightGray;
 		numberOfTicks: 20;
 		integer;
@@ -122,6 +124,7 @@ EvolutionLinePlotBuilder >> newHorizontalTick [
 EvolutionLinePlotBuilder >> newVerticalTick [
 	^ RSVerticalTick new 
 		in: [ :tick | 
+			tick shape width: 0.5.
 			tick configuration tickSize: self chartExtent x negated.
 			tick labelLocation right offset: 5@0 ];
 		color: Color veryVeryLightGray;
