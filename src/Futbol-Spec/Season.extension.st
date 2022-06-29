@@ -20,12 +20,6 @@ Season >> inspectorTablePoints [
 ]
 
 { #category : #'*Futbol-Spec' }
-Season >> inspectorTablePointsContext: context [
-
-	context withoutEvaluator
-]
-
-{ #category : #'*Futbol-Spec' }
 Season >> inspectorTeamEvolutionLinePlotContext: context [
 	context withoutEvaluator 
 ]

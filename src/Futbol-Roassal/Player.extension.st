@@ -7,3 +7,8 @@ Player >> inspectorStats [
 		player: self;
 		asPresenter
 ]
+
+{ #category : #'*Futbol-Roassal' }
+Player >> inspectorStatsContext: context [
+	context withoutEvaluator
+]

@@ -10,7 +10,7 @@ Class {
 		'y',
 		'playerName'
 	],
-	#category : #'Futbol-Utilities'
+	#category : #'Futbol-Roassal'
 }
 
 { #category : #'as yet unclassified' }
