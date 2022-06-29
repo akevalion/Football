@@ -40,9 +40,11 @@ TablePointsOfSeasonPresenter >> initializeIndexColumn [
 			title: '#';
 			beNotExpandable;
 			evaluated: [ :e | (table items indexOf: e) asString ];
-			displayColor: [ :teamStatsCalculator | self teamStringTableColor: teamStatsCalculator ];
-			displayBold: [ :teamStatsCalculator |self doesTeamHasARelevantposition: teamStatsCalculator];
-			width: 30
+			displayColor: [ :teamStatsCalculator |
+				self teamStringTableColor: teamStatsCalculator ];
+			displayBold: [ :teamStatsCalculator |
+				self doesTeamHasARelevantposition: teamStatsCalculator];
+			width: 30;
 			yourself)
 ]
 
@@ -55,7 +57,8 @@ TablePointsOfSeasonPresenter >> initializeNameColumn [
 			evaluated: #teamName;
 			width: 30;
 			displayColor: [ :teamStatsCalculator | self teamStringTableColor: teamStatsCalculator ];
-			displayBold: [ :teamStatsCalculator |self doesTeamHasARelevantposition: teamStatsCalculator ])
+			displayBold: [ :teamStatsCalculator |self doesTeamHasARelevantposition: teamStatsCalculator ];
+			yourself)
 ]
 
 { #category : #utilities }
