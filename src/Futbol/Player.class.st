@@ -78,19 +78,6 @@ Player >> id: anObject [
 	id:= anObject
 ]
 
-{ #category : #inspector }
-Player >> inspectorStats [
-	<inspectorPresentationOrder: 90 title: 'Stats'>
-	^ SpPlayerStatsPresenter new
-		player: self;
-		yourself
-]
-
-{ #category : #inspector }
-Player >> inspectorStatsContext: context [
-	context withoutEvaluator
-]
-
 { #category : #accessing }
 Player >> player_api_id [
 	^ player_api_id

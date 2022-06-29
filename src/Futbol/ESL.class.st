@@ -82,15 +82,6 @@ ESL class >> zipPath [
 	^ './pharo-local/iceberg/akevalion/Futbol/data/soccer-csv.zip'
 ]
 
-{ #category : #inspector }
-ESL >> inspectorLeagueList [
-	<inspectorPresentationOrder: 1 title: 'Leagues'>
-	^ SpListPresenter new
-		items: self leagues;
-		yourself
-	
-]
-
 { #category : #accessing }
 ESL >> leagues [
 	

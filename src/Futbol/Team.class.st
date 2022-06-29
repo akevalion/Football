@@ -49,37 +49,6 @@ Team >> id: anObject [
 	id:= anObject
 ]
 
-{ #category : #inspector }
-Team >> inspectorMatches [
-	"<inspectorPresentationOrder: 1 title: 'Matches'>"
-	^ SpTablePresenter new
-		addColumn: (SpIndexTableColumn new 
-			title: '#';
-			beNotExpandable;
-			width: 30
-			yourself);
-		addColumn: (SpStringTableColumn new  
-			title: 'Matches';
-			evaluated: #yourself;
-			yourself);
-		items: self matches;
-		yourself
-
-]
-
-{ #category : #inspector }
-Team >> inspectorTablePerformance [
-
-	<inspectorPresentationOrder: 1 title: 'Performance All Time'>
-	^ TeamTablePerformancePresenter on: self teamEvolutionData
-]
-
-{ #category : #inspector }
-Team >> inspectorTablePerformanceContext: aContext [
-
-	aContext withoutEvaluator
-]
-
 { #category : #'accessing - decorators' }
 Team >> matches [
 	^ matches ifNil: [ matches := self computeMatches ]
@@ -90,7 +59,7 @@ Team >> printOn: stream [
 	stream << team_long_name
 ]
 
-{ #category : #inspector }
+{ #category : #'accessing - computed' }
 Team >> teamEvolutionData [
 
 	^ TeamStatsCalculator fromMatches: self matches ofTeam: self team_api_id

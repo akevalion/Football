@@ -35,45 +35,6 @@ Season >> computeMatches [
 		list asSortedCollection: [ :a :b | a dateAndTime < b dateAndTime ] ]
 ]
 
-{ #category : #inspector }
-Season >> inspectorMatches [
-
-	<inspectorPresentationOrder: 1 title: 'Matches'>
-	^ SeasonMatchesTablePresenter on: self matches
-]
-
-{ #category : #inspector }
-Season >> inspectorMatchesContext: context [
-	context withoutEvaluator
-]
-
-{ #category : #inspector }
-Season >> inspectorTablePoints [
-
-	<inspectorPresentationOrder: 2 title: 'Table Points'>
-	^ TablePointsOfSeasonPresenter on: self teamEvolutionData
-]
-
-{ #category : #inspector }
-Season >> inspectorTablePointsContext: context [
-
-	context withoutEvaluator
-]
-
-{ #category : #inspector }
-Season >> inspectorTeamEvolutionLinePlot [
-
-	<inspectorPresentationOrder: 3 title: 'Teams Evolution'>
-	^ SpEvolutionLinePlotPresenter new
-		  season: self;
-		  yourself
-]
-
-{ #category : #inspector }
-Season >> inspectorTeamEvolutionLinePlotContext: context [
-	context withoutEvaluator 
-]
-
 { #category : #accessing }
 Season >> league_id [
 	^ league_id
