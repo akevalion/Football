@@ -26,14 +26,6 @@ Season >> inspectorTablePointsContext: context [
 ]
 
 { #category : #'*Futbol-Spec' }
-Season >> inspectorTeamEvolutionLinePlot [
-	<inspectorPresentationOrder: 3 title: 'Teams Evolution'>
-	^ EvolutionLinePlotBuilder new
-		season: self;
-		asPresenter
-]
-
-{ #category : #'*Futbol-Spec' }
 Season >> inspectorTeamEvolutionLinePlotContext: context [
 	context withoutEvaluator 
 ]

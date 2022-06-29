@@ -1,20 +1,21 @@
 "
-This class uses a spider/radar/kiviat visualization
+I am a roassal builder for a player object
 "
 Class {
-	#name : #SpPlayerStatsPresenter,
-	#superclass : #SpRoassal3InspectorPresenter,
+	#name : #PlayerStatsBuilder,
+	#superclass : #RSAbstractContainerBuilder,
 	#instVars : [
 		'player',
+		'stats',
 		'title',
 		'animatedPolygon',
 		'polygonAndDots'
 	],
-	#category : #'Futbol-Spec-Core'
+	#category : #'Futbol-Roassal'
 }
 
 { #category : #animation }
-SpPlayerStatsPresenter >> addAnimationButtonIn: kiviat stats: list [
+PlayerStatsBuilder >> addAnimationButtonIn: kiviat [
 	| icon label button setValues c |
 	c := kiviat canvas.
 	icon := RSBitmap new.
@@ -35,7 +36,7 @@ SpPlayerStatsPresenter >> addAnimationButtonIn: kiviat stats: list [
 	button padding: 5.
 	button when: RSMouseClick do: [ :evt |
 		label text = 'Play Evolution' 
-			ifTrue: [ self playEvolutionAnimation: kiviat stats: list ]
+			ifTrue: [ self playEvolutionAnimation: kiviat ]
 			ifFalse: [ self stopEvolutionAnimation: kiviat ].
 		setValues value.
 		evt signalUpdate ].
@@ -47,12 +48,12 @@ SpPlayerStatsPresenter >> addAnimationButtonIn: kiviat stats: list [
 	c addShape: button
 ]
 
-{ #category : #building }
-SpPlayerStatsPresenter >> computePolygonDots: kiviat stats: list [
+{ #category : #hooks }
+PlayerStatsBuilder >> computePolygonDots: kiviat [
 	| c |
 	c := kiviat container.
 	polygonAndDots := OrderedCollection new.
-	kiviat polygonShapes with: list do: [ :polygon :stat | | dots |
+	kiviat polygonShapes with: stats do: [ :polygon :stat | | dots |
 		polygon pushFront.
 		polygonAndDots add: polygon.
 		dots := polygon points with: stat dataArray collect: [ :point :value |
@@ -64,21 +65,25 @@ SpPlayerStatsPresenter >> computePolygonDots: kiviat stats: list [
 				position: point+polygon position;
 				yourself ].
 		c addAll: dots.
-		polygonAndDots addAll: dots.
-		 ].
+		polygonAndDots addAll: dots ].
+]
+
+{ #category : #'accessing - defaults' }
+PlayerStatsBuilder >> defaultContainer [
+	^ RSCanvas new @ RSCanvasController
 ]
 
 { #category : #animation }
-SpPlayerStatsPresenter >> newAnimationFor: fromShape index: index shapes: shapes stats: list [
-	| k toShape |
+PlayerStatsBuilder >> newAnimationFor: fromShape index: index shapes: polygonShapes [
+		| k toShape |
 	k := index + 1.
-	k > shapes size ifTrue: [ k := 1 ].
-	toShape := shapes at: k.
+	k > polygonShapes size ifTrue: [ k := 1 ].
+	toShape := polygonShapes at: k.
 	
-	^ canvas transitionAnimation
+	^ title canvas transitionAnimation
 		duration: 1 seconds;
 		easing: RSEasingInterpolator expIn;
-		when: RSAnimationEndEvent do: [ :evt | title text: (list at: k) dateAndTime asDate ];
+		when: RSAnimationEndEvent do: [ :evt | title text: (stats at: k) dateAndTime asDate ];
 		onStepDo: [ :t |
 			animatedPolygon 
 				privatePoints: (fromShape points with: toShape points 
@@ -91,63 +96,68 @@ SpPlayerStatsPresenter >> newAnimationFor: fromShape index: index shapes: shapes
 			animatedPolygon signalUpdate ]
 ]
 
-{ #category : #building }
-SpPlayerStatsPresenter >> newCanvas [
-	| list kiviat c |
-	c := RSCanvas new.
-	list := player stats.
-	list ifEmpty: [ 
-		c add: (RSLabel text: 'No player information').
-		^ c ].
-	kiviat := RSKiviat new.
-	list do: [ :stat | kiviat addRow: stat dataArray ].
-	kiviat
+{ #category : #hooks }
+PlayerStatsBuilder >> newKiviat [
+	^ RSKiviat new
+		in: [ :kiviat | stats do: [ :stat | kiviat addRow: stat dataArray ] ];
 		axisNames: PlayerAttributes axisNames;
 		usePolygonBorder;
-		container: c;
 		maxValue: 100;
 		minValue: 0;
-		build.
-	kiviat labels do: [ :lbl | lbl color: Color black ].
-	self computePolygonDots: kiviat stats: list.
-	self addAnimationButtonIn: kiviat stats: list.
-	c @ RSCanvasController.
-	^ c
+		yourself
+		
 ]
 
 { #category : #animation }
-SpPlayerStatsPresenter >> playEvolutionAnimation: kiviat stats: list [
-	| c animations shapes animation |
+PlayerStatsBuilder >> playEvolutionAnimation: kiviat [
+	| c animations polygonShapes animation |
 	c := kiviat canvas.
-	shapes := kiviat polygonShapes.
+	polygonShapes := kiviat polygonShapes.
 	animatedPolygon := RSPolygon new withBorder.
 	title := RSLabel new
 		color: Color black;
-		text: list first dateAndTime asDate;
+		text: stats first dateAndTime asDate;
 		fontSize: 20;
 		yourself.
 	c add: title.
 	c add: animatedPolygon.
-	RSLocation new above; offset: 0@ -20; move: title on: canvas shapes.
+	RSLocation new above; offset: 0@ -20; move: title on: c shapes.
 	"because 2"
 	polygonAndDots do: #remove.
 	
 	animations := kiviat polygonShapes collectWithIndex: [:fromShape :index |
-		self newAnimationFor: fromShape index: index shapes: kiviat polygonShapes stats: list ].
-	animation := canvas animationFrom: animations.
+		self newAnimationFor: fromShape index: index shapes: polygonShapes ].
+	animation := c animationFrom: animations.
 	animation repeat.
 	c signalUpdate.
 	
 ]
 
 { #category : #accessing }
-SpPlayerStatsPresenter >> player: aPlayer [
+PlayerStatsBuilder >> player: aPlayer [
 	player := aPlayer.
-	self canvas: self newCanvas
+	stats := player stats.
+]
+
+{ #category : #hooks }
+PlayerStatsBuilder >> renderIn: aCanvas [
+	| kiviat |
+	stats ifEmpty: [ 
+		aCanvas add: (RSLabel text: 'No player information').
+		^ self.
+	].
+	kiviat := self newKiviat.
+	kiviat container: aCanvas.
+	kiviat build.
+	kiviat labels do: [ :lbl | lbl color: Color black ].
+	self computePolygonDots: kiviat.
+	self addAnimationButtonIn: kiviat.
+	
+	
 ]
 
 { #category : #animation }
-SpPlayerStatsPresenter >> stopEvolutionAnimation: kiviat [
+PlayerStatsBuilder >> stopEvolutionAnimation: kiviat [
 	| c |
 	c := kiviat canvas.
 	c animations do: #stop.
