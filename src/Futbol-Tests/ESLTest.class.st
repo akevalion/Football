@@ -4,7 +4,7 @@ An ESLTest is a test class for testing the behavior of ESL
 Class {
 	#name : #ESLTest,
 	#superclass : #TestCase,
-	#category : #'Futbol-Tests'
+	#category : #'Futbol-Tests-Core'
 }
 
 { #category : #accessing }
