@@ -49,6 +49,11 @@ ESLTest >> testHomeDirectory [
 ]
 
 { #category : #tests }
+ESLTest >> testLeaguesMap [
+	self assert: ESL new inspectorLeaguesMap isPresenter
+]
+
+{ #category : #tests }
 ESLTest >> testZipPath [
 	self assert: ESL zipPath isString
 ]

@@ -9,7 +9,8 @@ Class {
 		'country_id',
 		'name',
 		'seasons',
-		'teams'
+		'teams',
+		'countryName'
 	],
 	#category : #'Futbol-Entities'
 }
@@ -26,6 +27,11 @@ League class >> reStoreDefinition [
 		define: #country_id as: Integer;
 		define: #name as: (String maxSize: 100);
 		yourself.
+]
+
+{ #category : #accessing }
+League >> computeCountryName [
+	^ ESL databaseDo: [ (Country storedInstances detect: [ :country | country id = country_id ]) name ]
 ]
 
 { #category : #'accessing - computed' }
@@ -47,6 +53,11 @@ League >> computeTeams [
 			satisfying: [ :match | match league_id = self id ])
 			project: [ :match | match home_team_api_id ].
 		Team storedInstances select: [:team | teamIDs includes: team team_api_id ] ]
+]
+
+{ #category : #accessing }
+League >> countryName [
+	^ countryName ifNil: [ countryName := self computeCountryName ]
 ]
 
 { #category : #accessing }
