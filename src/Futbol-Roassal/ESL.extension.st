@@ -7,3 +7,8 @@ ESL >> inspectorLeaguesMap [
 		leagues: self leagues;
 		asPresenter
 ]
+
+{ #category : #'*Futbol-Roassal' }
+ESL >> inspectorLeaguesMapContext: context [
+	context withoutEvaluator
+]
