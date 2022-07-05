@@ -255,13 +255,17 @@ ESLMap >> europeShape [
 { #category : #hooks }
 ESLMap >> flagPaintFor: path [
 
-	| form paint name selector |
+	| form paint name selector point newScale |
 	name := path model countryName asLowercase.
 	selector := (name, 'Icon') asSymbol.
 	(self class class canUnderstand: selector)
 		ifFalse: [ self downloadAndSaveIcon: name ].
 	form := selector value: self class.
-	form := form scaledToSize: form extent x * form extent x @ path extent y.
+	point := form extent / path extent.
+	newScale := point x < point y 
+		ifTrue: [ path extent x @ (form extent y * form extent y) ]
+		ifFalse: [ form extent x * form extent x @ path extent y].
+	form := form scaledToSize: newScale.
 	paint := (AthensCairoPatternSurfacePaint 
 		createForSurface: (AthensCairoSurface fromForm: form)).
 	paint origin: (form extent / 2) negated.
