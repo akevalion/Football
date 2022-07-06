@@ -9,7 +9,7 @@ Season >> inspectorTablePointsContext: context [
 { #category : #'*Futbol-Roassal' }
 Season >> inspectorTeamEvolutionLinePlot [
 	<inspectorPresentationOrder: 3 title: 'Teams Evolution'>
-	^ EvolutionLinePlotBuilder new
+	^ EvolutionLinePlotVisualization new
 		season: self;
 		asPresenter
 ]

@@ -4,7 +4,7 @@ Extension { #name : #Match }
 Match >> inspectorMatchField [
 	<inspectorPresentationOrder: 90 title: 'Players'>
 	
-	^ MatchFieldBuilder new
+	^ MatchFieldVisualization new
 		match: self;
 		asPresenter
 ]

@@ -3,7 +3,7 @@ Extension { #name : #ESL }
 { #category : #'*Futbol-Roassal' }
 ESL >> inspectorLeaguesMap [
 	<inspectorPresentationOrder: 1 title: 'Map'>
-	^ ESLMap new
+	^ ESLMapVisualization new
 		leagues: self leagues;
 		asPresenter
 ]

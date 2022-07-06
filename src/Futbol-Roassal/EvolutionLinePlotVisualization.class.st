@@ -2,7 +2,7 @@
 Used to create a custom chart 
 "
 Class {
-	#name : #EvolutionLinePlotBuilder,
+	#name : #EvolutionLinePlotVisualization,
 	#superclass : #RSAbstractContainerBuilder,
 	#instVars : [
 		'season',
@@ -12,7 +12,7 @@ Class {
 }
 
 { #category : #hooks }
-EvolutionLinePlotBuilder >> addLegendInteractions: lb plots: plots [
+EvolutionLinePlotVisualization >> addLegendInteractions: lb plots: plots [
 	| highlight |
 	"highlight := RSHighlightable color: Smalltalk ui theme selectionColor."
 	highlight := RSHighlightable new.
@@ -39,24 +39,24 @@ EvolutionLinePlotBuilder >> addLegendInteractions: lb plots: plots [
 ]
 
 { #category : #hooks }
-EvolutionLinePlotBuilder >> chartExtent [
+EvolutionLinePlotVisualization >> chartExtent [
 	^ 380@(380*9/16)
 ]
 
 { #category : #'accessing - defaults' }
-EvolutionLinePlotBuilder >> defaultContainer [
+EvolutionLinePlotVisualization >> defaultContainer [
 	^ RSCanvas new @ RSGradientBackground
 ]
 
 { #category : #hooks }
-EvolutionLinePlotBuilder >> labelsColorInBlack: aCanvas [
+EvolutionLinePlotVisualization >> labelsColorInBlack: aCanvas [
 	aCanvas shapes 
 		select: [ :shape | shape isLabel ]
 		thenDo: [ :shape | shape color: Color black ]
 ]
 
 { #category : #'private - layout' }
-EvolutionLinePlotBuilder >> layout: lb [
+EvolutionLinePlotVisualization >> layout: lb [
 
 	lb legendDo: [ :shape | 
 		| delta groups |
@@ -79,7 +79,7 @@ EvolutionLinePlotBuilder >> layout: lb [
 ]
 
 { #category : #hooks }
-EvolutionLinePlotBuilder >> newEvolutionLineChart [
+EvolutionLinePlotVisualization >> newEvolutionLineChart [
 	| chart x popup |
 	chart := RSChart new.
 	popup := RSPopupDecoration new.
@@ -109,7 +109,7 @@ EvolutionLinePlotBuilder >> newEvolutionLineChart [
 ]
 
 { #category : #hooks }
-EvolutionLinePlotBuilder >> newHorizontalTick [
+EvolutionLinePlotVisualization >> newHorizontalTick [
 	^ RSHorizontalTick new
 		in: [ :tick | 
 			tick shape width: 0.5.
@@ -121,7 +121,7 @@ EvolutionLinePlotBuilder >> newHorizontalTick [
 ]
 
 { #category : #hooks }
-EvolutionLinePlotBuilder >> newVerticalTick [
+EvolutionLinePlotVisualization >> newVerticalTick [
 	^ RSVerticalTick new 
 		in: [ :tick | 
 			tick shape width: 0.5.
@@ -134,7 +134,7 @@ EvolutionLinePlotBuilder >> newVerticalTick [
 ]
 
 { #category : #hooks }
-EvolutionLinePlotBuilder >> renderIn: aCanvas [
+EvolutionLinePlotVisualization >> renderIn: aCanvas [
 	| chart |
 	chart := self newEvolutionLineChart.
 	chart container: aCanvas.
@@ -144,7 +144,7 @@ EvolutionLinePlotBuilder >> renderIn: aCanvas [
 ]
 
 { #category : #hooks }
-EvolutionLinePlotBuilder >> renderLegendWith: chart [
+EvolutionLinePlotVisualization >> renderLegendWith: chart [
 	| lb index |
 	lb := RSLegend new.
 	lb container: chart container.
@@ -169,12 +169,12 @@ EvolutionLinePlotBuilder >> renderLegendWith: chart [
 ]
 
 { #category : #accessing }
-EvolutionLinePlotBuilder >> season: aSeason [
+EvolutionLinePlotVisualization >> season: aSeason [
 	season := aSeason.
 	teams := season teamEvolutionData
 ]
 
 { #category : #accessing }
-EvolutionLinePlotBuilder >> theme [
+EvolutionLinePlotVisualization >> theme [
 	^ Smalltalk ui theme
 ]

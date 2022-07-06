@@ -2,7 +2,7 @@
 I can draw a match field with each player position
 "
 Class {
-	#name : #MatchFieldBuilder,
+	#name : #MatchFieldVisualization,
 	#superclass : #RSAbstractContainerBuilder,
 	#instVars : [
 		'palette',
@@ -14,7 +14,7 @@ Class {
 }
 
 { #category : #hooks }
-MatchFieldBuilder >> createAwayPlayers [
+MatchFieldVisualization >> createAwayPlayers [
 	| players layers |
 	awayPlayers := self playersFrom: 'away'.
 	players := awayPlayers collect: [ :player | 
@@ -37,7 +37,7 @@ MatchFieldBuilder >> createAwayPlayers [
 ]
 
 { #category : #hooks }
-MatchFieldBuilder >> createHomePlayers [
+MatchFieldVisualization >> createHomePlayers [
 	| players layers |
 	homePlayers := self playersFrom: 'home'.
 	players := homePlayers collect: [ :player | 
@@ -59,15 +59,18 @@ MatchFieldBuilder >> createHomePlayers [
 ]
 
 { #category : #hooks }
-MatchFieldBuilder >> createPlayerShapeFor: aDrawablePlayer [
-	| size circle name label box |
+MatchFieldVisualization >> createPlayerShapeFor: aDrawablePlayer [
+	| size circle name label box model |
+	model := aDrawablePlayer asPlayer.
 	size := 30.
 	circle := RSEllipse new
 		size: size*0.75;
+		model: model;
 		yourself.
 	label := RSLabel new
 		color: 'black';
 		text: aDrawablePlayer lastName;
+		model: model;
 		fontSize: 15;
 		position: 0 @ size *0.75;
 		yourself.
@@ -77,16 +80,15 @@ MatchFieldBuilder >> createPlayerShapeFor: aDrawablePlayer [
 		color: Color white translucent;
 		yourself.
 	name := { box. label } asShape.
-		
+	
 	^ { circle } asShape
-		model: aDrawablePlayer asPlayer;
 		propertyAt: #drawablePlayer put: aDrawablePlayer;
 		add: name;
 		yourself
 ]
 
 { #category : #hooks }
-MatchFieldBuilder >> date [
+MatchFieldVisualization >> date [
 	^ RSLabel new
 		text: (Date fromString: match date);
 		color: 'black';
@@ -95,18 +97,18 @@ MatchFieldBuilder >> date [
 ]
 
 { #category : #'accessing - defaults' }
-MatchFieldBuilder >> defaultContainer [
+MatchFieldVisualization >> defaultContainer [
 	^ RSCanvas new @ RSCanvasController
 ]
 
 { #category : #initialization }
-MatchFieldBuilder >> initialize [
+MatchFieldVisualization >> initialize [
 	super initialize.
 	palette := RSColorPalette diverging rdylbu10.
 ]
 
 { #category : #'private - layout' }
-MatchFieldBuilder >> layoutPlayers [
+MatchFieldVisualization >> layoutPlayers [
 	RSHorizontalLineLayout new
 		alignMiddle;
 		gapSize: 40;
@@ -114,12 +116,12 @@ MatchFieldBuilder >> layoutPlayers [
 ]
 
 { #category : #accessing }
-MatchFieldBuilder >> match: aMatch [
+MatchFieldVisualization >> match: aMatch [
 	match := aMatch
 ]
 
 { #category : #hooks }
-MatchFieldBuilder >> playersFrom: aString [
+MatchFieldVisualization >> playersFrom: aString [
 	| selector selectorX selectorY |
 	selector := aString , '_player_'.
 	selectorX := aString , '_player_X'.
@@ -137,7 +139,7 @@ MatchFieldBuilder >> playersFrom: aString [
 ]
 
 { #category : #hooks }
-MatchFieldBuilder >> renderIn: aCanvas [
+MatchFieldVisualization >> renderIn: aCanvas [
 	| field r1 titleAndDate |
 	homePlayers := self createHomePlayers.
 	awayPlayers := self createAwayPlayers.
@@ -160,12 +162,12 @@ MatchFieldBuilder >> renderIn: aCanvas [
 ]
 
 { #category : #'accessing - defaults' }
-MatchFieldBuilder >> soccerField [
+MatchFieldVisualization >> soccerField [
 	^ RSSVGImporter fromString: self soccerFieldString
 ]
 
 { #category : #'accessing - defaults' }
-MatchFieldBuilder >> soccerFieldString [
+MatchFieldVisualization >> soccerFieldString [
 	^ '<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" 
   "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
@@ -193,7 +195,7 @@ MatchFieldBuilder >> soccerFieldString [
 ]
 
 { #category : #hooks }
-MatchFieldBuilder >> title [
+MatchFieldVisualization >> title [
 	| labelHome labelAway hyphen |
 	labelHome := RSLabel new
 		text: match homeName, ' (', match home_team_goal asString, ')';
@@ -217,7 +219,7 @@ MatchFieldBuilder >> title [
 ]
 
 { #category : #hooks }
-MatchFieldBuilder >> titleAndDate [
+MatchFieldVisualization >> titleAndDate [
 	| title date |
 	title := self title.
 	date := self date.

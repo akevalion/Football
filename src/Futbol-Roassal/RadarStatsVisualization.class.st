@@ -2,20 +2,21 @@
 I am an abstract class to create a radar visualization
 "
 Class {
-	#name : #AbstractStatsBuilder,
+	#name : #RadarStatsVisualization,
 	#superclass : #RSAbstractContainerBuilder,
 	#instVars : [
 		'stats',
 		'title',
 		'animatedPolygon',
 		'polygonAndDots',
-		'model'
+		'model',
+		'axisNames'
 	],
 	#category : #'Futbol-Roassal'
 }
 
 { #category : #animation }
-AbstractStatsBuilder >> addAnimationButtonIn: kiviat [
+RadarStatsVisualization >> addAnimationButtonIn: kiviat [
 	| icon label button setValues c |
 	c := kiviat canvas.
 	icon := RSBitmap new.
@@ -49,12 +50,17 @@ AbstractStatsBuilder >> addAnimationButtonIn: kiviat [
 ]
 
 { #category : #accessing }
-AbstractStatsBuilder >> axisNames [
-	^ self subclassResponsibility
+RadarStatsVisualization >> axisNames [
+	^ axisNames
+]
+
+{ #category : #accessing }
+RadarStatsVisualization >> axisNames: aCollection [
+	axisNames := aCollection
 ]
 
 { #category : #hooks }
-AbstractStatsBuilder >> computePolygonDots: kiviat [
+RadarStatsVisualization >> computePolygonDots: kiviat [
 	| c |
 	c := kiviat container.
 	polygonAndDots := OrderedCollection new.
@@ -74,18 +80,18 @@ AbstractStatsBuilder >> computePolygonDots: kiviat [
 ]
 
 { #category : #'accessing - defaults' }
-AbstractStatsBuilder >> defaultContainer [
+RadarStatsVisualization >> defaultContainer [
 	^ RSCanvas new @ RSCanvasController
 ]
 
 { #category : #accessing }
-AbstractStatsBuilder >> model: anObject [
+RadarStatsVisualization >> model: anObject [
 	model := anObject.
 	stats := model stats.
 ]
 
 { #category : #animation }
-AbstractStatsBuilder >> newAnimationFor: fromShape index: index shapes: polygonShapes [
+RadarStatsVisualization >> newAnimationFor: fromShape index: index shapes: polygonShapes [
 		| k toShape |
 	k := index + 1.
 	k > polygonShapes size ifTrue: [ k := 1 ].
@@ -108,7 +114,7 @@ AbstractStatsBuilder >> newAnimationFor: fromShape index: index shapes: polygonS
 ]
 
 { #category : #hooks }
-AbstractStatsBuilder >> newKiviat [
+RadarStatsVisualization >> newKiviat [
 	^ RSKiviat new
 		in: [ :kiviat | stats do: [ :stat | kiviat addRow: stat dataArray ] ];
 		axisNames: self axisNames;
@@ -119,7 +125,7 @@ AbstractStatsBuilder >> newKiviat [
 ]
 
 { #category : #animation }
-AbstractStatsBuilder >> playEvolutionAnimation: kiviat [
+RadarStatsVisualization >> playEvolutionAnimation: kiviat [
 	| c animations polygonShapes animation |
 	c := kiviat canvas.
 	polygonShapes := kiviat polygonShapes.
@@ -144,7 +150,7 @@ AbstractStatsBuilder >> playEvolutionAnimation: kiviat [
 ]
 
 { #category : #hooks }
-AbstractStatsBuilder >> renderIn: aCanvas [
+RadarStatsVisualization >> renderIn: aCanvas [
 	| kiviat |
 	stats ifEmpty: [ 
 		aCanvas add: (RSLabel text: 'No information').
@@ -161,7 +167,7 @@ AbstractStatsBuilder >> renderIn: aCanvas [
 ]
 
 { #category : #animation }
-AbstractStatsBuilder >> stopEvolutionAnimation: kiviat [
+RadarStatsVisualization >> stopEvolutionAnimation: kiviat [
 	| c |
 	c := kiviat canvas.
 	c animations do: #stop.
