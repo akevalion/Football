@@ -211,17 +211,21 @@ ESLMap >> createEuropeanCountry: name [
 	path := RSSVGPath new.
 	path border: (RSBorder new color: Color white; width: 1).
 	league := self leagueByCountryName: name.
-	path @ RSPopup theme.
+	
 	path svgPath: (name asSymbol value: self class).
 	path extent: path extent * 10.
 	path position: path position * 10.
-	path model: name.
 	
 	path color: (Color veryLightGray alpha:0.7).
-	league ifNotNil: [ 
+	
+	league ifNil: [ 
+		path @ (RSPopup themeText: name).
+	] ifNotNil: [
+		path @ RSPopup theme.
 		path border color: Color black.
 		path model: league.
 		path paint: (self flagPaintFor: path) ].
+	
 	^ path
 ]
 

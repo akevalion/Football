@@ -138,7 +138,7 @@ MatchFieldBuilder >> playersFrom: aString [
 
 { #category : #hooks }
 MatchFieldBuilder >> renderIn: aCanvas [
-	| field r1 title dateLabel |
+	| field r1 titleAndDate |
 	homePlayers := self createHomePlayers.
 	awayPlayers := self createAwayPlayers.
 	field := self soccerField.
@@ -148,16 +148,14 @@ MatchFieldBuilder >> renderIn: aCanvas [
 	r1 := aCanvas nodes encompassingRectangle.
 	field position: r1 floatCenter.
 	field scaleBy: (r1 width / field width) * 1.1.
-	title := self title.
-	dateLabel := self date.
-	r1 width > r1 height ifTrue: [ 
+	titleAndDate := self titleAndDate.
+	r1 width > r1 height ifTrue: [
 		aCanvas add: field.
 		field pushBack
 	] ifFalse: [ field := (0@20) asMargin expandRectangle: aCanvas encompassingRectangle. ].
 	RSLocation new 
-		above; move: title on: field;
-		below; move: dateLabel on: field.
-	aCanvas addAll: {title. dateLabel}.
+		above; move: titleAndDate on: field.
+	aCanvas add: titleAndDate.
 	
 ]
 
@@ -196,9 +194,35 @@ MatchFieldBuilder >> soccerFieldString [
 
 { #category : #hooks }
 MatchFieldBuilder >> title [
-	^ RSLabel new
-		text: match asString;
+	| labelHome labelAway hyphen |
+	labelHome := RSLabel new
+		text: match homeName, ' (', match home_team_goal asString, ')';
+		color: 'black';
+		model: match homeTeam;
+		fontSize: 20;
+		yourself.
+	hyphen := (RSLabel text: ' - ')
 		color: 'black';
 		fontSize: 20;
-		yourself
+		yourself.
+		
+	labelAway := RSLabel new
+		text: '(', match away_team_goal asString, ') ', match awayName;
+		model: match awayTeam;
+		color: 'black';
+		fontSize: 20;
+		yourself.
+	RSHorizontalLineLayout on: { labelHome. hyphen. labelAway }.
+	^ { labelHome. hyphen. labelAway } asShape.
+]
+
+{ #category : #hooks }
+MatchFieldBuilder >> titleAndDate [
+	| title date |
+	title := self title.
+	date := self date.
+	RSVerticalLineLayout new
+		alignCenter;
+		on: { title. date }.
+	^ { title. date } asShape.
 ]

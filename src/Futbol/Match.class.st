@@ -122,7 +122,9 @@ Class {
 		'BSA',
 		'dateAndTime',
 		'homeName',
-		'awayName'
+		'awayName',
+		'awayTeam',
+		'homeTeam'
 	],
 	#category : #'Futbol-Entities'
 }
@@ -563,6 +565,11 @@ Match >> awayName: aString [
 	awayName := aString
 ]
 
+{ #category : #'accessing - computed' }
+Match >> awayTeam [
+	^ awayTeam ifNil: [ awayTeam := self team: away_team_api_id ] 
+]
+
 { #category : #accessing }
 Match >> away_player_1 [
 	^ away_player_1
@@ -996,6 +1003,11 @@ Match >> homeName [
 { #category : #'accessing - computed' }
 Match >> homeName: aString [
 	homeName := aString
+]
+
+{ #category : #'accessing - computed' }
+Match >> homeTeam [
+	^ homeTeam ifNil: [ homeTeam := self team: home_team_api_id ] 
 ]
 
 { #category : #accessing }
@@ -1439,6 +1451,11 @@ Match >> stage [
 { #category : #accessing }
 Match >> stage: anObject [
 	stage:= anObject
+]
+
+{ #category : #utilities }
+Match >> team: teamId [
+	^ ESL databaseDo: [ Team storedInstances detect: [ :team | team team_api_id = teamId ] ]
 ]
 
 { #category : #utilities }
