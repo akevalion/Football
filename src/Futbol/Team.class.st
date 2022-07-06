@@ -10,7 +10,8 @@ Class {
 		'team_fifa_api_id',
 		'team_long_name',
 		'team_short_name',
-		'matches'
+		'matches',
+		'stats'
 	],
 	#category : #'Futbol-Entities'
 }
@@ -39,6 +40,12 @@ Team >> computeMatches [
 				| (match away_team_api_id = team_api_id) ] ]
 ]
 
+{ #category : #'accessing - computed' }
+Team >> computeStats [
+	^ (ESL databaseDo: [ TeamAttributes storedInstances
+		select: [ :each | each team_api_id = team_api_id ] ]) asSortedCollection: #dateAndTime ascending.
+]
+
 { #category : #accessing }
 Team >> id [
 	^ id
@@ -57,6 +64,11 @@ Team >> matches [
 { #category : #printing }
 Team >> printOn: stream [
 	stream << team_long_name
+]
+
+{ #category : #'accessing - computed' }
+Team >> stats [
+	^ stats ifNil: [ stats := self computeStats ]
 ]
 
 { #category : #'accessing - computed' }

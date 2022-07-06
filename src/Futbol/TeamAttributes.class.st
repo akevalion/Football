@@ -29,10 +29,24 @@ Class {
 		'defenceAggressionClass',
 		'defenceTeamWidth',
 		'defenceTeamWidthClass',
-		'defenceDefenderLineClass'
+		'defenceDefenderLineClass',
+		'dateAndTime'
 	],
 	#category : #'Futbol-Entities'
 }
+
+{ #category : #public }
+TeamAttributes class >> axisNames [
+	^ #(buildUpPlaySpeed
+buildUpPlayDribbling
+buildUpPlayPassing
+chanceCreationPassing
+chanceCreationCrossing
+chanceCreationShooting
+defencePressure
+defenceAggression
+defenceTeamWidth)
+]
 
 { #category : #accessing }
 TeamAttributes class >> csvFile [
@@ -211,6 +225,13 @@ TeamAttributes >> chanceCreationShootingClass: anObject [
 	chanceCreationShootingClass:= anObject
 ]
 
+{ #category : #'accessing - computed' }
+TeamAttributes >> dataArray [
+	^ self class axisNames collect: [ :each | | value |
+		value := each value: self.
+		value ifNil: [ 0 ] ifNotNil: [ value asNumber ] ]
+]
+
 { #category : #accessing }
 TeamAttributes >> date [
 	^ date
@@ -219,6 +240,11 @@ TeamAttributes >> date [
 { #category : #accessing }
 TeamAttributes >> date: anObject [
 	date:= anObject
+]
+
+{ #category : #'accessing - computed' }
+TeamAttributes >> dateAndTime [
+	^ dateAndTime ifNil: [ dateAndTime := DateAndTime fromString: self date ]
 ]
 
 { #category : #accessing }

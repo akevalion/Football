@@ -2,7 +2,7 @@ Extension { #name : #Team }
 
 { #category : #'*Futbol-Spec' }
 Team >> inspectorMatches [
-	"<inspectorPresentationOrder: 1 title: 'Matches'>"
+	<inspectorPresentationOrder: 3 title: 'Matches of Team'>
 	^ SpTablePresenter new
 		addColumn: (SpIndexTableColumn new 
 			title: '#';
@@ -21,7 +21,7 @@ Team >> inspectorMatches [
 { #category : #'*Futbol-Spec' }
 Team >> inspectorTablePerformance [
 
-	<inspectorPresentationOrder: 1 title: 'Performance All Time'>
+	<inspectorPresentationOrder: 2 title: 'Performance All Time'>
 	^ TeamTablePerformancePresenter on: self teamEvolutionData
 ]
 

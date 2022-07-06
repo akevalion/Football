@@ -4,7 +4,7 @@ Extension { #name : #Player }
 Player >> inspectorStats [
 	<inspectorPresentationOrder: 90 title: 'Stats'>
 	^ PlayerStatsBuilder new
-		player: self;
+		model: self;
 		asPresenter
 ]
 
