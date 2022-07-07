@@ -3,7 +3,7 @@ Extension { #name : #Team }
 { #category : #'*Futbol-Roassal' }
 Team >> inspectorRadar [
 	<inspectorPresentationOrder: 1 title: 'Stats'>
-	^ RadarStatsVisualization new
+	^ AnimatedRadarStatsVisualization new
 		model: self;
 		axisNames: TeamAttributes axisNames;
 		asPresenter
