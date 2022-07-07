@@ -35,11 +35,12 @@ FutbolEntityTest >> entityClass: aClass [
 FutbolEntityTest >> testBasicAccessors [
 	| entity |
 	entity := self entityClass new.
-	self entityClass methods do: [ :met | 
-		(met selector includes: $:) 
-			ifTrue: [ entity perform: met selector with: nil ]
-			ifFalse: [ met selector value: entity ]
-	].
+	self entityClass methods
+		select: [ :met | met category = 'accessing' ]
+		thenDo: [ :met |
+			(met selector includes: $:) 
+				ifTrue: [ entity perform: met selector with: nil ]
+				ifFalse: [ met selector value: entity ] ].
 ]
 
 { #category : #tests }

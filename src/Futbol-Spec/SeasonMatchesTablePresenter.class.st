@@ -89,7 +89,7 @@ SeasonMatchesTablePresenter >> outputActivationPort [
 
 	^ table outputActivationPort
 		transform: [ :selection | SpWrappedItem new 
-			selectedItem: selection selectedItem;
+			selectedItem: selection;
 			yourself ];
 		yourself
 ]

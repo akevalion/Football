@@ -29,7 +29,7 @@ League class >> reStoreDefinition [
 		yourself.
 ]
 
-{ #category : #accessing }
+{ #category : #'accessing - computed' }
 League >> computeCountryName [
 	^ ESL databaseDo: [ (Country storedInstances detect: [ :country | country id = country_id ]) name ]
 ]
@@ -55,7 +55,7 @@ League >> computeTeams [
 		Team storedInstances select: [:team | teamIDs includes: team team_api_id ] ]
 ]
 
-{ #category : #accessing }
+{ #category : #'accessing - computed' }
 League >> countryName [
 	^ countryName ifNil: [ countryName := self computeCountryName ]
 ]
@@ -95,12 +95,12 @@ League >> printOn: stream [
 	stream << name
 ]
 
-{ #category : #accessing }
+{ #category : #'accessing - computed' }
 League >> seasons [
 	^ seasons ifNil: [ seasons := self computeSeasons ]
 ]
 
-{ #category : #accessing }
+{ #category : #'accessing - computed' }
 League >> teams [
 	^ teams ifNil: [ teams := self computeTeams ]
 ]

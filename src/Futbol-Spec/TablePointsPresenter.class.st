@@ -83,9 +83,7 @@ TablePointsPresenter >> initializePresenters [
 TablePointsPresenter >> outputActivationPort [
     "^ SpActivationPort newPresenter: self"
 	^ table outputActivationPort
-		transform: [ :selection | SpWrappedItem new 
-			selectedItem: selection selectedItem asTeam;
-			yourself ];
+		transform: [ :aMatch | aMatch asTeam ];
 		yourself
 ]
 
