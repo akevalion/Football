@@ -58,8 +58,7 @@ BaselineOfFutbol >> roassal3: spec [
 
 	spec 
 		baseline: 'Roassal3' 
- 		with: [ 
-			spec
-				repository: (self class environment at: #BaselineOfPharo) roassal3Repository;
-    			loads: #( 'SVGImporter' ) ]
+ 		with: [ spec
+			repository: 'github://ObjectProfile/Roassal3';
+			loads: #( 'SVGImporter' 'default' ) ]
 ]
