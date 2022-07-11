@@ -88,10 +88,6 @@ SeasonMatchesTablePresenter >> initializeTable [
 SeasonMatchesTablePresenter >> outputActivationPort [
 
 	^ table outputActivationPort
-		transform: [ :selection | SpWrappedItem new 
-			selectedItem: selection;
-			yourself ];
-		yourself
 ]
 
 { #category : #'accessing - model' }
