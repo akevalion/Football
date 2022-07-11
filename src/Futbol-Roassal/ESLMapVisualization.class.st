@@ -231,11 +231,7 @@ ESLMapVisualization >> createEuropeanCountry: name [
 
 { #category : #'accessing - defaults' }
 ESLMapVisualization >> defaultContainer [
-	^ RSCanvas new @ (RSCanvasController new
-		in: [ :int | int configuration 
-			"minScale: 1;
-			maxScale: 10" ];
-		yourself).
+	^ RSCanvas new @ RSCanvasController
 ]
 
 { #category : #hooks }
