@@ -31,8 +31,9 @@ TeamTablePerformancePresenter >> initializeNameColumn [
 
 ]
 
-{ #category : #testing }
+{ #category : #transmission }
 TeamTablePerformancePresenter >> outputActivationPort [
+
 	^ table outputActivationPort
 		transform: [ :teamCalculator | teamCalculator asSeason ];
 		yourself
