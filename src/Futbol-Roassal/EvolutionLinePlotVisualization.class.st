@@ -89,7 +89,7 @@ EvolutionLinePlotVisualization >> newEvolutionLineChart [
 		extent: self chartExtent;
 		addDecoration: self newHorizontalTick;
 		addDecoration: self newVerticalTick;
-		title: 'Points Evolutions During Season: ', season season;
+		title: 'Points Evolution During Season: ', season season;
 		xlabel: 'Matches Played'.
 	(chart ylabel: 'Points') right.
 	
