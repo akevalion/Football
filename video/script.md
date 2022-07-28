@@ -12,10 +12,8 @@ because of these reasons, managing and interpreting information is an important 
 Especially, when we have thousands or millions of rows, its complexity can be a great problem to solve.
 
 We have created an example project. 
-********
-DATABASE
-********
 
+# DATABASE
 
 For this project we will use the selected database from data dot world. They did a great job compiling and modeling a database of some European football leagues, matches, teams and players between the years 2008 and 2016. The database is around 300 megabytes in size. It contains seven tables and thousands of rows of data. With the help of Pharo we can model and build a small application.
 In this picture you can see the relationships between the tables where Match is the table with the most columns and rows in the database
