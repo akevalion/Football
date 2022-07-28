@@ -3,7 +3,9 @@ I am an abstract class for creating a table of points. You need to extend me to 
 "
 Class {
 	#name : #TablePointsPresenter,
-	#superclass : #StInspection,
+	#superclass : #SpPresenter,
+	#traits : 'SpTActivable',
+	#classTraits : 'SpTActivable classTrait',
 	#instVars : [
 		'table',
 		'teamEvolutionData'
@@ -25,19 +27,12 @@ TablePointsPresenter >> defaultLayout [
 		yourself
 ]
 
-{ #category : #testing }
-TablePointsPresenter >> hasOutputActivationPort [
-
-	^ true
-]
-
 { #category : #initialization }
 TablePointsPresenter >> initializeColumnPairsColumns [
 
 	self columnPairs pairsDo: [ :title :selector | 
 		table addColumn: (SpStringTableColumn new
 			title: title;
-			"width: 50;"
 			evaluated: selector;
 			yourself) ]
 ]
@@ -77,14 +72,6 @@ TablePointsPresenter >> initializePresenters [
 	self initializeNameColumn.
 	self initializeColumnPairsColumns.
 	self initializeLastMatchesColumn
-]
-
-{ #category : #testing }
-TablePointsPresenter >> outputActivationPort [
-    "^ SpActivationPort newPresenter: self"
-	^ table outputActivationPort
-		transform: [ :aMatch | aMatch asTeam ];
-		yourself
 ]
 
 { #category : #'accessing - model' }

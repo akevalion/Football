@@ -9,7 +9,7 @@ Use the following incantation on you pharo image
 ```st
 Metacello new
 	baseline: 'Futbol';
-	repository: 'github://akevalion/Futbol';
+	repository: 'github://akevalion/Football';
 	onConflictUseIncoming;
 	load.
 ```

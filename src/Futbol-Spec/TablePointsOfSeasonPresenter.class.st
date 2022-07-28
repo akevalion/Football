@@ -61,6 +61,14 @@ TablePointsOfSeasonPresenter >> initializeNameColumn [
 			yourself)
 ]
 
+{ #category : #transmission }
+TablePointsOfSeasonPresenter >> outputActivationPort [
+
+	^ table outputActivationPort
+		transform: [ :aMatch | aMatch asTeam ];
+		yourself
+]
+
 { #category : #utilities }
 TablePointsOfSeasonPresenter >> teamStringTableColor: teamStatsCalculator [
 
