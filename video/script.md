@@ -24,7 +24,7 @@ First, we need to start our Pharo image. In this case, we'll use the Pharo Launc
 
 ## Talking about the Pharo Inspector
 
-Tha Pharo Inspector is a tool that allows to examine an entity, to interact with it and to see it in different presentations forms.
+Tha Pharo Inspector is a tool that allows one to examine an entity, to interact with it and to see it in different presentation forms.
 
 ## Inspecting the first object, the European Football League
 
