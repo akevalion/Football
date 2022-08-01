@@ -1,6 +1,6 @@
-# Futbol
+# Football
 
-Roassal3 soccer/futbol/football demo
+Roassal3 soccer/futbol/football demo.
 
 ## Installation
  
@@ -13,6 +13,9 @@ Metacello new
 	onConflictUseIncoming;
 	load.
 ```
+
+## Video
+https://youtu.be/69kZb5IfwT4
 
 ## Links
 - https://data.world/data-society/european-soccer-data
