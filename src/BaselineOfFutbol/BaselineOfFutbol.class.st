@@ -11,7 +11,7 @@ Class {
 BaselineOfFutbol >> baseline: spec [
 	<baseline>
 	"main repository"
-	"https://github.com/akevalion/Futbol"
+	"https://github.com/akevalion/Football"
 	spec for: #common do: [
 		spec postLoadDoIt: #generateDB.
 		
