@@ -33,6 +33,7 @@ TablePointsPresenter >> initializeColumnPairsColumns [
 	self columnPairs pairsDo: [ :title :selector | 
 		table addColumn: (SpStringTableColumn new
 			title: title;
+			width: 50;
 			evaluated: selector;
 			yourself) ]
 ]

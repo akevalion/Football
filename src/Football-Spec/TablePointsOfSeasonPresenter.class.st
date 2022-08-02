@@ -55,7 +55,6 @@ TablePointsOfSeasonPresenter >> initializeNameColumn [
 		addColumn: (SpStringTableColumn new
 			title: 'Team';
 			evaluated: #teamName;
-			width: 30;
 			displayColor: [ :teamStatsCalculator | self teamStringTableColor: teamStatsCalculator ];
 			displayBold: [ :teamStatsCalculator |self doesTeamHasARelevantposition: teamStatsCalculator ];
 			yourself)

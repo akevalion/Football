@@ -21,7 +21,6 @@ TeamTablePerformancePresenter >> initializeIndexColumn [
 
 	table addColumn: (SpStringTableColumn new 
 		title: 'Season';
-		width: 70;
 		evaluated: [ :item | item season ];
 		yourself)
 ]
