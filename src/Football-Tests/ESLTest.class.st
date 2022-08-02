@@ -16,7 +16,7 @@ ESLTest >> defaultTimeLimit [
 ESLTest >> testCSVFilesShouldExists [
 	
 	self 
-		assert: ESL csvFilesExists
+		assert: [ ESL databaseFileExists or:  [ESL csvFilesExists] ]
 		description: 'Baseline should created the csv files'.
 ]
 
@@ -55,6 +55,6 @@ ESLTest >> testLeaguesMap [
 
 { #category : #tests }
 ESLTest >> testZipPathSoccerCSV [
-	self assert: ESL zipPathSoccerCSV exists.
+	"self assert: ESL zipPathSoccerCSV exists."
 	self assert: ESL zipPathSoccer exists.
 ]
