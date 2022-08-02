@@ -4,11 +4,11 @@ Roassal3 soccer/futbol/football demo.
 
 ## Installation
  
-Use the following incantation on you pharo image
+Use the following incantation on your pharo image
 
 ```st
 Metacello new
-	baseline: 'Futbol';
+	baseline: 'Football';
 	repository: 'github://akevalion/Football';
 	onConflictUseIncoming;
 	load.
