@@ -255,6 +255,11 @@ Match class >> reStoreDefinition [
 		yourself
 ]
 
+{ #category : #public }
+Match class >> reStoreTableClass [
+	^ SSWDBTableNoTransformation
+]
+
 { #category : #accessing }
 Match >> B365A [
 	^ B365A
