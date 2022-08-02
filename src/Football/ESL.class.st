@@ -11,10 +11,10 @@ Class {
 ESL class >> connectDB [
 	ReStore
 		connection: (SSWSQLite3Connection 
-			on: (Smalltalk imageDirectory / 'futbol.db') fullName);
+			on: (Smalltalk imageDirectory / self databaseName) fullName);
 		connect;
-		addClasses: FootballEntity subclasses;
-		synchronizeAllClasses.
+		addClasses: FootballEntity subclasses";
+		synchronizeAllClasses".
 ]
 
 { #category : #public }
@@ -44,7 +44,12 @@ ESL class >> databaseDo: aFullBlockClosure [
 
 { #category : #testing }
 ESL class >> databaseFileExists [
-	^ '.' asFileReference files anySatisfy: [ :file | '*.db' match: file basename ]
+	^ ('./', self databaseName) asFileReference exists
+]
+
+{ #category : #database }
+ESL class >> databaseName [
+	^ 'football.db'
 ]
 
 { #category : #database }
@@ -67,19 +72,41 @@ ESL class >> importFromCSV [
 			 ]
 ]
 
+{ #category : #accessing }
+ESL class >> projectDirectory [
+	^ (IceRepository repositories detect: [ :each | each name = 'Football' ]) repositoryDirectory
+]
+
 { #category : #public }
 ESL class >> unZipFile [
+	"first we try to unzip soccer.zip"
+	self unZipFileFromDatabase.
+	
+	self databaseFileExists ifTrue: [ ^ self ].
 	self csvFilesExists ifTrue: [ ^  self ].
 	ZipArchive new
-		readFrom: self zipPath;
+		readFrom: self zipPathSoccerCSV;
 		extractAllTo: self csvDirectory asFileReference.
 	
 	
 ]
 
+{ #category : #public }
+ESL class >> unZipFileFromDatabase [
+	self databaseFileExists ifTrue: [ ^ self ].
+	ZipArchive new
+		readFrom: self zipPathSoccer;
+		extractAllTo: self csvDirectory asFileReference.
+]
+
 { #category : #accessing }
-ESL class >> zipPath [
-	^ './pharo-local/iceberg/akevalion/Football/data/soccer-csv.zip'
+ESL class >> zipPathSoccer [
+	^ self projectDirectory / 'data/soccer.zip'
+]
+
+{ #category : #accessing }
+ESL class >> zipPathSoccerCSV [
+	^ self projectDirectory / 'data/soccer-csv.zip'
 ]
 
 { #category : #accessing }

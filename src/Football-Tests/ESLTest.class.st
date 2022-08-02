@@ -54,6 +54,7 @@ ESLTest >> testLeaguesMap [
 ]
 
 { #category : #tests }
-ESLTest >> testZipPath [
-	self assert: ESL zipPath isString
+ESLTest >> testZipPathSoccerCSV [
+	self assert: ESL zipPathSoccerCSV exists.
+	self assert: ESL zipPathSoccer exists.
 ]
