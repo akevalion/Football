@@ -8,7 +8,7 @@ Use the following incantation on you pharo image
 
 ```st
 Metacello new
-	baseline: 'Futbol';
+	baseline: 'Football';
 	repository: 'github://akevalion/Football';
 	onConflictUseIncoming;
 	load.
