@@ -60,10 +60,6 @@ In the first inspector pane, we see a list of the available seasons.
 In the next one, we can see a list of all the teams that participated at least once in the Spanish league. There are 33 teams in total in which we can see, for example, Villareal, Real Madrid and so on.
 
 
-##slide ? Seasons, teams and players are all different objects that we navigate interactively
-
-
-
 ## Inspecting the 2015-2016 season of the Spanish league
 
 Now let's see the data of the season 2015 2016.
@@ -71,9 +67,6 @@ As a first thing, we see a list of all the matches that were played on that seas
 Note that the presentations offer special query facilities
 For example we get the list of the matches between Real Madrid and Barcelona.
 The result are the two matches that took place in this season.
-
-
-
 
 
 In the next inspector pane, we see a special table with the points and some statistics of the season.
@@ -138,7 +131,6 @@ The radar graph shows a similar shape because both of them play in similar posit
 On the other hand, the stats of a goalkeeper, as Claudio Bravo, are different from the strikers. 
 Let's select the other goalkeeper, Keylor Navas, to compare. 
 The two graphs of the goalkeepers are similar.
-
 
 ### Script queries for superusers
 Our tools are not closed.
