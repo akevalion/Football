@@ -14,7 +14,9 @@ With visualizations and inspection techniques, we will see how Roassal empower t
 
 _At the same time as the text, we will show some of the content of the database and the database diagram_
 
-For this example we use a database from data dot world. They did a great job compiling the data of the most important European football leagues between the years 2008 and 2016. The database is around 300 megabytes in size. It contains seven tables and thousands of rows of data. 
+For this example we use a database from data dot world. 
+They did a great job compiling the data of the most important European football leagues between the years 2008 and 2016. 
+The database is around 300 megabytes in size. It contains seven tables and thousands of rows of data. 
 
 This picture shows the relationships between the tables of this database. 
 Notice that Match is the main table. It has the most number of columns and rows in the database.
@@ -58,10 +60,6 @@ In the first inspector pane, we see a list of the available seasons.
 In the next one, we can see a list of all the teams that participated at least once in the Spanish league. There are 33 teams in total in which we can see, for example, Villareal, Real Madrid and so on.
 
 
-##slide ? Seasons, teams and players are all different objects that we navigate interactively
-
-
-
 ## Inspecting the 2015-2016 season of the Spanish league
 
 Now let's see the data of the season 2015 2016.
@@ -71,13 +69,10 @@ For example we get the list of the matches between Real Madrid and Barcelona.
 The result are the two matches that took place in this season.
 
 
-
-
-
 In the next inspector pane, we see a special table with the points and some statistics of the season.
 The teams colored in green are the ones that will competite in the Europa and Champions Leagues.
 The last teams colored in red are the ones that are relegated.
-The table displayes the number of matches won by each team, the goals on favor.
+The table displays the number of matches won by each team, the goals, draws, losses, etc.
 
 The third pane shows us a line graph.
 This graph shows the evolution of the points of each of the team.
@@ -102,7 +97,8 @@ And in the last pane, there is a list that shows all the matches of Barcelona fo
 Up until now, the inspector was loaded with special presentations that we already prepared for the league domain. 
 Now we want to show how to add a new one. 
 
-Let's go back to the matches list. Now, we want to examine this match in which Barcelona won 4 0 to Real Madrid.
+Let's go back to the matches list.
+Now, we want to examine this match in which Barcelona won 4 0 to Real Madrid.
 As we already say we can always access the raw data of any entity. 
 Here we see that a match has a lot of values. For example, the players, the position in the field of each player: if they are goalkeepers, strikers, the date of the match, goals that were scored, etc.
 
@@ -114,7 +110,7 @@ That's why we built a new custom visualization to show this exact same data.
 To add it to the inspector, we browse the Match class and modify this method that adds this new visualization in the inspector.
 
 ???
-The new visualization is component using roassal. 
+The new visualization component is using roassal. 
 It defines programmatically how to display field information.
 Defining it follows the same process as the other Roassal visualization. 
 It can take a couple hours to a couple of days depending on the complexity of the vizualization.
@@ -136,13 +132,18 @@ On the other hand, the stats of a goalkeeper, as Claudio Bravo, are different fr
 Let's select the other goalkeeper, Keylor Navas, to compare. 
 The two graphs of the goalkeepers are similar.
 
-
 ### Script queries for superusers
 Our tools are not closed.
 We provide super users facilities such as advanced queries.
 Let us look at one example....
-All the teams that got between 12 and: 15
+In this season let's find all the matches where goals are above 5.
+Or we can access the same information using the database.
 
+# Other projects
+
+We show how we can analyse data of the football league.
+Roassal has been used to visualize many data and complex projects
+such as large software in Java, power builder, satelite data, profilers.
 
 # CONCLUSIONS
 
