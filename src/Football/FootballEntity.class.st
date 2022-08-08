@@ -38,11 +38,6 @@ FootballEntity class >> importFromCSV [
 ]
 
 { #category : #public }
-FootballEntity class >> reStoreTableClass [
-	^ SSWDBTableNoTransformation
-]
-
-{ #category : #public }
 FootballEntity class >> utilityScript [
 	"
 string := ' '.
