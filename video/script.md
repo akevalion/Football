@@ -139,11 +139,10 @@ Let us look at one example....
 In this season let's find all the matches where goals are above 5.
 Or we can access the same information using the database.
 
-# Other projects
+# More projects
 
-We show how we can analyse data of the football league.
 Roassal has been used to visualize many data and complex projects
-such as large software in Java, power builder, satelite data, profilers.
+such as large software in Java, satelite data, profilers, 3d visualizations, etc.
 
 # CONCLUSIONS
 
