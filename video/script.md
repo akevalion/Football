@@ -70,7 +70,7 @@ The result are the two matches that took place in this season.
 
 
 In the next inspector pane, we see a special table with the points and some statistics of the season.
-The teams colored in green are the ones that will competite in the Europa and Champions Leagues.
+The teams colored in green are the ones that will compete in the Europa and Champions Leagues.
 The last teams colored in red are the ones that are relegated.
 The table displays the number of matches won by each team, the goals, draws, losses, etc.
 
@@ -141,8 +141,7 @@ Or we can access the same information using the database.
 
 # More projects
 
-Roassal has been used to visualize many data and complex projects
-such as large software in Java, satelite data, profilers, 3d visualizations, etc.
+Roassal has been used to visualize many data and complex projects such as large software in Java, satelite data, profilers, 3d visualizations, etc.
 
 # CONCLUSIONS
 
