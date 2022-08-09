@@ -7,12 +7,10 @@ We take as example the database of the European football leagues.
 # INTRODUCTION Slide 1
 
 Data analysis involves inspecting and modeling the data to discover useful information and to see patterns that are hidden at first sight.
-The visualization shows the information presenting it in a visual context making it more natural for humans.
+A visualization shows the information presenting it in a visual context making it more natural for humans.
 With visualizations and inspection techniques, we will see how Roassal empower the end-user
 
 # DATABASE Slide 2
-
-_At the same time as the text, we will show some of the content of the database and the database diagram_
 
 For this example we use a database from data dot world. 
 They did a great job compiling the data of the most important European football leagues between the years 2008 and 2016. 
@@ -139,7 +137,7 @@ Let us look at one example....
 In this season let's find all the matches where goals are above 5.
 Or we can access the same information using the database.
 
-# More projects
+# Roassal has been applied to other domains
 
 Roassal has been used to visualize many data and complex projects such as large software in Java, satelite data, profilers, 3d visualizations, etc.
 
