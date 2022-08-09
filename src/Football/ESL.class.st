@@ -4,6 +4,9 @@ The european soccer league
 Class {
 	#name : #ESL,
 	#superclass : #Object,
+	#instVars : [
+		'leagues'
+	],
 	#category : #'Football-Core'
 }
 
@@ -13,8 +16,11 @@ ESL class >> connectDB [
 		connection: (SSWSQLite3Connection 
 			on: (Smalltalk imageDirectory / self databaseName) fullName);
 		connect;
-		addClasses: FootballEntity subclasses";
-		synchronizeAllClasses".
+		in: [ :base | base connection sqlDialect instVarNameTransformation: [ :value | value ] ];
+		addClasses: FootballEntity subclasses.
+
+		
+ 
 ]
 
 { #category : #public }
@@ -110,7 +116,11 @@ ESL class >> zipPathSoccerCSV [
 ]
 
 { #category : #accessing }
-ESL >> leagues [
-	
+ESL >> computeLeagues [
 	^ self class databaseDo: [ League storedInstances asOrderedCollection ]
+]
+
+{ #category : #accessing }
+ESL >> leagues [
+	^ leagues ifNil: [ leagues := self computeLeagues ]
 ]
