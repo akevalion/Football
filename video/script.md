@@ -141,6 +141,7 @@ Or we can access the same information using the database.
 
 Roassal has been used to visualize many data and complex projects such as large software in Java, satelite data, profilers, 3d visualizations, etc.
 
+Finally those logos are from companies or groups using roassal
 # CONCLUSIONS
 
 Building customised analysis tools

@@ -25,3 +25,7 @@
 ## slide 6
 
 # Enabling dynamically special views
+
+# coclusions
+
+# If you have date and want to get more contact us
