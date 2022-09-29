@@ -15,7 +15,7 @@ Metacello new
 ```
 
 ## Video
-https://youtu.be/69kZb5IfwT4
+https://youtu.be/LOn9jVGa83c
 
 ## Links
 - https://data.world/data-society/european-soccer-data
