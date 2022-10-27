@@ -40,7 +40,9 @@ EvolutionLinePlotVisualization >> addLegendInteractions: lb plots: plots [
 
 { #category : #hooks }
 EvolutionLinePlotVisualization >> chartExtent [
-	^ 380@(380*9/16)
+	| width |
+	width := 500.
+	^ width@(width * 9/16)
 ]
 
 { #category : #'accessing - defaults' }

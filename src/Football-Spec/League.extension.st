@@ -4,9 +4,14 @@ Extension { #name : #League }
 League >> inspectorSeasonList [
 	
 	<inspectorPresentationOrder: 1 title: 'Seasons'>
-	^ SpListPresenter new 
-		items: self seasons;
-		yourself
+	^ SeasonsPresenter new 
+		seasons: self seasons;
+		asPresenter
+]
+
+{ #category : #'*Football-Spec' }
+League >> inspectorSeasonListContext: aContext [
+	aContext withoutEvaluator
 ]
 
 { #category : #'*Football-Spec' }

@@ -10,7 +10,8 @@ TeamStatsCalculator >> last5MatchesIcon [
 	RSHorizontalLineLayout new
 		gapSize: 0;
 		on: canvas nodes.
-	canvas camera position: canvas encompassingRectangle floatCenter.
-	canvas extent: 100 @ 25.
+	
+	canvas extent: 120 @ 25.
+	canvas zoomToFit.
 	^ canvas asForm
 ]

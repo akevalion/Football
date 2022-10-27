@@ -1,3 +1,6 @@
+"
+This class uses a map with flags to render some components
+"
 Class {
 	#name : #ESLMapVisualization,
 	#superclass : #RSAbstractContainerBuilder,
@@ -19,6 +22,7 @@ ESLMapVisualization >> createEuropeanCountry: countryName [
 	
 	path color: (Color veryVeryLightGray alpha: 0.7).
 	league ifNil: [ 
+		path when: RSMouseClick do: [ :evt | self inform: 'No information'].
 		path @ (RSPopup themeText: countryName) ]
 	ifNotNil: [ 
 		path @ RSPopup theme.
@@ -31,7 +35,14 @@ ESLMapVisualization >> createEuropeanCountry: countryName [
 
 { #category : #'accessing - defaults' }
 ESLMapVisualization >> defaultContainer [
-	^ RSCanvas new @ RSCanvasController
+	^ RSCanvas new @ (RSCanvasController new
+		in: [ :controller|
+			controller configuration 
+				noLegend;
+				useZoomToFitOnExtendChanged.
+			 ];
+		yourself)
+		
 ]
 
 { #category : #rendering }

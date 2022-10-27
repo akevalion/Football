@@ -30,6 +30,7 @@ RSGradientBackground >> updateBackground: evt [
 		{0->'fdfbfb'. 
 		1->'ebedee'}.
 	box fromRectangle: evt canvas visibleRectangle.
+	box extent: box extent + 20.
 	paint start: box baseRectangle origin.
 	paint stop: box baseRectangle corner.
 	box paint: paint.

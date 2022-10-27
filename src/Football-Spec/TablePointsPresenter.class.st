@@ -33,7 +33,7 @@ TablePointsPresenter >> initializeColumnPairsColumns [
 	self columnPairs pairsDo: [ :title :selector | 
 		table addColumn: (SpStringTableColumn new
 			title: title;
-			width: 50;
+			width: 30;
 			evaluated: selector;
 			yourself) ]
 ]
@@ -49,7 +49,7 @@ TablePointsPresenter >> initializeLastMatchesColumn [
 
 	table addColumn: (SpImageTableColumn new
 		title: 'Last 5 matches';
-		width: 120;
+		width: 140;
 		evaluated: #last5MatchesIcon;
 		yourself).
 ]

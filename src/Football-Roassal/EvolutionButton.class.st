@@ -41,7 +41,9 @@ EvolutionButton >> initialize [
 	super initialize.
 	isActive := false.
 	self isFixed: true.
-	label := RSLabel new.
+	label := RSLabel new
+		fontSize: 20;
+		yourself.
 	icon := RSBitmap new.
 ]
 
@@ -67,11 +69,11 @@ EvolutionButton >> mouseClick: event [
 	self isActive: self isActive not.
 ]
 
-{ #category : #rendering }
+{ #category : #adding }
 EvolutionButton >> renderOn: aCanvas [
 	super renderOn: aCanvas.
 	self state: self stopState.
-	RSHorizontalLineLayout on: { icon. label }.
+	RSHorizontalLineLayout new alignMiddle; on: { icon. label }.
 	self children: { icon. label }.
 	self adjustToChildren.
 	self addInteraction: (RSHighlightable color: Color lightGray translucent).

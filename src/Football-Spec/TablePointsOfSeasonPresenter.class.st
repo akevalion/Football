@@ -44,7 +44,7 @@ TablePointsOfSeasonPresenter >> initializeIndexColumn [
 				self teamStringTableColor: teamStatsCalculator ];
 			displayBold: [ :teamStatsCalculator |
 				self doesTeamHasARelevantposition: teamStatsCalculator];
-			width: 30;
+			width: 20;
 			yourself)
 ]
 
