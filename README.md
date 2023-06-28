@@ -2,6 +2,8 @@
 
 Roassal3 soccer/futbol/football demo.
 
+Works on Pharo 11 and Pharo 12. It probably works also on Pharo 10 but we didn't test it.
+
 ## Installation
  
 Use the following incantation on your pharo image
