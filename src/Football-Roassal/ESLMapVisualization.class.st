@@ -38,8 +38,7 @@ ESLMapVisualization >> defaultContainer [
 	^ RSCanvas new @ (RSCanvasController new
 		in: [ :controller|
 			controller configuration 
-				noLegend;
-				useZoomToFitOnExtendChanged.
+				noLegend.
 			 ];
 		yourself)
 		
