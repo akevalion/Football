@@ -17,7 +17,7 @@ jobs:
         id: tests
         uses: akevalion/PharoTestsAction@v1
         with:
-          pharo: pharo10
+          pharo: pharo11
           baseline: 'Football'
           removes-repo: 'Roassal3'
           group: 'default'
