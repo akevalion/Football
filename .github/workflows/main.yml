@@ -19,5 +19,6 @@ jobs:
         with:
           pharo: pharo11
           baseline: 'Football'
+          removes-repo: 'Roassal3'
           group: 'default'
           tests: 'Football-Tests'
