@@ -13,29 +13,29 @@ Class {
 
 { #category : #hooks }
 EvolutionLinePlotVisualization >> addLegendInteractions: lb plots: plots [
+
 	| highlight |
 	"highlight := RSHighlightable color: Smalltalk ui theme selectionColor."
 	highlight := RSHighlightable new.
-	highlight 
-		when: RSHighlightEvent do: [ :evt | 
+	highlight
+		when: RSHighlightEvent do: [ :evt |
 			| plot |
 			highlight record: evt shape selector: #color value: self theme selectionColor.
-			plot := plots detect: [:each | each line model = evt shape model ].
+			plot := plots detect: [ :each | each line model = evt shape model ].
 			plots do: [ :each | each line color: (each line color alpha: 0.1) ].
 			plot line
 				color: (plot line color alpha: 1);
 				width: 2;
-				pushFront.
-			 ];
-		when: RSUnHighlightEvent do: [ :evt | 
+				pushFront ]
+		for: self;
+		when: RSUnHighlightEvent do: [ :evt |
 			highlight restore: evt shape selector: #color.
 			plots do: [ :plot |
-				plot line 
+				plot line
 					color: (plot line color alpha: 1);
-					width: 1 ]. ].
-	lb shapes addInteraction: highlight.
-	
-	
+					width: 1 ] ]
+		for: self.
+	lb shapes addInteraction: highlight
 ]
 
 { #category : #hooks }
@@ -83,7 +83,7 @@ EvolutionLinePlotVisualization >> layout: lb [
 { #category : #hooks }
 EvolutionLinePlotVisualization >> newEvolutionLineChart [
 	| chart x popup |
-	chart := RSChart new.
+	chart := RSCompositeChart new.
 	popup := RSPopupDecoration new.
 	chart addDecoration: popup.
 	
@@ -101,7 +101,7 @@ EvolutionLinePlotVisualization >> newEvolutionLineChart [
 		y := OrderedCollection withAll: points.
 		x addFirst: 0.
 		y addFirst: 0.
-		chart addPlot: (plot := RSLinePlot new x: x y: y).
+		chart add: (plot := RSLinePlot new x: x y: y).
 		popup chartPopupBuilder
 			for: plot text: team teamName color: plot computeColor.
 	].
