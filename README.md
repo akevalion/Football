@@ -9,11 +9,12 @@ Works on Pharo 11 and Pharo 12. It probably works also on Pharo 10 but we didn't
 Use the following incantation on your pharo image
 
 ```st
-Metacello new
-	baseline: 'Football';
-	repository: 'github://akevalion/Football';
-	onConflictUseIncoming;
-	load.
+EpMonitor disableDuring: [ 
+	Metacello new
+		baseline: 'Football';
+		repository: 'github://akevalion/Football';
+		onConflictUseIncoming;
+		load ].
 ```
 
 ## Video
