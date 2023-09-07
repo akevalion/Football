@@ -2,7 +2,7 @@
 The european soccer league
 "
 Class {
-	#name : #ESL,
+	#name : #EuropeanFootballLeagues,
 	#superclass : #Object,
 	#instVars : [
 		'leagues'
@@ -11,7 +11,7 @@ Class {
 }
 
 { #category : #database }
-ESL class >> connectDB [
+EuropeanFootballLeagues class >> connectDB [
 	ReStore
 		connection: (SSWSQLite3Connection 
 			on: (Smalltalk imageDirectory / self databaseName) fullName);
@@ -24,53 +24,53 @@ ESL class >> connectDB [
 ]
 
 { #category : #public }
-ESL class >> createDatabase [
+EuropeanFootballLeagues class >> createDatabase [
 	self unZipFile.
 	self generateDB.
 ]
 
 { #category : #accessing }
-ESL class >> csvDirectory [
+EuropeanFootballLeagues class >> csvDirectory [
 	^ '.'
 ]
 
 { #category : #testing }
-ESL class >> csvFilesExists [
+EuropeanFootballLeagues class >> csvFilesExists [
 	| root |
 	root := '.' asFileReference.
 	^ (root files anySatisfy: [ :file | '*.csv' match: file basename ])
 ]
 
 { #category : #public }
-ESL class >> databaseDo: aFullBlockClosure [ 
+EuropeanFootballLeagues class >> databaseDo: aFullBlockClosure [ 
 	self connectDB.
 	^ aFullBlockClosure ensure: [ self disconnectDB ]
 	
 ]
 
 { #category : #testing }
-ESL class >> databaseFileExists [
+EuropeanFootballLeagues class >> databaseFileExists [
 	^ ('./', self databaseName) asFileReference exists
 ]
 
 { #category : #database }
-ESL class >> databaseName [
+EuropeanFootballLeagues class >> databaseName [
 	^ 'football.db'
 ]
 
 { #category : #database }
-ESL class >> disconnectDB [
+EuropeanFootballLeagues class >> disconnectDB [
 	ReStore disconnect
 ]
 
 { #category : #public }
-ESL class >> generateDB [
+EuropeanFootballLeagues class >> generateDB [
 	self databaseFileExists ifTrue: [ ^ self ].
 	self databaseDo: [ self importFromCSV ]
 ]
 
 { #category : #public }
-ESL class >> importFromCSV [
+EuropeanFootballLeagues class >> importFromCSV [
 	FootballEntity subclasses 
 		do: [ :cls | cls importFromCSV ]
 		displayingProgress: [ :cls | 
@@ -79,12 +79,12 @@ ESL class >> importFromCSV [
 ]
 
 { #category : #accessing }
-ESL class >> projectDirectory [
+EuropeanFootballLeagues class >> projectDirectory [
 	^ (IceRepository repositories detect: [ :each | each name = 'Football' ]) repositoryDirectory
 ]
 
 { #category : #public }
-ESL class >> unZipFile [
+EuropeanFootballLeagues class >> unZipFile [
 	"first we try to unzip soccer.zip"
 	self unZipFileFromDatabase.
 	
@@ -98,7 +98,7 @@ ESL class >> unZipFile [
 ]
 
 { #category : #public }
-ESL class >> unZipFileFromDatabase [
+EuropeanFootballLeagues class >> unZipFileFromDatabase [
 	self databaseFileExists ifTrue: [ ^ self ].
 	ZipArchive new
 		readFrom: self zipPathSoccer;
@@ -106,21 +106,21 @@ ESL class >> unZipFileFromDatabase [
 ]
 
 { #category : #accessing }
-ESL class >> zipPathSoccer [
+EuropeanFootballLeagues class >> zipPathSoccer [
 	^ self projectDirectory / 'data/soccer.zip'
 ]
 
 { #category : #accessing }
-ESL class >> zipPathSoccerCSV [
+EuropeanFootballLeagues class >> zipPathSoccerCSV [
 	^ self projectDirectory / 'data/soccer-csv.zip'
 ]
 
 { #category : #accessing }
-ESL >> computeLeagues [
+EuropeanFootballLeagues >> computeLeagues [
 	^ self class databaseDo: [ League storedInstances asOrderedCollection ]
 ]
 
 { #category : #accessing }
-ESL >> leagues [
+EuropeanFootballLeagues >> leagues [
 	^ leagues ifNil: [ leagues := self computeLeagues ]
 ]

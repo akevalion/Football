@@ -1455,12 +1455,12 @@ Match >> stage: anObject [
 
 { #category : #utilities }
 Match >> team: teamId [
-	^ ESL databaseDo: [ Team storedInstances detect: [ :team | team team_api_id = teamId ] ]
+	^ EuropeanFootballLeagues databaseDo: [ Team storedInstances detect: [ :team | team team_api_id = teamId ] ]
 ]
 
 { #category : #utilities }
 Match >> teamName: teamId [
-	^ ESL databaseDo: [ 
+	^ EuropeanFootballLeagues databaseDo: [ 
 		((Team storedInstances satisfying: [ :team | team team_api_id = teamId ])
 			collect: [ :team | team team_long_name ]) first ]
 ]

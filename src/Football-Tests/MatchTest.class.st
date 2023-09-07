@@ -14,7 +14,7 @@ Class {
 MatchTest >> setUp [
 	super setUp.
 	
-	match := ESL databaseDo: [ Match storedInstances detect: [ :each | each id = 24420 ] ].
+	match := EuropeanFootballLeagues databaseDo: [ Match storedInstances detect: [ :each | each id = 24420 ] ].
 ]
 
 { #category : #tests }

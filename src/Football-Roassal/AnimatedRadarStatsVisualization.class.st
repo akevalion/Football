@@ -11,9 +11,10 @@ Class {
 
 { #category : #hooks }
 AnimatedRadarStatsVisualization >> addAnimationButtonIn: aCanvas [
+
 	| button |
 	button := self createButton.
-	aCanvas when: RSExtentChangedEvent do: [ self updateButtonPosition: button ].
+	aCanvas when: RSExtentChangedEvent do: [ self updateButtonPosition: button ] for: self.
 	aCanvas add: button
 ]
 
@@ -46,25 +47,29 @@ AnimatedRadarStatsVisualization >> createButton [
 
 { #category : #animation }
 AnimatedRadarStatsVisualization >> newAnimationFor: fromShape index: index shapes: polygonShapes [
+
 	| k toShape |
 	k := index + 1.
 	k > polygonShapes size ifTrue: [ k := 1 ].
 	toShape := polygonShapes at: k.
-	
+
 	^ title canvas transitionAnimation
-		duration: 1 seconds;
-		easing: RSEasingInterpolator expIn;
-		when: RSAnimationEndEvent do: [ :evt | title text: (stats at: k) dateAndTime asDate ];
-		onStepDo: [ :t |
-			animatedPolygon 
-				privatePoints: (fromShape points with: toShape points 
-					collect: [ :p1 :p2 | p1 interpolateTo: p2 at: t ]);
-				resetPath;
-				color: (fromShape color interpolateTo: toShape color at: t);
-				position: (fromShape position interpolateTo: toShape position at: t).
-			animatedPolygon border 
-				color: (fromShape border color interpolateTo: toShape border color at: t).
-			animatedPolygon signalUpdate ]
+		  duration: 1 seconds;
+		  easing: RSEasingInterpolator expIn;
+		  when: RSAnimationEndEvent
+		  do: [ :evt | title text: (stats at: k) dateAndTime asDate ]
+		  for: self;
+		  onStepDo: [ :t |
+			  animatedPolygon
+				  privatePoints:
+					  (fromShape points with: toShape points
+						   collect: [ :p1 :p2 | p1 interpolateTo: p2 at: t ]);
+				  resetPath;
+				  color: (fromShape color interpolateTo: toShape color at: t);
+				  position: (fromShape position interpolateTo: toShape position at: t).
+			  animatedPolygon border color:
+				  (fromShape border color interpolateTo: toShape border color at: t).
+			  animatedPolygon signalUpdate ]
 ]
 
 { #category : #hooks }

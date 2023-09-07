@@ -54,7 +54,7 @@ Player >> birthday: anObject [
 
 { #category : #'accessing - computed' }
 Player >> computeStats [
-	^ (ESL databaseDo: [ PlayerAttributes storedInstances
+	^ (EuropeanFootballLeagues databaseDo: [ PlayerAttributes storedInstances
 		select: [ :each | each player_api_id = player_api_id ] ]) asSortedCollection: #dateAndTime ascending.
 ]
 

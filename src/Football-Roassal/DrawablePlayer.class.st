@@ -26,13 +26,13 @@ DrawablePlayer class >> id: id x: x y: y [
 { #category : #converting }
 DrawablePlayer >> asPlayer [
 	id ifNil: [ ^ Player nilPlayer ].
-	^ ESL databaseDo: [ Player storedInstances detect: [ :player | player player_api_id = id ] ]
+	^ EuropeanFootballLeagues databaseDo: [ Player storedInstances detect: [ :player | player player_api_id = id ] ]
 ]
 
 { #category : #accessing }
 DrawablePlayer >> computePlayerName [
 	id ifNil: [ ^ 'NO_NAME' ].
-	^ ESL databaseDo: [ 
+	^ EuropeanFootballLeagues databaseDo: [ 
 		(Player storedInstances detect: [ :player | player player_api_id = id ]) player_name
 		 ]
 ]

@@ -16,19 +16,19 @@ ESLTest >> defaultTimeLimit [
 ESLTest >> testCSVFilesShouldExists [
 	
 	self 
-		assert: [ ESL databaseFileExists or:  [ESL csvFilesExists] ]
+		assert: [ EuropeanFootballLeagues databaseFileExists or:  [EuropeanFootballLeagues csvFilesExists] ]
 		description: 'Baseline should created the csv files'.
 ]
 
 { #category : #tests }
 ESLTest >> testCreateDatabase [
-	ESL createDatabase
+	EuropeanFootballLeagues createDatabase
 ]
 
 { #category : #tests }
 ESLTest >> testDatabaseDo [
 	| list |
-	list := ESL databaseDo: [ 
+	list := EuropeanFootballLeagues databaseDo: [ 
 		(Country storedInstances select: [ :each | true ])
 		 ].
 	self assert: list notEmpty.
@@ -39,22 +39,22 @@ ESLTest >> testDatabaseDo [
 ESLTest >> testDatabaseShouldExists [
 	
 	self 
-		assert: ESL databaseFileExists
+		assert: EuropeanFootballLeagues databaseFileExists
 		description: 'Baseline should created the database'.
 ]
 
 { #category : #tests }
 ESLTest >> testHomeDirectory [
-	self assert: ESL csvDirectory isString
+	self assert: EuropeanFootballLeagues csvDirectory isString
 ]
 
 { #category : #tests }
 ESLTest >> testLeaguesMap [
-	self assert: ESL new inspectorLeaguesMap isPresenter
+	self assert: EuropeanFootballLeagues new inspectorLeaguesMap isPresenter
 ]
 
 { #category : #tests }
 ESLTest >> testZipPathSoccerCSV [
 	"self assert: ESL zipPathSoccerCSV exists."
-	self assert: ESL zipPathSoccer exists.
+	self assert: EuropeanFootballLeagues zipPathSoccer exists.
 ]

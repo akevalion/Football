@@ -14,7 +14,7 @@ Class {
 
 { #category : #'accessing - computed' }
 Season >> computeMatches [
-	^ ESL databaseDo: [
+	^ EuropeanFootballLeagues databaseDo: [
 		| list ids names |
 		list := Match storedInstances 
 			select: [ :match | 

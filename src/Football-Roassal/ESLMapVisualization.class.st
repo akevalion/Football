@@ -12,24 +12,28 @@ Class {
 
 { #category : #rendering }
 ESLMapVisualization >> createEuropeanCountry: countryName [
+
 	| league path |
 	path := RSSVGPath new.
-	path border: (RSBorder new color: Color white; width: 1; yourself).
+	path border: (RSBorder new
+			 color: Color white;
+			 width: 1;
+			 yourself).
 	league := self leagueByCountryName: countryName.
 	path svgPath: (countryName asSymbol value: ESLMapIcons).
 	path extent: path extent * 10.
 	path position: path position * 10.
-	
+
 	path color: (Color veryVeryLightGray alpha: 0.7).
-	league ifNil: [ 
-		path when: RSMouseClick do: [ :evt | self inform: 'No information'].
-		path @ (RSPopup themeText: countryName) ]
-	ifNotNil: [ 
-		path @ RSPopup theme.
-		path model: league.
-		path border color: Color black.
-		path paint: (self flagPaintFor: path)
-		 ].
+	league
+		ifNil: [
+			path when: RSMouseClick do: [ :evt | self inform: 'No information' ] for: self.
+			path @ (RSPopup themeText: countryName) ]
+		ifNotNil: [
+			path @ RSPopup theme.
+			path model: league.
+			path border color: Color black.
+			path paint: (self flagPaintFor: path) ].
 	^ path
 ]
 

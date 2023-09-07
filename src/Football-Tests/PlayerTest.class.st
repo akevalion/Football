@@ -10,7 +10,7 @@ Class {
 { #category : #tests }
 PlayerTest >> testPlayerStats [
 	| player presenter |
-	player := ESL databaseDo: [ 
+	player := EuropeanFootballLeagues databaseDo: [ 
 		Player storedInstances 
 			detect: [ :each | each player_api_id = 30981 "Messi" ] ].
 	presenter := player inspectorStats.

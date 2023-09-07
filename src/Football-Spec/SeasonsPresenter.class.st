@@ -12,9 +12,10 @@ Class {
 
 { #category : #'accessing - defaults' }
 SeasonsPresenter >> defaultContainer [
+
 	^ RSCanvas new
-		when: RSExtentChangedEvent do: [ :evt | evt canvas zoomToFit ];
-		yourself
+		  when: RSExtentChangedEvent do: [ :evt | evt canvas zoomToFit ] for: self;
+		  yourself
 ]
 
 { #category : #highlighting }

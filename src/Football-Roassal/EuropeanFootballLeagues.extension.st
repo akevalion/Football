@@ -1,7 +1,7 @@
-Extension { #name : #ESL }
+Extension { #name : #EuropeanFootballLeagues }
 
 { #category : #'*Football-Roassal' }
-ESL >> inspectorLeaguesMap [
+EuropeanFootballLeagues >> inspectorLeaguesMap [
 	<inspectorPresentationOrder: 1 title: 'Map'>
 	^ ESLMapVisualization new
 		leagues: self leagues;
@@ -10,7 +10,7 @@ ESL >> inspectorLeaguesMap [
 ]
 
 { #category : #'*Football-Roassal' }
-ESL >> inspectorLeaguesMapContext: aContext [
+EuropeanFootballLeagues >> inspectorLeaguesMapContext: aContext [
 	aContext withoutEvaluator
 	
 ]

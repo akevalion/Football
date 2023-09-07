@@ -56,7 +56,7 @@ BaselineOfFootball class >> createButton [
 		
 	{ background. playIcon. text } asGroup
 		addInteraction: high;
-		when: RSMouseClick do: [ :evt | ESL new inspect ].
+		when: RSMouseClick do: [ :evt | EuropeanFootballLeagues new inspect ].
 	
 	^ canvas createMorph.
 	
@@ -136,7 +136,7 @@ BaselineOfFootball >> baseline: spec [
 
 { #category : #postload }
 BaselineOfFootball >> generateDB [
-	(Smalltalk at: #ESL) createDatabase
+	(Smalltalk at: #EuropeanFootballLeagues) createDatabase
 ]
 
 { #category : #demo }

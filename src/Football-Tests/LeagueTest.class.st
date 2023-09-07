@@ -13,7 +13,7 @@ Class {
 { #category : #running }
 LeagueTest >> setUp [
 	super setUp.
-	league := ESL databaseDo: [ League storedInstances asOrderedCollection ].
+	league := EuropeanFootballLeagues databaseDo: [ League storedInstances asOrderedCollection ].
 	league := league anyOne.
 	
 ]

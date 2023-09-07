@@ -10,7 +10,7 @@ Class {
 { #category : #tests }
 SeasonTest >> testTeamsEvolution [
 	| league |
-	league := ESL databaseDo: [
+	league := EuropeanFootballLeagues databaseDo: [
 		league := League storedInstances asOrderedCollection first.
 		 ].
 	self assert: league seasons first inspectorTeamEvolutionLinePlot isPresenter
@@ -19,7 +19,7 @@ SeasonTest >> testTeamsEvolution [
 { #category : #tests }
 SeasonTest >> testTeamsTablePoint [
 	| league table window |
-	league := ESL databaseDo: [
+	league := EuropeanFootballLeagues databaseDo: [
 		league := League storedInstances asOrderedCollection first.
 		 ].
 	table := league seasons first inspectorTablePoints.

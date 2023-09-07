@@ -10,11 +10,11 @@ Class {
 { #category : #accessing }
 FutbolWorldMenu class >> menu: aBuilder [
 	<worldMenu>
-	(aBuilder item: #ESL)
+	(aBuilder item: #EuropeanFootballLeagues)
 		parent: #Tools;
 		label: 'European Leagues(Demo)';
 		icon: (self iconNamed: #remote);
 		help: 'basic football demo';
-		action: [ ESL new inspect ];
+		action: [ EuropeanFootballLeagues new inspect ];
 		order: 1000
 ]

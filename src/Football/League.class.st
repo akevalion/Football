@@ -31,12 +31,12 @@ League class >> reStoreDefinition [
 
 { #category : #'accessing - computed' }
 League >> computeCountryName [
-	^ ESL databaseDo: [ (Country storedInstances detect: [ :country | country id = country_id ]) name ]
+	^ EuropeanFootballLeagues databaseDo: [ (Country storedInstances detect: [ :country | country id = country_id ]) name ]
 ]
 
 { #category : #'accessing - computed' }
 League >> computeSeasons [
-	^ ESL databaseDo: [
+	^ EuropeanFootballLeagues databaseDo: [
 		(Match storedInstances project: [ :match | match season ]) asSortedCollection
 			collect: [ :str | 
 				Season new
@@ -47,7 +47,7 @@ League >> computeSeasons [
 
 { #category : #'accessing - computed' }
 League >> computeTeams [
-	^ ESL databaseDo: [
+	^ EuropeanFootballLeagues databaseDo: [
 		| teamIDs |
 		teamIDs := (Match storedInstances 
 			satisfying: [ :match | match league_id = self id ])

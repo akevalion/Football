@@ -140,7 +140,7 @@ TeamStatsCalculator >> asSeason [
 { #category : #converting }
 TeamStatsCalculator >> asTeam [
 
-	^ ESL databaseDo: [ Team storedInstances detect: [ :team | team team_api_id = id ] ]
+	^ EuropeanFootballLeagues databaseDo: [ Team storedInstances detect: [ :team | team team_api_id = id ] ]
 ]
 
 { #category : #accessing }
@@ -231,7 +231,7 @@ TeamStatsCalculator >> printOn: stream [
 { #category : #printing }
 TeamStatsCalculator >> queryTeamName [
 
-	^ ESL databaseDo: [ 
+	^ EuropeanFootballLeagues databaseDo: [ 
 		  (Team storedInstances detect: [ :team | team team_api_id = id ]) team_long_name ]
 ]
 

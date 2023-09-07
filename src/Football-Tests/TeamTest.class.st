@@ -10,7 +10,7 @@ Class {
 { #category : #tests }
 TeamTest >> testMatches [
 	| team |
-	team := ESL databaseDo: [ Team storedInstances detect: [ :obj | 
+	team := EuropeanFootballLeagues databaseDo: [ Team storedInstances detect: [ :obj | 
 			obj team_short_name = 'BAR' ] ].
 	self assert: team inspectorMatches isPresenter
 ]
@@ -18,7 +18,7 @@ TeamTest >> testMatches [
 { #category : #tests }
 TeamTest >> testPerformanceAllTime [
 	| team |
-	team := ESL databaseDo: [ Team storedInstances detect: [ :obj | 
+	team := EuropeanFootballLeagues databaseDo: [ Team storedInstances detect: [ :obj | 
 			obj team_short_name = 'BAR' ] ].
 	self assert: team inspectorTablePerformance isPresenter 
 ]

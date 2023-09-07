@@ -1,7 +1,7 @@
-Extension { #name : #ESL }
+Extension { #name : #EuropeanFootballLeagues }
 
 { #category : #'*Football-Spec' }
-ESL >> inspectorLeagueList [
+EuropeanFootballLeagues >> inspectorLeagueList [
 	<inspectorPresentationOrder: 2 title: 'Leagues'>
 	^ SpListPresenter new
 		items: self leagues;
