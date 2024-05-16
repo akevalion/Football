@@ -117,12 +117,12 @@ BaselineOfFootball >> baseline: spec [
 		
 		"Dependencies"
 		self
-			roassal3: spec;
+			roassal: spec;
 			restore: spec;
 			neoCSV: spec.
 		"packages"
 		spec
-			package: 'Football' with: [ spec requires: #('Roassal3' 'NeoCSV' 'ReStore') ];
+			package: 'Football' with: [ spec requires: #('Roassal' 'NeoCSV' 'ReStore') ];
 			package: 'Football-Spec' with: [ spec requires: #('Football') ];
 			package: 'Football-Roassal' with: [ spec requires: #('Football') ];
 			package: 'Football-Tests' with: [ spec requires: #(
@@ -194,10 +194,10 @@ BaselineOfFootball >> restore: spec [
 ]
 
 { #category : 'dependencies' }
-BaselineOfFootball >> roassal3: spec [
+BaselineOfFootball >> roassal: spec [
 
 	spec 
-		baseline: 'Roassal3' 
+		baseline: 'Roassal' 
  		with: [ spec
 			repository: 'github://pharo-graphics/Roassal';
 			loads: #( 'SVGImporter' 'default' ) ]
