@@ -2,15 +2,17 @@
 baseline for futbol project
 "
 Class {
-	#name : #BaselineOfFootball,
-	#superclass : #BaselineOf,
+	#name : 'BaselineOfFootball',
+	#superclass : 'BaselineOf',
 	#classVars : [
 		'LaunchButton'
 	],
-	#category : #'BaselineOfFootball-Baseline'
+	#category : 'BaselineOfFootball-Baseline',
+	#package : 'BaselineOfFootball',
+	#tag : 'Baseline'
 }
 
-{ #category : #demo }
+{ #category : 'demo' }
 BaselineOfFootball class >> createButton [
 	| canvas  playIcon background text group w h paint high paint2 |
 	canvas := RSCanvas new.
@@ -63,14 +65,14 @@ BaselineOfFootball class >> createButton [
 	
 ]
 
-{ #category : #demo }
+{ #category : 'demo' }
 BaselineOfFootball class >> handIcon [
 	^ RSSVGPath new
 		svgPath: self handSVGString;
 		yourself 
 ]
 
-{ #category : #demo }
+{ #category : 'demo' }
 BaselineOfFootball class >> handSVGString [
 	^ 'M69.334,81.609c1.646,0,2.982-1.338,2.982-2.984v-7.459c0-1.646-1.337-2.984-2.982-2.984h-0.52
 		c0.273-3.088,0.873-4.131,1.785-5.709c0.676-1.17,1.518-2.625,2.452-5.17c2.501-6.805,1.478-18.619,1.433-19.117l-0.021-0.145
@@ -82,29 +84,29 @@ BaselineOfFootball class >> handSVGString [
 		c0,1.648,1.335,2.983,2.984,2.983L69.334,81.609z '
 ]
 
-{ #category : #demo }
+{ #category : 'demo' }
 BaselineOfFootball class >> launchButton [
 	^ LaunchButton ifNil: [ LaunchButton := self createButton ]
 ]
 
-{ #category : #demo }
+{ #category : 'demo' }
 BaselineOfFootball class >> launchButton: anObject [
 	LaunchButton := anObject
 ]
 
-{ #category : #demo }
+{ #category : 'demo' }
 BaselineOfFootball class >> playIcon [
 	^ RSSVGPath new
 		svgPath: self playSVGString;
 		yourself 
 ]
 
-{ #category : #demo }
+{ #category : 'demo' }
 BaselineOfFootball class >> playSVGString [
 	^ 'M45.563,29.174l-22-15c-0.307-0.208-0.703-0.231-1.031-0.058C22.205,14.289,22,14.629,22,15v30   c0,0.371,0.205,0.711,0.533,0.884C22.679,45.962,22.84,46,23,46c0.197,0,0.394-0.059,0.563-0.174l22-15   C45.836,30.64,46,30.331,46,30S45.836,29.36,45.563,29.174z M24,43.107V16.893L43.225,30L24,43.107zM30,0C13.458,0,0,13.458,0,30s13.458,30,30,30s30-13.458,30-30S46.542,0,30,0z M30,58C14.561,58,2,45.439,2,30   S14.561,2,30,2s28,12.561,28,28S45.439,58,30,58z'
 ]
 
-{ #category : #baselines }
+{ #category : 'baselines' }
 BaselineOfFootball >> baseline: spec [
 	<baseline>
 	"main repository"
@@ -134,22 +136,22 @@ BaselineOfFootball >> baseline: spec [
 		
 ]
 
-{ #category : #postload }
+{ #category : 'postload' }
 BaselineOfFootball >> generateDB [
 	(Smalltalk at: #EuropeanFootballLeagues) createDatabase
 ]
 
-{ #category : #demo }
+{ #category : 'demo' }
 BaselineOfFootball >> launchButton [
 	^ self class launchButton
 ]
 
-{ #category : #dependencies }
+{ #category : 'dependencies' }
 BaselineOfFootball >> neoCSV: spec [
 	spec baseline: 'NeoCSV' with: [ spec repository: 'github://svenvc/NeoCSV/repository' ].
 ]
 
-{ #category : #demo }
+{ #category : 'demo' }
 BaselineOfFootball >> prepareForDemo [
 	<script: 'self new prepareForDemo'>
 	"self launchButton roassalCanvas open."
@@ -167,7 +169,7 @@ BaselineOfFootball >> prepareForDemo [
 	
 ]
 
-{ #category : #demo }
+{ #category : 'demo' }
 BaselineOfFootball >> prepareForDev [
 	<script: 'self new prepareForDev'>
 	
@@ -181,7 +183,7 @@ BaselineOfFootball >> prepareForDev [
 	self class launchButton: nil
 ]
 
-{ #category : #dependencies }
+{ #category : 'dependencies' }
 BaselineOfFootball >> restore: spec [
 	spec 
 		baseline: 'ReStore' 
@@ -191,12 +193,12 @@ BaselineOfFootball >> restore: spec [
     			loads: #( 'all' ) ]
 ]
 
-{ #category : #dependencies }
+{ #category : 'dependencies' }
 BaselineOfFootball >> roassal3: spec [
 
 	spec 
 		baseline: 'Roassal3' 
  		with: [ spec
-			repository: 'github://ObjectProfile/Roassal3';
+			repository: 'github://pharo-graphics/Roassal';
 			loads: #( 'SVGImporter' 'default' ) ]
 ]
